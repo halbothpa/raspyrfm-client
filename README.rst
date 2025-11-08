@@ -51,12 +51,20 @@ Installation
 
 :code:`pip install raspyrfm-client`
 
+Documentation
+-------------
+
+The full project manual is published automatically via GitHub Pages whenever
+changes land on the ``master`` branch. Visit
+``https://halbothpa.github.io/raspyrfm-client/`` for the rendered HTML
+documentation sourced from the ``docs`` directory.
+
 Usage
 -----
 
 For a basic example have a look at the `example.py <https://github.com/markusressel/raspyrfm-client/blob/master/example_simple.py>`_ file.
 
-If you need more info have a look at the `documentation <http://raspyrfm-client.readthedocs.io/>`_ which should help.
+If you need more info the `documentation <https://halbothpa.github.io/raspyrfm-client/>`_ covers the full Home Assistant workflow.
 
 Basic Example
 -------------
