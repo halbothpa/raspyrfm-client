@@ -1,3 +1,4 @@
+import hashlib
 import re
 import subprocess
 
@@ -18,6 +19,13 @@ def _sanitize_branch(branch: str) -> str:
     sanitized = re.sub(r"[^a-z0-9]+", ".", branch.lower()).strip(".")
     return sanitized
 
+
+def _branch_dev_suffix(branch: str) -> int:
+    """Generate a deterministic integer suffix for development releases."""
+
+    digest = hashlib.sha1(branch.encode("utf-8")).hexdigest()
+    return int(digest[:8], 16) % 10000 + 1
+
 if GIT_BRANCH == "master":
     DEVELOPMENT_STATUS = "Development Status :: 5 - Production/Stable"
     VERSION_NAME = VERSION_NUMBER
@@ -28,10 +36,12 @@ elif GIT_BRANCH == "dev":
     DEVELOPMENT_STATUS = "Development Status :: 3 - Alpha"
     VERSION_NAME = f"{VERSION_NUMBER}.dev0"
 else:
-    print("Unknown git branch, using pre-alpha as default")
-    DEVELOPMENT_STATUS = "Development Status :: 2 - Pre-Alpha"
     sanitized_branch = _sanitize_branch(GIT_BRANCH) or "prealpha"
-    VERSION_NAME = f"{VERSION_NUMBER}+{sanitized_branch}"
+    print(
+        f"Unknown git branch '{sanitized_branch}', using pre-alpha development version"
+    )
+    DEVELOPMENT_STATUS = "Development Status :: 2 - Pre-Alpha"
+    VERSION_NAME = f"{VERSION_NUMBER}.dev{_branch_dev_suffix(sanitized_branch)}"
 
 
 def readme_type() -> str:
