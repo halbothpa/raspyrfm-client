@@ -14,6 +14,7 @@ from homeassistant.components import websocket_api
 
 from .const import (
     DOMAIN,
+    MAPPING_CATEGORIES,
     SIGNAL_LEARNING_STATE,
     SIGNAL_SIGNAL_RECEIVED,
     WS_TYPE_DEVICE_CREATE,
@@ -24,6 +25,9 @@ from .const import (
     WS_TYPE_LEARNING_STATUS,
     WS_TYPE_LEARNING_STOP,
     WS_TYPE_LEARNING_SUBSCRIBE,
+    WS_TYPE_SIGNAL_MAP_DELETE,
+    WS_TYPE_SIGNAL_MAP_LIST,
+    WS_TYPE_SIGNAL_MAP_UPDATE,
     WS_TYPE_SIGNALS_LIST,
     WS_TYPE_SIGNALS_SUBSCRIBE,
 )
@@ -50,6 +54,9 @@ def async_register_websocket_handlers(hass: HomeAssistant) -> None:
     websocket_api.async_register_command(hass, handle_device_delete)
     websocket_api.async_register_command(hass, handle_device_list)
     websocket_api.async_register_command(hass, handle_device_reload)
+    websocket_api.async_register_command(hass, handle_signal_map_list)
+    websocket_api.async_register_command(hass, handle_signal_map_update)
+    websocket_api.async_register_command(hass, handle_signal_map_delete)
 
     hass.data[HANDLERS_REGISTERED] = True
 
@@ -190,4 +197,57 @@ async def handle_device_reload(hass: HomeAssistant, connection: websocket_api.Ac
 
     hub = _get_hub(hass, msg)
     await hub.async_reload_devices()
+    connection.send_result(msg["id"], {})
+
+
+@websocket_api.websocket_command({vol.Required("type"): WS_TYPE_SIGNAL_MAP_LIST, vol.Optional("entry_id"): str})
+@websocket_api.async_response
+async def handle_signal_map_list(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: Dict[str, Any]) -> None:
+    """Return the stored signal mapping metadata."""
+
+    hub = _get_hub(hass, msg)
+    mappings = await hub.async_list_signal_mappings()
+    connection.send_result(msg["id"], {"mappings": mappings})
+
+
+_SIGNAL_MAP_UPDATE_SCHEMA = websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend(
+    {
+        vol.Required("type"): WS_TYPE_SIGNAL_MAP_UPDATE,
+        vol.Required("payload"): cv.string,
+        vol.Required("category"): vol.In(MAPPING_CATEGORIES),
+        vol.Required("label"): cv.string,
+        vol.Optional("linked_devices"): [cv.string],
+        vol.Optional("entry_id"): str,
+    }
+)
+
+
+@websocket_api.websocket_command(_SIGNAL_MAP_UPDATE_SCHEMA)
+@websocket_api.async_response
+async def handle_signal_map_update(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: Dict[str, Any]) -> None:
+    """Store mapping information for a payload."""
+
+    hub = _get_hub(hass, msg)
+    mapping = await hub.async_set_signal_mapping(
+        msg["payload"],
+        msg["category"],
+        msg["label"],
+        msg.get("linked_devices"),
+    )
+    connection.send_result(msg["id"], {"mapping": mapping.to_dict()})
+
+
+@websocket_api.websocket_command(
+    {
+        vol.Required("type"): WS_TYPE_SIGNAL_MAP_DELETE,
+        vol.Required("payload"): cv.string,
+        vol.Optional("entry_id"): str,
+    }
+)
+@websocket_api.async_response
+async def handle_signal_map_delete(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: Dict[str, Any]) -> None:
+    """Remove mapping information for a payload."""
+
+    hub = _get_hub(hass, msg)
+    await hub.async_remove_signal_mapping(msg["payload"])
     connection.send_result(msg["id"], {})

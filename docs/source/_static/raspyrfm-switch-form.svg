@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
+  <title id="title">RaspyRFM switch form</title>
+  <desc id="desc">Illustration of the RaspyRFM Home Assistant device form highlighting the mandatory OFF payload field.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f6f9fc" />
+      <stop offset="100%" stop-color="#e3eaf4" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#0b1f33" flood-opacity="0.15" />
+    </filter>
+  </defs>
+  <rect width="960" height="600" fill="url(#bg)" />
+  <g transform="translate(120 80)">
+    <rect width="720" height="440" rx="24" ry="24" fill="#ffffff" filter="url(#shadow)" />
+    <text x="48" y="72" font-family="Inter, Helvetica, Arial, sans-serif" font-size="36" font-weight="600" fill="#142641">Add RaspyRFM switch</text>
+    <g transform="translate(48 118)">
+      <text x="0" y="0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="20" fill="#5b6b7f">Name</text>
+      <rect x="0" y="16" width="320" height="52" rx="12" ry="12" fill="#f0f3f8" stroke="#ced6e5" />
+      <text x="20" y="50" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" fill="#1f2d3d">Garden Lights</text>
+    </g>
+    <g transform="translate(48 220)">
+      <text x="0" y="0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="20" fill="#5b6b7f">ON signal</text>
+      <rect x="0" y="16" width="624" height="52" rx="12" ry="12" fill="#f0f3f8" stroke="#ced6e5" />
+      <text x="20" y="50" font-family="Fira Code, Menlo, Consolas, monospace" font-size="22" fill="#1f2d3d">#A1B2C3:on:10</text>
+    </g>
+    <g transform="translate(48 322)">
+      <text x="0" y="0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#c1121f">OFF signal *</text>
+      <rect x="0" y="16" width="624" height="52" rx="12" ry="12" fill="#fff5f5" stroke="#f2b8b5" stroke-width="2" />
+      <text x="20" y="50" font-family="Fira Code, Menlo, Consolas, monospace" font-size="22" fill="#c1121f">Required: provide the OFF payload</text>
+      <rect x="640" y="16" width="32" height="52" rx="12" ry="12" fill="#ffffff" stroke="#f2b8b5" stroke-width="2" />
+      <text x="648" y="50" font-family="Inter, Helvetica, Arial, sans-serif" font-size="32" fill="#c1121f">!</text>
+    </g>
+    <g transform="translate(48 424)">
+      <rect x="0" y="0" width="172" height="56" rx="14" ry="14" fill="#2d72d9" />
+      <text x="86" y="36" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#ffffff">Save switch</text>
+      <text x="202" y="36" font-family="Inter, Helvetica, Arial, sans-serif" font-size="18" fill="#5b6b7f">All fields must be completed</text>
+    </g>
+  </g>
+</svg>

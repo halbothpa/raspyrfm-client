@@ -18,13 +18,17 @@ from .const import (
     CONF_HOST,
     CONF_PORT,
     DEFAULT_PORT,
-    DOMAIN,
     SIGNAL_DEVICE_REGISTRY_UPDATED,
     SIGNAL_DEVICE_REMOVED,
     SIGNAL_LEARNING_STATE,
     SIGNAL_SIGNAL_RECEIVED,
 )
-from .storage import RaspyRFMDeviceEntry, RaspyRFMDeviceStorage
+from .storage import (
+    RaspyRFMDeviceEntry,
+    RaspyRFMDeviceStorage,
+    RaspyRFMSignalMapStorage,
+    RaspyRFMSignalMapping,
+)
 from .gateway import RaspyRFMGateway
 from .learn import LearnManager, LearnedSignal
 
@@ -52,6 +56,7 @@ class RaspyRFMHub:
             entry.data.get(CONF_PORT, DEFAULT_PORT),
         )
         self._storage = RaspyRFMDeviceStorage(hass)
+        self._map_storage = RaspyRFMSignalMapStorage(hass)
         self._learn_manager = LearnManager(hass, self)
         self._active_signals: Dict[str, ActiveSignal] = {}
         self._signals_lock = asyncio.Lock()
@@ -78,12 +83,14 @@ class RaspyRFMHub:
         """Initialise hub resources."""
 
         await self._storage.async_load()
+        await self._map_storage.async_load()
 
     async def async_unload(self) -> None:
         """Unload hub resources."""
 
         await self._learn_manager.async_stop()
         await self._storage.async_unload()
+        await self._map_storage.async_unload()
 
     async def async_update_entry(self, entry: ConfigEntry) -> None:
         """Handle entry updates."""
@@ -109,6 +116,11 @@ class RaspyRFMHub:
         """Return all configured devices."""
 
         return self._storage.iter_devices()
+
+    def iter_signal_mappings(self) -> Iterable[RaspyRFMSignalMapping]:
+        """Return all stored signal mappings."""
+
+        return self._map_storage.iter_mappings()
 
     def get_device(self, device_id: str) -> Optional[RaspyRFMDeviceEntry]:
         """Return a device by id."""
@@ -140,6 +152,34 @@ class RaspyRFMHub:
 
         await self._storage.async_remove(device_id)
         async_dispatcher_send(self._hass, SIGNAL_DEVICE_REMOVED, device_id)
+
+    async def async_set_signal_mapping(
+        self,
+        payload: str,
+        category: str,
+        label: str,
+        linked_devices: Optional[List[str]] = None,
+    ) -> RaspyRFMSignalMapping:
+        """Store metadata describing a learned payload."""
+
+        mapping = RaspyRFMSignalMapping(
+            payload=payload,
+            category=category,
+            label=label or payload,
+            linked_devices=list(linked_devices or []),
+        )
+        await self._map_storage.async_set(mapping)
+        return mapping
+
+    async def async_remove_signal_mapping(self, payload: str) -> None:
+        """Delete mapping metadata for a payload."""
+
+        await self._map_storage.async_remove(payload)
+
+    async def async_list_signal_mappings(self) -> List[Dict[str, Any]]:
+        """Return a serialisable mapping overview."""
+
+        return [mapping.to_dict() for mapping in self._map_storage.iter_mappings()]
 
     async def async_handle_learned_signal(self, signal: LearnedSignal, addr: tuple[str, int]) -> None:
         """Handle a signal received during a learning session."""

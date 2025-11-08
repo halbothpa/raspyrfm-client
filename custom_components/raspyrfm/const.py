@@ -15,6 +15,11 @@ PLATFORMS: list[Platform] = [Platform.SWITCH, Platform.BINARY_SENSOR]
 STORAGE_VERSION = 1
 STORAGE_KEY = f"{DOMAIN}_devices"
 
+MAPPING_STORAGE_VERSION = 1
+MAPPING_STORAGE_KEY = f"{DOMAIN}_signal_map"
+
+MAPPING_CATEGORIES: list[str] = ["sensor", "actuator", "other"]
+
 SIGNAL_DEVICE_REGISTRY_UPDATED = "raspyrfm_device_registry_updated"
 SIGNAL_DEVICE_REMOVED = "raspyrfm_device_removed"
 SIGNAL_SIGNAL_RECEIVED = "raspyrfm_signal_received"
@@ -35,3 +40,6 @@ WS_TYPE_DEVICE_CREATE = WS_TYPE_PREFIX + "device/create"
 WS_TYPE_DEVICE_DELETE = WS_TYPE_PREFIX + "device/delete"
 WS_TYPE_DEVICE_LIST = WS_TYPE_PREFIX + "devices/list"
 WS_TYPE_DEVICE_RELOAD = WS_TYPE_PREFIX + "devices/reload"
+WS_TYPE_SIGNAL_MAP_LIST = WS_TYPE_PREFIX + "signals/map/list"
+WS_TYPE_SIGNAL_MAP_UPDATE = WS_TYPE_PREFIX + "signals/map/update"
+WS_TYPE_SIGNAL_MAP_DELETE = WS_TYPE_PREFIX + "signals/map/delete"
