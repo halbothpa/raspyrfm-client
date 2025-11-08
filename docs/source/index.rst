@@ -5,37 +5,34 @@ RaspyRFM Client Manual
    :hidden:
    :maxdepth: 2
 
+   homeassistant_components
    ui-guide
    raspyrfm_client
 
-.. container:: hero-card
+Overview
+--------
 
-   .. raw:: html
+RaspyRFM bridges inexpensive 433&nbsp;MHz receivers and transmitters with
+`Home Assistant <https://www.home-assistant.io/>`_.  The integration that
+ships with this repository contains:
 
-      <div class="hero-title">Visual tools for RaspyRFM automation</div>
+* A UDP ``gateway`` helper that speaks the RaspyRFM bridge protocol.
+* A ``hub`` coordinating the learn manager, persistent storage, and entity
+  registry updates inside Home Assistant.
+* Binary sensor and switch platforms that translate learned payloads into
+  Home Assistant entities.
+* A rich management panel implemented as a LitElement web component for
+  capturing, annotating, and replaying radio payloads.
 
-   .. raw:: html
+The sections below document how these pieces fit together and how you can
+adapt them for your own setup.
 
-      <p class="hero-subtitle">Build, map, and document your 433&nbsp;MHz Home Assistant devices with a refreshed design, live signal visualisations, and automatically published documentation.</p>
+Quick links
+~~~~~~~~~~~
 
-   - Explore the new signal mapping canvas to relate captured payloads with sensors and actuators.
-   - Capture screenshots and diagrams of the Home Assistant interface for quick onboarding.
-   - Publish the entire manual to GitHub Pages whenever the repository updates.
-
-Spotlight
----------
-
-.. grid:: 1 2 2 3
-   :gutter: 2
-
-   .. grid-item-card:: Guided configuration
-
-      The redesigned RaspyRFM control panel validates payloads in real time and explains the requirements for switches and binary sensors.
-
-   .. grid-item-card:: Signal topology mapping
-
-      Visually categorise incoming payloads as sensors, actuators, or miscellaneous signals and link them to the Home Assistant entities they drive.
-
-   .. grid-item-card:: Beautiful documentation
-
-      A modern theme, carefully tuned typography, and curated figures make the GitHub Pages site easy to read on desktop or mobile.
+* :doc:`homeassistant_components` – Backend components and Home Assistant
+  integration details.
+* :doc:`ui-guide` – Panels, cards, and mapping workspace provided by the
+  custom frontend.
+* :doc:`raspyrfm_client` – Python API reference for the reusable client
+  library.
