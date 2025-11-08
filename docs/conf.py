@@ -33,11 +33,16 @@ sys.path.insert(0, os.path.abspath('../'))
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc',
-              'sphinx.ext.todo',
-              'sphinx.ext.coverage',
-              'sphinx.ext.ifconfig',
-              'sphinx.ext.viewcode']
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.todo',
+    'sphinx.ext.coverage',
+    'sphinx.ext.ifconfig',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.autosectionlabel',
+    'sphinx_design',
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -83,15 +88,27 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 
-# If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = True
-
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'default'
+html_theme = 'furo'
+html_title = 'RaspyRFM Client Manual'
+html_theme_options = {
+    'light_css_variables': {
+        'color-brand-primary': '#1e88e5',
+        'color-brand-content': '#00897b',
+    },
+    'dark_css_variables': {
+        'color-brand-primary': '#4dd0e1',
+        'color-brand-content': '#90caf9',
+    },
+    'sidebar_hide_name': True,
+}
+
+html_static_path = ['_static']
+html_css_files = ['raspyrfm.css']
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -157,3 +174,6 @@ texinfo_documents = [
      author, 'raspyrfm_client', 'A library to send rc signals with the RaspyRFM module.',
      'Miscellaneous'),
 ]
+
+autosectionlabel_prefix_document = True
+todo_include_todos = True

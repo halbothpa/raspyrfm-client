@@ -1,30 +1,41 @@
-API
-===
+RaspyRFM Client Manual
+======================
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
 
+   ui-guide
    raspyrfm_client
 
-Home Assistant UI
-=================
+.. container:: hero-card
 
-The RaspyRFM custom integration exposes a Home Assistant configuration panel to manage RF switches.
-The following illustrations capture the refreshed interface that now requires both ON and OFF payloads
-before a device can be saved.
+   .. raw:: html
 
-.. figure:: _static/raspyrfm-switch-form.svg
-   :alt: RaspyRFM device creation form with required OFF signal
-   :align: center
-   :figwidth: 85%
+      <div class="hero-title">Visual tools for RaspyRFM automation</div>
 
-   Device creation dialog with the mandatory OFF signal field highlighted so users provide
-   matching payloads for both switch directions.
+   .. raw:: html
 
-.. figure:: _static/raspyrfm-device-list.svg
-   :alt: RaspyRFM device overview card in Home Assistant
-   :align: center
-   :figwidth: 85%
+      <p class="hero-subtitle">Build, map, and document your 433&nbsp;MHz Home Assistant devices with a refreshed design, live signal visualisations, and automatically published documentation.</p>
 
-   Home Assistant dashboard card showcasing RaspyRFM switches with clear ON/OFF state buttons
-   after the OFF payload requirement was introduced.
+   - Explore the new signal mapping canvas to relate captured payloads with sensors and actuators.
+   - Capture screenshots and diagrams of the Home Assistant interface for quick onboarding.
+   - Publish the entire manual to GitHub Pages whenever the repository updates.
+
+Spotlight
+---------
+
+.. grid:: 1 2 2 3
+   :gutter: 2
+
+   .. grid-item-card:: Guided configuration
+
+      The redesigned RaspyRFM control panel validates payloads in real time and explains the requirements for switches and binary sensors.
+
+   .. grid-item-card:: Signal topology mapping
+
+      Visually categorise incoming payloads as sensors, actuators, or miscellaneous signals and link them to the Home Assistant entities they drive.
+
+   .. grid-item-card:: Beautiful documentation
+
+      A modern theme, carefully tuned typography, and curated figures make the GitHub Pages site easy to read on desktop or mobile.
