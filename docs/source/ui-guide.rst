@@ -1,55 +1,95 @@
 Home Assistant Experience
 =========================
 
-The RaspyRFM Home Assistant panel now blends informative validation with live insights that help you
-understand each 433&nbsp;MHz payload. The screenshots and diagrams below are generated assets that mirror the
-refined user experience.
+The RaspyRFM panel is bundled with the integration and appears in the
+Home Assistant sidebar after you add a RaspyRFM config entry.  The panel
+is implemented as the ``raspyrfm-panel`` LitElement component and talks to
+Home Assistant exclusively through the websocket commands documented in
+:doc:`homeassistant_components`.
 
-.. container:: figure-grid
+Control strip
+-------------
 
-   .. figure:: _static/raspyrfm-switch-form.svg
-      :alt: RaspyRFM device creation form with required OFF signal
-      :figwidth: 100%
+A row of Material Web Components at the top of the panel exposes the
+core learning controls:
 
-      The device creation workflow emphasises that switches need both ON and OFF payloads before they can be saved.
+* **Start learning** – calls ``raspyrfm/learning/start`` and resets the
+  in-memory signal buffer.
+* **Stop learning** – calls ``raspyrfm/learning/stop`` and closes the
+  UDP listener created by the backend.
+* **Refresh devices** – pulls the current device list via
+  ``raspyrfm/devices/list`` and updates the entity cards without reloading
+  the page.
+* **Reload mapping** – refreshes the optional signal metadata with
+  ``raspyrfm/signals/map/list``.  When the mapping API is unavailable the
+  panel shows a non-blocking error banner.
 
-   .. figure:: _static/raspyrfm-device-list.svg
-      :alt: RaspyRFM device overview card in Home Assistant
-      :figwidth: 100%
+Captured signals card
+---------------------
 
-      A refreshed overview groups configured entities with their payload metadata for quick troubleshooting.
+Signals arriving through the learning pipeline are rendered inside the
+*Captured signals* card.  Each entry displays the raw payload, timestamp,
+source address, and action buttons that populate the device creation
+form.
 
-Signal Mapping Workspace
-========================
+.. figure:: _static/raspyrfm-switch-form.svg
+   :alt: RaspyRFM signal captured and assigned to a switch form
+   :figwidth: 100%
 
-The new graphical mapper turns the stream of learned payloads into a topology of sensors, actuators, and misc
-signals. You can assign friendly labels, associate payloads with stored RaspyRFM devices, and instantly see the
-resulting layout on the canvas.
+   Selecting **Set as ON/OFF/trigger** copies the payload into the
+   relevant field of the *Create Home Assistant device* card.
+
+Create Home Assistant device
+----------------------------
+
+The form on the right converts captured payloads into Home Assistant
+entities.  When the type is set to ``switch`` the RaspyRFM backend expects
+both ``on`` and ``off`` payloads; binary sensors accept a single
+``trigger`` payload.  Submitting the form calls
+``raspyrfm/device/create`` and automatically refreshes the device list and
+signal mapping state.
+
+.. figure:: _static/raspyrfm-switch-form.svg
+   :alt: RaspyRFM switch creation form highlighting required fields
+   :figwidth: 100%
+
+Signal mapping workspace
+------------------------
+
+The mapping workspace turns the ``raspyrfm/signals/map/*`` websocket API
+into an interactive editor.  Every payload is assigned to one of three
+categories—``sensor``, ``actuator``, or ``other``—and can optionally link
+back to stored devices.  The LitElement component keeps track of pending
+changes and only persists them when you press **Save mapping**.
 
 .. figure:: _static/raspyrfm-signal-mapping.svg
-   :alt: RaspyRFM signal mapping canvas mock-up
+   :alt: Signal mapping canvas showing payload categories
    :align: center
    :figwidth: 85%
-
-   Nodes are grouped into dedicated swimlanes so you always know which payloads feed sensors, actuators, or auxiliary workflows.
 
 .. figure:: _static/raspyrfm-mapping-editor.svg
-   :alt: RaspyRFM mapping editor mock-up
+   :alt: Signal mapping editor with label and device associations
    :align: center
    :figwidth: 85%
 
-   The editor couples category selectors and device toggles with save, reset, and delete controls to curate each payload.
+Device inventory
+----------------
 
-Documentation Theme Preview
-===========================
+Configured switches and binary sensors are listed in a dedicated card at
+the bottom of the panel.  Each entry shows the stored payloads, exposes a
+**Delete** button that triggers ``raspyrfm/device/delete``, and mirrors the
+state of the Home Assistant entities created by the integration.
 
-The GitHub Pages site uses the `Furo <https://pradyunsg.me/furo/>`_ theme with a custom accent palette and spacing tweaks that
-mirror the Home Assistant frontend.
+.. figure:: _static/raspyrfm-device-list.svg
+   :alt: RaspyRFM device overview card in Home Assistant
+   :figwidth: 100%
 
-.. container:: demo-highlight
+Styling
+-------
 
-   .. figure:: _static/raspyrfm-docs-theme.svg
-      :alt: RaspyRFM documentation theme sample page
-      :figwidth: 100%
-
-      Documentation cards now stretch across the page with generous white space and large typography for better readability on large displays.
+The panel ships with custom CSS that adopts Home Assistant's typography
+and card spacing while introducing rounded cards and subtle gradients for
+signal groupings.  The stylesheet lives alongside the Sphinx theme
+in ``docs/source/_static/raspyrfm.css`` and is referenced from the
+Furo theme configuration so the GitHub Pages site mirrors the in-app
+appearance.
