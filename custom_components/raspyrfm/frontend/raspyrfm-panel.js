@@ -1,5 +1,7 @@
 const { LitElement, html, css } = window;
 
+const MAX_SIGNAL_HISTORY = 200;
+
 class RaspyRFMPanel extends LitElement {
   static get properties() {
     return {
@@ -264,17 +266,31 @@ class RaspyRFMPanel extends LitElement {
     const status = await this.hass.callWS({ type: "raspyrfm/learning/status" });
     this.learning = status.active;
     const signals = await this.hass.callWS({ type: "raspyrfm/signals/list" });
-    this.signals = signals.signals || [];
+    this.signals = this._normaliseSignals(signals.signals || []);
   }
 
   async _loadMappings() {
-    const response = await this.hass.callWS({ type: "raspyrfm/signals/map/list" });
-    const next = {};
-    (response.mappings || []).forEach((entry) => {
-      next[entry.payload] = entry;
-    });
-    this.signalMappings = next;
-    this._persistedMappings = JSON.parse(JSON.stringify(next));
+    try {
+      const response = await this.hass.callWS({ type: "raspyrfm/signals/map/list" });
+      const next = {};
+      (response.mappings || []).forEach((entry) => {
+        next[entry.payload] = entry;
+      });
+      this.signalMappings = next;
+      this._persistedMappings = JSON.parse(JSON.stringify(next));
+      if (this.error === "Signal mapping is temporarily unavailable.") {
+        this.error = null;
+      }
+    } catch (err) {
+      // Older backends might not expose the mapping API yet – degrade gracefully.
+      console.warn("Unable to load RaspyRFM signal mappings", err);
+      if (Object.keys(this.signalMappings || {}).length) {
+        this.signalMappings = {};
+      }
+      if (!this.error) {
+        this.error = "Signal mapping is temporarily unavailable.";
+      }
+    }
   }
 
   async _subscribeSignals() {
@@ -283,7 +299,7 @@ class RaspyRFMPanel extends LitElement {
         return;
       }
       const signal = message.event;
-      this.signals = [...this.signals, signal];
+      this.signals = this._normaliseSignals([...this.signals, signal]);
     }, {
       type: "raspyrfm/signals/subscribe"
     });
@@ -368,7 +384,7 @@ class RaspyRFMPanel extends LitElement {
         <div class="card-content form-grid">
           <div class="form-row">
             <ha-textfield label="Name" .value=${this.formName} @input=${(ev) => this._updateName(ev.target.value)}></ha-textfield>
-            <ha-select label="Type" .value=${this.formType} @selected=${(ev) => this._updateType(ev.target.value)}>
+            <ha-select label="Type" .value=${this.formType} @selected=${(ev) => this._updateType(this._extractSelectValue(ev))}>
               <mwc-list-item value="switch">Switch</mwc-list-item>
               <mwc-list-item value="binary_sensor">Binary sensor</mwc-list-item>
             </ha-select>
@@ -509,7 +525,7 @@ class RaspyRFMPanel extends LitElement {
             .value=${mapping.label || ""}
             @input=${(ev) => handleLabelInput(ev.target.value)}
           ></ha-textfield>
-          <ha-select label="Category" .value=${mapping.category} @selected=${(ev) => handleCategoryChange(ev.target.value)}>
+          <ha-select label="Category" .value=${mapping.category} @selected=${(ev) => handleCategoryChange(this._extractSelectValue(ev))}>
             ${categories.map(
               (category) => html`<mwc-list-item value="${category.key}">${category.title}</mwc-list-item>`
             )}
@@ -647,27 +663,39 @@ class RaspyRFMPanel extends LitElement {
     if (!entry) {
       return;
     }
-    const response = await this.hass.callWS({
-      type: "raspyrfm/signals/map/update",
-      payload,
-      category: entry.category,
-      label: entry.label || payload,
-      linked_devices: entry.linked_devices || [],
-    });
-    const mapping = response.mapping || entry;
-    this.signalMappings = {
-      ...this.signalMappings,
-      [payload]: mapping,
-    };
-    this._persistedMappings[payload] = JSON.parse(JSON.stringify(mapping));
+    try {
+      const response = await this.hass.callWS({
+        type: "raspyrfm/signals/map/update",
+        payload,
+        category: entry.category,
+        label: entry.label || payload,
+        linked_devices: entry.linked_devices || [],
+      });
+      const mapping = response.mapping || entry;
+      this.signalMappings = {
+        ...this.signalMappings,
+        [payload]: mapping,
+      };
+      this._persistedMappings[payload] = JSON.parse(JSON.stringify(mapping));
+      this.error = null;
+    } catch (err) {
+      console.warn("Failed to persist RaspyRFM mapping", err);
+      this.error = err?.message || "Unable to save mapping.";
+    }
   }
 
   async _deleteMapping(payload) {
-    await this.hass.callWS({ type: "raspyrfm/signals/map/delete", payload });
-    const next = { ...this.signalMappings };
-    delete next[payload];
-    this.signalMappings = next;
-    delete this._persistedMappings[payload];
+    try {
+      await this.hass.callWS({ type: "raspyrfm/signals/map/delete", payload });
+      const next = { ...this.signalMappings };
+      delete next[payload];
+      this.signalMappings = next;
+      delete this._persistedMappings[payload];
+      this.error = null;
+    } catch (err) {
+      console.warn("Failed to delete RaspyRFM mapping", err);
+      this.error = err?.message || "Unable to delete mapping.";
+    }
   }
 
   _resetMapping(payload) {
@@ -728,6 +756,39 @@ class RaspyRFMPanel extends LitElement {
     } catch (err) {
       this.error = err?.message || "Failed to create device";
     }
+  }
+
+  _normaliseSignals(signals) {
+    if (!Array.isArray(signals)) {
+      return [];
+    }
+    const unique = [];
+    const seen = new Set();
+    signals.forEach((signal) => {
+      const key = signal?.uid || `${signal?.payload}-${signal?.received}`;
+      if (!key || seen.has(key)) {
+        return;
+      }
+      seen.add(key);
+      unique.push(signal);
+    });
+    if (unique.length > MAX_SIGNAL_HISTORY) {
+      return unique.slice(unique.length - MAX_SIGNAL_HISTORY);
+    }
+    return unique;
+  }
+
+  _extractSelectValue(event) {
+    if (!event) {
+      return "";
+    }
+    if (event.detail && event.detail.value !== undefined) {
+      return event.detail.value;
+    }
+    if (event.target && event.target.value !== undefined) {
+      return event.target.value;
+    }
+    return "";
   }
 
   async _deleteDevice(deviceId) {
