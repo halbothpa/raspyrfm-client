@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from typing import Any, Dict
 
 from homeassistant.components.switch import SwitchEntity
@@ -12,6 +13,9 @@ from .const import DOMAIN, SIGNAL_DEVICE_REGISTRY_UPDATED, SIGNAL_SIGNAL_RECEIVE
 from .entity import RaspyRFMEntity
 from .hub import RaspyRFMHub
 from .storage import RaspyRFMDeviceEntry
+
+
+_LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass, entry, async_add_entities):
@@ -84,7 +88,11 @@ class RaspyRFMSwitch(RaspyRFMEntity, SwitchEntity):
     async def async_turn_off(self, **kwargs: Any) -> None:
         signal = self._device.signals.get("off")
         if signal is None:
-            raise ValueError("No OFF signal stored for this device")
+            _LOGGER.warning(
+                "Device %s has no OFF signal stored; ignoring turn_off request",
+                self._device.device_id,
+            )
+            return
         await self._hub.async_send_raw(signal)
         self._attr_is_on = False
         self.async_write_ha_state()

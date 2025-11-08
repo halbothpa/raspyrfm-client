@@ -6,10 +6,14 @@ import asyncio
 from dataclasses import dataclass, field
 from datetime import datetime
 import logging
-from typing import Any, Dict, List, Optional, Tuple
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple
 
 from homeassistant.core import HomeAssistant
+
 from .const import DEFAULT_LISTEN_PORT
+
+if TYPE_CHECKING:
+    from .hub import RaspyRFMHub
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -37,7 +41,7 @@ class LearnedSignal:
 class RaspyRFMLearnProtocol(asyncio.DatagramProtocol):
     """Asyncio datagram protocol for capturing signals."""
 
-    def __init__(self, manager: "LearnManager") -> None:
+    def __init__(self, manager: LearnManager) -> None:
         self._manager = manager
 
     def datagram_received(self, data: bytes, addr: Tuple[str, int]) -> None:
@@ -51,7 +55,7 @@ class RaspyRFMLearnProtocol(asyncio.DatagramProtocol):
 class LearnManager:
     """Manage RaspyRFM learning sessions."""
 
-    def __init__(self, hass: HomeAssistant, hub: "RaspyRFMHub") -> None:
+    def __init__(self, hass: HomeAssistant, hub: RaspyRFMHub) -> None:
         self._hass = hass
         self._hub = hub
         self._transport: Optional[asyncio.transports.DatagramTransport] = None

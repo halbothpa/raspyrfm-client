@@ -76,6 +76,10 @@ class RaspyRFMPanel extends LitElement {
         color: var(--error-color);
         margin-bottom: 12px;
       }
+      .required {
+        margin-left: 4px;
+        color: var(--error-color);
+      }
     `;
   }
 
@@ -218,8 +222,8 @@ class RaspyRFMPanel extends LitElement {
                   <span>${this.formOn || "Choose a captured signal"}</span>
                 </div>
                 <div class="form-row">
-                  <span class="pill">OFF</span>
-                  <span>${this.formOff || "Optional"}</span>
+                  <span class="pill">OFF<span class="required">*</span></span>
+                  <span>${this.formOff || "Choose a captured signal"}</span>
                 </div>
               `
             : html`
@@ -316,9 +320,11 @@ class RaspyRFMPanel extends LitElement {
         return;
       }
       signals.on = this.formOn;
-      if (this.formOff) {
-        signals.off = this.formOff;
+      if (!this.formOff) {
+        this.error = "Select an OFF signal for the switch.";
+        return;
       }
+      signals.off = this.formOff;
     } else {
       if (!this.formTrigger) {
         this.error = "Select a trigger signal for the sensor.";
