@@ -1,29 +1,37 @@
+import re
 import subprocess
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 VERSION_NUMBER = "1.2.8"
 
 try:
     GIT_BRANCH = subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"])
-    GIT_BRANCH = GIT_BRANCH.decode()  # convert to standard string
-    GIT_BRANCH = GIT_BRANCH.rstrip()  # remove unnecessary whitespace
-except:
+    GIT_BRANCH = GIT_BRANCH.decode()
+    GIT_BRANCH = GIT_BRANCH.rstrip()
+except Exception:
     GIT_BRANCH = "master"
+
+def _sanitize_branch(branch: str) -> str:
+    """Return a PEP 440 compatible identifier for a branch name."""
+
+    sanitized = re.sub(r"[^a-z0-9]+", ".", branch.lower()).strip(".")
+    return sanitized
 
 if GIT_BRANCH == "master":
     DEVELOPMENT_STATUS = "Development Status :: 5 - Production/Stable"
     VERSION_NAME = VERSION_NUMBER
 elif GIT_BRANCH == "beta":
     DEVELOPMENT_STATUS = "Development Status :: 4 - Beta"
-    VERSION_NAME = "%s-beta" % VERSION_NUMBER
+    VERSION_NAME = f"{VERSION_NUMBER}b0"
 elif GIT_BRANCH == "dev":
     DEVELOPMENT_STATUS = "Development Status :: 3 - Alpha"
-    VERSION_NAME = "%s-dev" % VERSION_NUMBER
+    VERSION_NAME = f"{VERSION_NUMBER}.dev0"
 else:
     print("Unknown git branch, using pre-alpha as default")
     DEVELOPMENT_STATUS = "Development Status :: 2 - Pre-Alpha"
-    VERSION_NAME = "%s-%s" % (VERSION_NUMBER, GIT_BRANCH)
+    sanitized_branch = _sanitize_branch(GIT_BRANCH) or "prealpha"
+    VERSION_NAME = f"{VERSION_NUMBER}+{sanitized_branch}"
 
 
 def readme_type() -> str:
@@ -64,6 +72,14 @@ setup(
     author_email='mail@markusressel.de',
     url='https://github.com/markusressel/raspyrfm-client',
     packages=find_packages(exclude=['tests']),
+    package_data={
+        "custom_components.raspyrfm": [
+            "manifest.json",
+            "translations/*.json",
+            "frontend/*.js",
+        ]
+    },
+    include_package_data=True,
     classifiers=[
         DEVELOPMENT_STATUS,
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
