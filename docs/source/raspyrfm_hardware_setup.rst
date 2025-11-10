@@ -207,8 +207,8 @@ Carry out the following tasks in order.
          cd /config/custom_components
          mkdir -p raspyrfm
          curl -L https://github.com/raspyrfm/raspyrfm-client/archive/refs/heads/main.tar.gz \
-          | tar -xz --strip-components=2 -C raspyrfm \
-              raspyrfm-client-main/custom_components/raspyrfm
+          | tar -xz --strip-components=3 -C raspyrfm \
+             raspyrfm-client-main/custom_components/raspyrfm
 
       Restart Home Assistant after the files are in place.
    #. Add the integration, enter the Raspberry Pi's IP address, keep the default
