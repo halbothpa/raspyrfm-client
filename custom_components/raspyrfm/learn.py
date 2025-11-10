@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple
 
 from homeassistant.core import HomeAssistant
 
+from .classifier import classify_payload
 from .const import DEFAULT_LISTEN_PORT
 
 if TYPE_CHECKING:
@@ -116,6 +117,9 @@ class LearnManager:
             received=datetime.utcnow(),
             metadata={"source": addr[0], "port": addr[1]},
         )
+        classification = classify_payload(payload)
+        if classification:
+            signal.metadata["classification"] = classification.to_dict()
         async with self._lock:
             self._signals.append(signal)
         await self._hub.async_handle_learned_signal(signal, addr)

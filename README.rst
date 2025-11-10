@@ -40,7 +40,7 @@ Home Assistant
 ==============
 The initial goal of this library was to be able to integrate the SimpleSolutions ConnAir gateway with `Home Assistant <https://www.home-assistant.io>`_. This gateway is sadly not sold anymore but there are other alternatives like the Intertechno Gateway or the `ConnAir Emulator script <https://github.com/Phunkafizer/RaspyRFM/blob/master/connair.py>`_ that can be used on a Raspberry Pi equipped with a 433MHz radio like the `RaspyRFM from Seegel Systeme <https://www.seegel-systeme.de/produkt/raspyrfm-ii/>`_.
 
-The bundled Home Assistant panel now features a refreshed design, inline validation for switch payloads, and a graphical signal mapping workspace that lets you categorise learned payloads as sensors, actuators, or auxiliary events. Linked device chips show exactly which Home Assistant entities react to a given payload so legacy installations stay understandable.
+The bundled Home Assistant panel now features a refreshed design, inline validation for switch payloads, and a graphical signal mapping workspace that lets you categorise learned payloads as sensors, actuators, or auxiliary events. Linked device chips show exactly which Home Assistant entities react to a given payload so legacy installations stay understandable. Incoming payloads are fingerprinted against the original ``raspyrfm-client`` library so the interface can suggest whether a signal looks like a switch, a dimmable light, or a pairing remote. Suggested actions populate the creation form automatically and cover newly supported entity types such as lights and button groups. When no fingerprint matches, the universal entity card stores the raw payloads and exposes a quick-send button so you can still read and replay transmissions.
 
 You can find the related integration documentation here: 
 `RaspyRFM Home Assistant component documentation <https://www.home-assistant.io/components/switch.raspyrfm/>`_
@@ -62,7 +62,9 @@ changes land on the ``master`` branch. Visit
 documentation sourced from the ``docs`` directory. The site now uses the
 `Furo <https://pradyunsg.me/furo/>`_ theme with custom accent colours and
 hero components that mirror the refreshed Home Assistant UI, plus SVG
-illustrations of the mapping workspace for quick onboarding.
+illustrations of the mapping workspace for quick onboarding. A new UI
+showcase page highlights every card in the Home Assistant panel, including
+the adaptive classification chips and the universal entity send controls.
 
 Usage
 -----

@@ -10,7 +10,13 @@ CONF_PORT = "port"
 DEFAULT_PORT = 49880
 DEFAULT_LISTEN_PORT = 49881
 
-PLATFORMS: list[Platform] = [Platform.SWITCH, Platform.BINARY_SENSOR]
+PLATFORMS: list[Platform] = [
+    Platform.SWITCH,
+    Platform.BINARY_SENSOR,
+    Platform.LIGHT,
+    Platform.BUTTON,
+    Platform.SENSOR,
+]
 
 STORAGE_VERSION = 1
 STORAGE_KEY = f"{DOMAIN}_devices"
@@ -40,6 +46,12 @@ WS_TYPE_DEVICE_CREATE = WS_TYPE_PREFIX + "device/create"
 WS_TYPE_DEVICE_DELETE = WS_TYPE_PREFIX + "device/delete"
 WS_TYPE_DEVICE_LIST = WS_TYPE_PREFIX + "devices/list"
 WS_TYPE_DEVICE_RELOAD = WS_TYPE_PREFIX + "devices/reload"
+WS_TYPE_DEVICE_SEND = WS_TYPE_PREFIX + "device/send"
 WS_TYPE_SIGNAL_MAP_LIST = WS_TYPE_PREFIX + "signals/map/list"
 WS_TYPE_SIGNAL_MAP_UPDATE = WS_TYPE_PREFIX + "signals/map/update"
 WS_TYPE_SIGNAL_MAP_DELETE = WS_TYPE_PREFIX + "signals/map/delete"
+
+SERVICE_SEND_ACTION = "send_action"
+ATTR_DEVICE_ID = "device_id"
+ATTR_ACTION = "action"
+DATA_SERVICE_REGISTERED = "_service_registered"

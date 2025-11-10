@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict
+from typing import Any, Dict, Set
 
 import voluptuous as vol
 
@@ -21,6 +21,7 @@ from .const import (
     WS_TYPE_DEVICE_DELETE,
     WS_TYPE_DEVICE_LIST,
     WS_TYPE_DEVICE_RELOAD,
+    WS_TYPE_DEVICE_SEND,
     WS_TYPE_LEARNING_START,
     WS_TYPE_LEARNING_STATUS,
     WS_TYPE_LEARNING_STOP,
@@ -54,6 +55,7 @@ def async_register_websocket_handlers(hass: HomeAssistant) -> None:
     websocket_api.async_register_command(hass, handle_device_delete)
     websocket_api.async_register_command(hass, handle_device_list)
     websocket_api.async_register_command(hass, handle_device_reload)
+    websocket_api.async_register_command(hass, handle_device_send_action)
     websocket_api.async_register_command(hass, handle_signal_map_list)
     websocket_api.async_register_command(hass, handle_signal_map_update)
     websocket_api.async_register_command(hass, handle_signal_map_delete)
@@ -67,7 +69,12 @@ def _get_hub(hass: HomeAssistant, msg: Dict[str, Any]) -> RaspyRFMHub:
         # fallback to first entry
         if DOMAIN not in hass.data or not hass.data[DOMAIN]:
             raise websocket_api.HomeAssistantWebSocketError("No RaspyRFM entries configured")
-        entry_id = next(iter(hass.data[DOMAIN]))
+        candidates = [
+            key for key in hass.data[DOMAIN] if not key.startswith("_")
+        ]
+        if not candidates:
+            raise websocket_api.HomeAssistantWebSocketError("No RaspyRFM entries configured")
+        entry_id = candidates[0]
 
     hub = hass.data[DOMAIN].get(entry_id)
     if hub is None:
@@ -144,11 +151,14 @@ def handle_signals_subscribe(hass: HomeAssistant, connection: websocket_api.Acti
     connection.send_result(msg["id"])
 
 
+SUPPORTED_DEVICE_TYPES = ["switch", "binary_sensor", "light", "button", "universal"]
+
+
 _DEVICE_CREATE_SCHEMA = websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend(
     {
         vol.Required("type"): WS_TYPE_DEVICE_CREATE,
         vol.Required("name"): cv.string,
-        vol.Required("device_type"): vol.In(["switch", "binary_sensor"]),
+        vol.Required("device_type"): vol.In(SUPPORTED_DEVICE_TYPES),
         vol.Required("signals"): {cv.string: cv.string},
         vol.Optional("metadata"): {cv.string: cv.Any()},
         vol.Optional("entry_id"): str,
@@ -162,7 +172,10 @@ async def handle_device_create(hass: HomeAssistant, connection: websocket_api.Ac
     """Create a device from captured signals."""
 
     hub = _get_hub(hass, msg)
-    device = await hub.async_create_device(msg["name"], msg["device_type"], msg["signals"], msg.get("metadata"))
+    _validate_device_payload(msg["device_type"], msg["signals"])
+    device = await hub.async_create_device(
+        msg["name"], msg["device_type"], msg["signals"], msg.get("metadata")
+    )
     connection.send_result(msg["id"], {"device": device.to_dict()})
 
 
@@ -198,6 +211,68 @@ async def handle_device_reload(hass: HomeAssistant, connection: websocket_api.Ac
     hub = _get_hub(hass, msg)
     await hub.async_reload_devices()
     connection.send_result(msg["id"], {})
+
+
+@websocket_api.websocket_command(
+    {
+        vol.Required("type"): WS_TYPE_DEVICE_SEND,
+        vol.Required("device_id"): cv.string,
+        vol.Required("action"): cv.string,
+        vol.Optional("entry_id"): str,
+    }
+)
+@websocket_api.async_response
+async def handle_device_send_action(
+    hass: HomeAssistant,
+    connection: websocket_api.ActiveConnection,
+    msg: Dict[str, Any],
+) -> None:
+    """Trigger a stored signal for a RaspyRFM device."""
+
+    hub = _get_hub(hass, msg)
+    try:
+        await hub.async_send_device_action(msg["device_id"], msg["action"])
+    except ValueError as err:
+        raise websocket_api.HomeAssistantWebSocketError(str(err)) from err
+    connection.send_result(msg["id"], {})
+
+
+def _validate_device_payload(device_type: str, signals: Dict[str, str]) -> None:
+    """Ensure the provided payload mapping matches the expected schema."""
+
+    required: Dict[str, str] = {}
+    optional: Set[str] = set()
+
+    if device_type == "switch":
+        required = {"on": "ON payload", "off": "OFF payload"}
+    elif device_type == "binary_sensor":
+        required = {"trigger": "Trigger payload"}
+    elif device_type == "light":
+        required = {"on": "ON payload"}
+        optional = {"off", "bright", "dim"}
+    elif device_type in {"button", "universal"}:
+        if not signals:
+            raise websocket_api.HomeAssistantWebSocketError(
+                "Provide at least one signal mapping"
+            )
+    else:
+        raise websocket_api.HomeAssistantWebSocketError("Unsupported device type")
+
+    missing = [key for key in required if key not in signals or not signals[key]]
+    if missing:
+        raise websocket_api.HomeAssistantWebSocketError(
+            f"Missing {', '.join(missing)} for {device_type}"
+        )
+
+    unexpected = [
+        key
+        for key in signals
+        if key not in required and key not in optional and device_type not in {"button", "universal"}
+    ]
+    if unexpected:
+        raise websocket_api.HomeAssistantWebSocketError(
+            f"Unexpected signals for {device_type}: {', '.join(unexpected)}"
+        )
 
 
 @websocket_api.websocket_command({vol.Required("type"): WS_TYPE_SIGNAL_MAP_LIST, vol.Optional("entry_id"): str})

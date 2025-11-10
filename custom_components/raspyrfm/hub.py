@@ -231,6 +231,19 @@ class RaspyRFMHub:
 
         await self._gateway.async_send_raw(payload)
 
+    async def async_send_device_action(self, device_id: str, action: str) -> None:
+        """Send a stored signal for the given device."""
+
+        device = self._storage.get_device(device_id)
+        if device is None:
+            raise ValueError(f"Unknown device: {device_id}")
+
+        payload = device.signals.get(action)
+        if payload is None:
+            raise ValueError(f"Device {device_id} has no signal named {action}")
+
+        await self.async_send_raw(payload)
+
 
 async def resolve_host(host: str) -> str:
     """Resolve a host to an IP address."""
