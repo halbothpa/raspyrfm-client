@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict
+from typing import Any, Dict
 
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.core import callback
