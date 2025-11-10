@@ -30,7 +30,9 @@ Captured signals card
 Signals arriving through the learning pipeline are rendered inside the
 *Captured signals* card.  Each entry displays the raw payload, timestamp,
 source address, and action buttons that populate the device creation
-form.
+form.  When the classifier recognises a fingerprint the card highlights
+the suggested entity type and available actions, and a one-click shortcut
+applies the template to the form.
 
 .. figure:: _static/raspyrfm-switch-form.svg
    :alt: RaspyRFM signal captured and assigned to a switch form
@@ -43,9 +45,11 @@ Create Home Assistant device
 ----------------------------
 
 The form on the right converts captured payloads into Home Assistant
-entities.  When the type is set to ``switch`` the RaspyRFM backend expects
-both ``on`` and ``off`` payloads; binary sensors accept a single
-``trigger`` payload.  Submitting the form calls
+entities.  The type selector now includes switches, binary sensors,
+lights, button groups, and a universal receiver.  Each type defines the
+required actions and optional extras (for example ``bright``/``dim`` for
+lights).  Button and universal devices allow you to add arbitrary actions
+before assigning payloads.  Submitting the form calls
 ``raspyrfm/device/create`` and automatically refreshes the device list and
 signal mapping state.
 
@@ -75,10 +79,12 @@ changes and only persists them when you press **Save mapping**.
 Device inventory
 ----------------
 
-Configured switches and binary sensors are listed in a dedicated card at
-the bottom of the panel.  Each entry shows the stored payloads, exposes a
-**Delete** button that triggers ``raspyrfm/device/delete``, and mirrors the
-state of the Home Assistant entities created by the integration.
+Configured devices are listed in a dedicated card at the bottom of the
+panel.  Each entry shows the stored payloads, exposes a **Send** button for
+every action via ``raspyrfm/device/send``, and mirrors the state of the Home
+Assistant entities created by the integration.  Universal devices highlight
+their actions alongside the last payload seen so you can replay legacy
+signals without switching to the developer tools.
 
 .. figure:: _static/raspyrfm-device-list.svg
    :alt: RaspyRFM device overview card in Home Assistant

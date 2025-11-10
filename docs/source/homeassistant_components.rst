@@ -12,8 +12,9 @@ Configuration flow and setup
 RaspyRFM is installed as a config entry.  The integration registers a
 config flow that resolves the gateway host name and persists the chosen
 UDP port.  Once an entry is created, ``async_setup_entry`` instantiates
-the hub, forwards platform setups, and makes the management panel and
-websocket commands available.
+the hub, forwards platform setups, and makes the management panel,
+websocket commands, and the ``raspyrfm.send_action`` service available so
+payloads can be replayed from automations.
 
 .. literalinclude:: ../../custom_components/raspyrfm/config_flow.py
    :language: python
@@ -46,20 +47,27 @@ The :class:`~custom_components.raspyrfm.learn.LearnManager` binds a UDP
 listener to ``DEFAULT_LISTEN_PORT`` (49881) and streams payloads into the
 hub.  Incoming packets are normalised into ``LearnedSignal`` dataclasses
 and broadcast over dispatcher events so that the UI and entity platforms
-receive live updates.
+receive live updates.  Each payload is fingerprinted against the
+``raspyrfm-client`` device library using the ``classifier`` helper, which
+allows the UI to suggest an entity type even when users have not labelled
+the signal yet.
 
 .. literalinclude:: ../../custom_components/raspyrfm/learn.py
    :language: python
    :lines: 1-133
+
+.. literalinclude:: ../../custom_components/raspyrfm/classifier.py
+   :language: python
+   :lines: 1-220
 
 Persistent storage and device registry
 --------------------------------------
 
 Two storage helpers manage device definitions and optional metadata about
 captured payloads.  The ``RaspyRFMDeviceStorage`` class keeps track of
-switches and binary sensors created from learned signals, while
-``RaspyRFMSignalMapStorage`` stores labels, semantic categories, and links
-between payloads and devices.
+all entity types created from learned signals, including switches, lights,
+button groups, and universal listeners, while ``RaspyRFMSignalMapStorage``
+stores labels, semantic categories, and links between payloads and devices.
 
 .. literalinclude:: ../../custom_components/raspyrfm/storage.py
    :language: python
@@ -68,10 +76,13 @@ between payloads and devices.
 Entity platforms
 ----------------
 
-Both switches and binary sensors share a base entity class that listens
-for dispatcher updates when devices change.  The entity platforms iterate
-over stored devices, create entities on demand, and react to live signal
-messages from the learning pipeline.
+All entities share a base class that listens for dispatcher updates when
+devices change.  The entity platforms iterate over stored devices, create
+entities on demand, and react to live signal messages from the learning
+pipeline.  Besides switches and binary sensors the integration now exposes
+a light platform for dimmable actuators, a button platform that creates one
+entity per stored action, and a universal sensor that records and replays
+raw payloads when no fingerprint matches.
 
 .. literalinclude:: ../../custom_components/raspyrfm/entity.py
    :language: python
@@ -79,23 +90,35 @@ messages from the learning pipeline.
 
 .. literalinclude:: ../../custom_components/raspyrfm/switch.py
    :language: python
-   :lines: 1-98
+   :lines: 1-120
 
 .. literalinclude:: ../../custom_components/raspyrfm/binary_sensor.py
    :language: python
    :lines: 1-88
+
+.. literalinclude:: ../../custom_components/raspyrfm/light.py
+   :language: python
+   :lines: 1-120
+
+.. literalinclude:: ../../custom_components/raspyrfm/button.py
+   :language: python
+   :lines: 1-200
+
+.. literalinclude:: ../../custom_components/raspyrfm/sensor.py
+   :language: python
+   :lines: 1-120
 
 Websocket API surface
 ---------------------
 
 The integration exposes a websocket namespace under ``raspyrfm/``.  The
 commands cover the full lifecycle: starting and stopping capture, listing
-signals, creating or deleting devices, and maintaining the optional
-signal mapping metadata.
+signals, creating or deleting devices, triggering stored actions, and
+maintaining the optional signal mapping metadata.
 
 .. literalinclude:: ../../custom_components/raspyrfm/websocket.py
    :language: python
-   :lines: 1-253
+   :lines: 1-320
 
 Panel registration and static assets
 ------------------------------------
@@ -113,14 +136,15 @@ Frontend component
 
 The ``raspyrfm-panel`` web component drives the onboarding experience for
 RaspyRFM users.  It exposes learning controls, renders cards summarising
-captured payloads, provides a device creation form, and lets users map
+captured payloads, fingerprints signals against the Python library to
+suggest device types, provides a flexible creation form, and lets users map
 payloads to semantic categories with optional device links.  The component
 relies exclusively on the websocket commands described above, so no
 additional backend endpoints are required.
 
 .. literalinclude:: ../../custom_components/raspyrfm/frontend/raspyrfm-panel.js
    :language: javascript
-   :lines: 1-420
+   :lines: 1-520
 
 Home Assistant integration checklist
 ------------------------------------
