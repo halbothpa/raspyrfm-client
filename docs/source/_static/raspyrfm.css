@@ -75,6 +75,30 @@ a:hover {
   margin: 0;
 }
 
+.ui-showcase-figure {
+  margin: 2.5rem auto !important;
+  max-width: 780px;
+  border-radius: 20px;
+  background: radial-gradient(circle at top, rgba(30, 136, 229, 0.08), rgba(30, 136, 229, 0));
+  padding: 1.5rem;
+  box-shadow: 0 22px 45px rgba(15, 23, 42, 0.18);
+}
+
+.ui-showcase-figure img {
+  display: block;
+  max-width: min(100%, 720px);
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 12px 34px rgba(15, 23, 42, 0.22);
+}
+
+.ui-showcase-figure figcaption {
+  font-size: 0.95rem;
+  margin-top: 1rem;
+  color: #455a64;
+}
+
 @media (prefers-color-scheme: dark) {
   .hero-card {
     background: linear-gradient(135deg, rgba(30, 136, 229, 0.22), rgba(0, 137, 123, 0.22));
@@ -91,5 +115,14 @@ a:hover {
 
   .demo-highlight {
     background: linear-gradient(120deg, rgba(77, 208, 225, 0.32), rgba(144, 202, 249, 0.32));
+  }
+
+  .ui-showcase-figure {
+    background: radial-gradient(circle at top, rgba(144, 202, 249, 0.18), rgba(0, 0, 0, 0));
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.35);
+  }
+
+  .ui-showcase-figure figcaption {
+    color: #cfd8dc;
   }
 }
