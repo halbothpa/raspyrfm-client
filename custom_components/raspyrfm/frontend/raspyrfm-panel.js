@@ -12,9 +12,9 @@ class RaspyRFMPanel extends LitElement {
       signalMappings: { state: true },
       formType: { state: true },
       formName: { state: true },
-      formOn: { state: true },
-      formOff: { state: true },
-      formTrigger: { state: true },
+      formSignals: { state: true },
+      formActions: { state: true },
+      formCustomAction: { state: true },
       error: { state: true },
     };
   }
@@ -129,6 +129,46 @@ class RaspyRFMPanel extends LitElement {
         font-size: 12px;
       }
 
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 14px;
+        background: rgba(0, 0, 0, 0.08);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .chip.primary {
+        background: rgba(25, 118, 210, 0.16);
+        color: var(--primary-color);
+      }
+
+      .signal-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .signal-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 6px;
+      }
+
+      .signal-chip {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 10px;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.03);
+      }
+
       .error {
         color: var(--error-color);
         margin-bottom: 12px;
@@ -229,9 +269,10 @@ class RaspyRFMPanel extends LitElement {
     this.signalMappings = {};
     this.formType = "switch";
     this.formName = "";
-    this.formOn = null;
-    this.formOff = null;
-    this.formTrigger = null;
+    this.formSignals = {};
+    this.formActions = [];
+    this._configureActionsForType(this.formType);
+    this.formCustomAction = "";
     this.error = null;
     this._signalUnsub = null;
     this._learningUnsub = null;
@@ -363,19 +404,212 @@ class RaspyRFMPanel extends LitElement {
   }
 
   _renderSignal(signal) {
+    const actions = Array.isArray(this.formActions) ? this.formActions : [];
+    const classification = signal?.metadata?.classification;
+    const classificationActions = Array.isArray(classification?.actions)
+      ? classification.actions.map((action) => this._labelForAction(this._normaliseActionKey(action)))
+      : [];
+
     return html`
       <div class="signal-entry">
         <div class="meta-block">
           <div>${signal.payload}</div>
           <div class="signal-meta">${signal.received}</div>
+          ${classification
+            ? html`
+                <div class="signal-chips">
+                  <span class="chip primary">${classification.suggested_type}</span>
+                  ${classificationActions.map((label) => html`<span class="chip">${label}</span>`) }
+                </div>
+              `
+            : ""}
         </div>
-        <div class="form-row">
-          <mwc-button dense outlined @click=${() => this._selectSignal(signal.payload, "on")}>Set as ON</mwc-button>
-          <mwc-button dense outlined @click=${() => this._selectSignal(signal.payload, "off")}>Set as OFF</mwc-button>
-          <mwc-button dense outlined @click=${() => this._selectSignal(signal.payload, "trigger")}>Set as trigger</mwc-button>
+        <div class="signal-actions">
+          ${actions.length
+            ? actions.map(
+                (action) => html`
+                  <mwc-button
+                    dense
+                    outlined
+                    @click=${() => this._assignSignal(action.key, signal.payload)}
+                    >Set as ${action.label}</mwc-button
+                  >
+                `,
+              )
+            : html`<span class="signal-meta">Add an action to the form to assign this payload.</span>`}
         </div>
+        ${classification
+          ? html`
+              <div class="signal-actions">
+                <mwc-button
+                  dense
+                  icon="mdi:auto-fix"
+                  @click=${() => this._applyClassification(signal)}
+                  >Use ${classification.suggested_type} template</mwc-button
+                >
+              </div>
+            `
+          : ""}
       </div>
     `;
+  }
+
+  _normaliseActionKey(value) {
+    if (!value) {
+      return "";
+    }
+    const normalized = value
+      .toString()
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "_")
+      .replace(/^_+|_+$/g, "");
+    if (normalized === "dimm") {
+      return "dim";
+    }
+    return normalized;
+  }
+
+  _labelForAction(key) {
+    const map = {
+      on: "On",
+      off: "Off",
+      trigger: "Trigger",
+      bright: "Brighten",
+      dim: "Dim",
+      pair: "Pair",
+      unpair: "Unpair",
+      press: "Press",
+    };
+    if (map[key]) {
+      return map[key];
+    }
+    return key
+      .split("_")
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+  }
+
+  _makeActionEntry(key, required = false) {
+    const normalised = this._normaliseActionKey(key);
+    return {
+      key: normalised,
+      label: this._labelForAction(normalised),
+      required,
+    };
+  }
+
+  _defaultActionsForType(type) {
+    switch (type) {
+      case "switch":
+        return [this._makeActionEntry("on", true), this._makeActionEntry("off", true)];
+      case "binary_sensor":
+        return [this._makeActionEntry("trigger", true)];
+      case "light":
+        return [
+          this._makeActionEntry("on", true),
+          this._makeActionEntry("off", false),
+          this._makeActionEntry("bright", false),
+          this._makeActionEntry("dim", false),
+        ];
+      default:
+        return [];
+    }
+  }
+
+  _configureActionsForType(type) {
+    const defaults = this._defaultActionsForType(type);
+    const nextSignals = {};
+    defaults.forEach((entry) => {
+      if (this.formSignals && this.formSignals[entry.key]) {
+        nextSignals[entry.key] = this.formSignals[entry.key];
+      }
+    });
+    this.formActions = defaults;
+    this.formSignals = nextSignals;
+  }
+
+  _assignSignal(actionKey, payload) {
+    if (!actionKey) {
+      this.error = "Add an action before assigning signals.";
+      return;
+    }
+    this.formSignals = {
+      ...this.formSignals,
+      [actionKey]: payload,
+    };
+    this.error = null;
+  }
+
+  _clearSignal(actionKey) {
+    if (!actionKey || !this.formSignals) {
+      return;
+    }
+    const next = { ...this.formSignals };
+    delete next[actionKey];
+    this.formSignals = next;
+  }
+
+  _applyClassification(signal) {
+    const classification = signal?.metadata?.classification;
+    if (!classification) {
+      return;
+    }
+    const nextType = classification.suggested_type || this.formType;
+    this.formType = nextType;
+    this._configureActionsForType(nextType);
+    const actions = Array.isArray(classification.actions) ? classification.actions : [];
+    let assigned = false;
+    actions.forEach((actionName) => {
+      const key = this._normaliseActionKey(actionName);
+      if (!this.formActions.some((entry) => entry.key === key) && (nextType === "button" || nextType === "universal")) {
+        this.formActions = [...this.formActions, this._makeActionEntry(key, false)];
+      }
+      if (!assigned && this.formActions.some((entry) => entry.key === key)) {
+        this._assignSignal(key, signal.payload);
+        assigned = true;
+      }
+    });
+    if (!assigned && actions.length) {
+      const fallback = this._normaliseActionKey(actions[0]);
+      if (fallback) {
+        this._assignSignal(fallback, signal.payload);
+      }
+    }
+    this.requestUpdate();
+  }
+
+  _removeAction(actionKey) {
+    if (!actionKey || !Array.isArray(this.formActions)) {
+      return;
+    }
+    this.formActions = this.formActions.filter((entry) => entry.key !== actionKey);
+    this._clearSignal(actionKey);
+  }
+
+  _updateCustomAction(value) {
+    this.formCustomAction = value;
+  }
+
+  _addCustomAction() {
+    const label = (this.formCustomAction || "").trim();
+    if (!label) {
+      this.error = "Provide a label for the new action.";
+      return;
+    }
+    const key = this._normaliseActionKey(label);
+    if (!key) {
+      this.error = "Unable to derive an action name.";
+      return;
+    }
+    if (this.formActions?.some((entry) => entry.key === key)) {
+      this.error = "This action is already present.";
+      return;
+    }
+    this.formActions = [...(this.formActions || []), this._makeActionEntry(key, false)];
+    this.formCustomAction = "";
+    this.error = null;
   }
 
   _renderForm() {
@@ -387,25 +621,42 @@ class RaspyRFMPanel extends LitElement {
             <ha-select label="Type" .value=${this.formType} @selected=${(ev) => this._updateType(this._extractSelectValue(ev))}>
               <mwc-list-item value="switch">Switch</mwc-list-item>
               <mwc-list-item value="binary_sensor">Binary sensor</mwc-list-item>
+              <mwc-list-item value="light">Light</mwc-list-item>
+              <mwc-list-item value="button">Button group</mwc-list-item>
+              <mwc-list-item value="universal">Universal</mwc-list-item>
             </ha-select>
           </div>
-          ${this.formType === "switch"
+          ${Array.isArray(this.formActions) && this.formActions.length
+            ? this.formActions.map((action) => {
+                const payload = this.formSignals?.[action.key];
+                return html`
+                  <div class="form-row">
+                    <span class="pill">
+                      ${action.label}${action.required ? html`<span class="required">*</span>` : ""}
+                    </span>
+                    <span>${payload || "Choose a captured signal"}</span>
+                    ${payload
+                      ? html`<mwc-button dense icon="mdi:backspace" @click=${() => this._clearSignal(action.key)}>Clear</mwc-button>`
+                      : ""}
+                    ${!action.required
+                      ? html`<mwc-button dense icon="mdi:delete-outline" @click=${() => this._removeAction(action.key)}>Remove</mwc-button>`
+                      : ""}
+                  </div>
+                `;
+              })
+            : html`<div class="form-row"><span class="signal-meta">Add an action to begin assigning payloads.</span></div>`}
+          ${this.formType === "button" || this.formType === "universal"
             ? html`
                 <div class="form-row">
-                  <span class="pill">ON</span>
-                  <span>${this.formOn || "Choose a captured signal"}</span>
-                </div>
-                <div class="form-row">
-                  <span class="pill">OFF<span class="required">*</span></span>
-                  <span>${this.formOff || "Choose a captured signal"}</span>
+                  <ha-textfield
+                    label="Add action"
+                    .value=${this.formCustomAction}
+                    @input=${(ev) => this._updateCustomAction(ev.target.value)}
+                  ></ha-textfield>
+                  <mwc-button icon="mdi:plus" @click=${this._addCustomAction}>Add</mwc-button>
                 </div>
               `
-            : html`
-                <div class="form-row">
-                  <span class="pill">Trigger</span>
-                  <span>${this.formTrigger || "Choose a captured signal"}</span>
-                </div>
-              `}
+            : ""}
           <div class="form-row">
             <mwc-button raised icon="mdi:plus-box" @click=${this._createDevice}>Create device</mwc-button>
           </div>
@@ -590,7 +841,19 @@ class RaspyRFMPanel extends LitElement {
                   <td>${device.name}</td>
                   <td>${device.device_type}</td>
                   <td>
-                    ${Object.entries(device.signals || {}).map(([key, value]) => html`<div><strong>${key}</strong>: ${value}</div>`) }
+                    ${Object.entries(device.signals || {}).map(
+                      ([key, value]) => html`
+                        <div class="signal-chip">
+                          <div><strong>${this._labelForAction(this._normaliseActionKey(key))}</strong></div>
+                          <div class="signal-meta">${value}</div>
+                          <div class="signal-actions">
+                            <mwc-button dense icon="mdi:send" @click=${() => this._invokeAction(device.device_id, key)}
+                              >Send</mwc-button
+                            >
+                          </div>
+                        </div>
+                      `,
+                    ) }
                   </td>
                   <td>
                     <mwc-button @click=${() => this._deleteDevice(device.device_id)}>Delete</mwc-button>
@@ -609,24 +872,12 @@ class RaspyRFMPanel extends LitElement {
   }
 
   _updateType(value) {
-    this.formType = value;
-  }
-
-  _selectSignal(payload, target) {
-    if (this.formType === "switch") {
-      if (target === "on") {
-        this.formOn = payload;
-      } else if (target === "off") {
-        this.formOff = payload;
-      } else {
-        this.error = "Switches do not use trigger signals";
-        return;
-      }
-    } else {
-      this.formTrigger = payload;
+    const next = value || "switch";
+    if (next === this.formType) {
+      return;
     }
-    this.error = null;
-    this.requestUpdate();
+    this.formType = next;
+    this._configureActionsForType(next);
   }
 
   _updateMappingDraft(payload, updates) {
@@ -721,23 +972,23 @@ class RaspyRFMPanel extends LitElement {
     }
 
     const signals = {};
-    if (this.formType === "switch") {
-      if (!this.formOn) {
-        this.error = "Select an ON signal for the switch.";
-        return;
+    const actions = Array.isArray(this.formActions) ? this.formActions : [];
+    const missing = actions.filter((action) => action.required && !this.formSignals?.[action.key]);
+    if (missing.length) {
+      this.error = `Missing ${missing.map((entry) => entry.label).join(", ")} payloads.`;
+      return;
+    }
+
+    actions.forEach((action) => {
+      const payload = this.formSignals?.[action.key];
+      if (payload) {
+        signals[action.key] = payload;
       }
-      signals.on = this.formOn;
-      if (!this.formOff) {
-        this.error = "Select an OFF signal for the switch.";
-        return;
-      }
-      signals.off = this.formOff;
-    } else {
-      if (!this.formTrigger) {
-        this.error = "Select a trigger signal for the sensor.";
-        return;
-      }
-      signals.trigger = this.formTrigger;
+    });
+
+    if ((this.formType === "button" || this.formType === "universal") && Object.keys(signals).length === 0) {
+      this.error = "Add at least one action before creating the device.";
+      return;
     }
 
     try {
@@ -749,9 +1000,9 @@ class RaspyRFMPanel extends LitElement {
       });
       await this._refreshDevices();
       this.formName = "";
-      this.formOn = null;
-      this.formOff = null;
-      this.formTrigger = null;
+      this.formSignals = {};
+      this.formCustomAction = "";
+      this._configureActionsForType(this.formType);
       this.error = null;
     } catch (err) {
       this.error = err?.message || "Failed to create device";
@@ -794,6 +1045,15 @@ class RaspyRFMPanel extends LitElement {
   async _deleteDevice(deviceId) {
     await this.hass.callWS({ type: "raspyrfm/device/delete", device_id: deviceId });
     await this._refreshDevices();
+  }
+
+  async _invokeAction(deviceId, action) {
+    try {
+      await this.hass.callWS({ type: "raspyrfm/device/send", device_id: deviceId, action });
+      this.error = null;
+    } catch (err) {
+      this.error = err?.message || "Unable to send action";
+    }
   }
 
   async _handleStartLearning() {

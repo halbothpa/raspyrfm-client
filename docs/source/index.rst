@@ -7,6 +7,7 @@ RaspyRFM Client Manual
 
    homeassistant_components
    ui-guide
+   ui-showcase
    raspyrfm_client
 
 Overview
@@ -34,5 +35,6 @@ Quick links
   integration details.
 * :doc:`ui-guide` – Panels, cards, and mapping workspace provided by the
   custom frontend.
+* :doc:`ui-showcase` – Visual highlights of the refreshed management panel.
 * :doc:`raspyrfm_client` – Python API reference for the reusable client
   library.
