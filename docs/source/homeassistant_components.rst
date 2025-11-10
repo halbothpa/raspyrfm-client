@@ -17,11 +17,11 @@ websocket commands available.
 
 .. literalinclude:: ../../custom_components/raspyrfm/config_flow.py
    :language: python
-   :lines: 1-76
+   :lines: 1-81
 
 .. literalinclude:: ../../custom_components/raspyrfm/__init__.py
    :language: python
-   :lines: 1-74
+   :lines: 1-53
 
 Gateway and hub orchestration
 -----------------------------
@@ -33,11 +33,11 @@ via Home Assistant dispatcher signals.
 
 .. literalinclude:: ../../custom_components/raspyrfm/gateway.py
    :language: python
-   :lines: 1-60
+   :lines: 1-54
 
 .. literalinclude:: ../../custom_components/raspyrfm/hub.py
    :language: python
-   :lines: 1-220
+   :lines: 1-239
 
 Signal learning pipeline
 ------------------------
@@ -50,7 +50,7 @@ receive live updates.
 
 .. literalinclude:: ../../custom_components/raspyrfm/learn.py
    :language: python
-   :lines: 1-160
+   :lines: 1-133
 
 Persistent storage and device registry
 --------------------------------------
@@ -63,7 +63,7 @@ between payloads and devices.
 
 .. literalinclude:: ../../custom_components/raspyrfm/storage.py
    :language: python
-   :lines: 1-220
+   :lines: 1-193
 
 Entity platforms
 ----------------
@@ -75,15 +75,15 @@ messages from the learning pipeline.
 
 .. literalinclude:: ../../custom_components/raspyrfm/entity.py
    :language: python
-   :lines: 1-80
+   :lines: 1-57
 
 .. literalinclude:: ../../custom_components/raspyrfm/switch.py
    :language: python
-   :lines: 1-160
+   :lines: 1-98
 
 .. literalinclude:: ../../custom_components/raspyrfm/binary_sensor.py
    :language: python
-   :lines: 1-160
+   :lines: 1-88
 
 Websocket API surface
 ---------------------
@@ -95,7 +95,7 @@ signal mapping metadata.
 
 .. literalinclude:: ../../custom_components/raspyrfm/websocket.py
    :language: python
-   :lines: 1-260
+   :lines: 1-253
 
 Panel registration and static assets
 ------------------------------------
@@ -106,7 +106,7 @@ module that runs entirely inside the Home Assistant frontend.
 
 .. literalinclude:: ../../custom_components/raspyrfm/panel.py
    :language: python
-   :lines: 1-120
+   :lines: 1-48
 
 Frontend component
 ------------------
