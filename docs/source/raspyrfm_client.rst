@@ -8,10 +8,6 @@ ships with base classes you can extend to model new radio-frequency hardware.
 This chapter now pairs narrative explanations, architecture diagrams, and API
 maps so you can move from concept to implementation without leaving the page.
 
-.. contents::
-   :local:
-   :depth: 2
-
 Overview
 --------
 
