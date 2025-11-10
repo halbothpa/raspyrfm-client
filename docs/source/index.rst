@@ -6,6 +6,7 @@ RaspyRFM Client Manual
    :maxdepth: 2
 
    homeassistant_components
+   raspyrfm_hardware_setup
    ui-guide
    ui-showcase
    raspyrfm_client
@@ -31,6 +32,8 @@ adapt them for your own setup.
 Quick links
 ~~~~~~~~~~~
 
+* :doc:`raspyrfm_hardware_setup` – Hardware preparation, installation, and
+  deployment recipes for Home Assistant OS, Docker, and standalone gateways.
 * :doc:`homeassistant_components` – Backend components and Home Assistant
   integration details.
 * :doc:`ui-guide` – Panels, cards, and mapping workspace provided by the
