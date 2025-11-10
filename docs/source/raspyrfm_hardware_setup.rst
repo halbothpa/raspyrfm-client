@@ -111,7 +111,8 @@ enabled in ``config.txt``:
 
    The ``spi0-2cs`` overlay (or the Raspberry Pi OS default configuration with
    ``dtparam=spi=on`` alone) keeps both chip select lines enabled so the Twin
-   module can expose two radios.
+   module can expose two radios.  Avoid ``dtoverlay=spi0-1cs``—it disables the
+   second chip select and prevents ``/dev/spidev0.1`` from appearing.
 
 3. Save the file and safely eject the card.
 4. Reinsert the microSD card into the Raspberry Pi and connect power.
@@ -206,8 +207,8 @@ Carry out the following tasks in order.
          cd /config/custom_components
          mkdir -p raspyrfm
          curl -L https://github.com/raspyrfm/raspyrfm-client/archive/refs/heads/main.tar.gz \
-          | tar -xz --strip-components=2 -C raspyrfm \
-              raspyrfm-client-main/custom_components/raspyrfm
+          | tar -xz --strip-components=3 -C raspyrfm \
+             raspyrfm-client-main/custom_components/raspyrfm
 
       Restart Home Assistant after the files are in place.
    #. Add the integration, enter the Raspberry Pi's IP address, keep the default
