@@ -264,6 +264,13 @@ def _validate_device_payload(device_type: str, signals: Dict[str, str]) -> None:
             f"Missing {', '.join(missing)} for {device_type}"
         )
 
+    if device_type == "light" and not any(
+        signals.get(key) for key in ("off", "dim")
+    ):
+        raise websocket_api.HomeAssistantWebSocketError(
+            "Provide either an OFF or DIM payload for light devices"
+        )
+
     unexpected = [
         key
         for key in signals
