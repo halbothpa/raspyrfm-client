@@ -96,6 +96,14 @@ Step 2 – Antennas and jumpers
 * Leave the ``JP1``/``JP2`` jumpers at their factory position (``3V3``) unless
   you have a documented reason to power the radios from an external supply.
 
+.. figure:: _static/raspyrfm-antenna-orientation.svg
+   :alt: Diagram that highlights antenna assignments for RaspyRFM radio A and B
+         and the matching ASK/FSK switch settings.
+   :align: center
+
+   Antennas ``A`` and ``B`` line up with radio ``A`` (433&nbsp;MHz) and radio
+   ``B`` (868/915&nbsp;MHz).  Keep the whips vertical for best range.
+
 Step 3 – Enable SPI support
 ---------------------------
 

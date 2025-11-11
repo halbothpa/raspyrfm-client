@@ -10,6 +10,7 @@ RaspyRFM Client Manual
    ui-guide
    ui-showcase
    raspyrfm_client
+   modules
 
 Overview
 --------

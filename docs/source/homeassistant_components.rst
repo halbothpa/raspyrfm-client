@@ -90,7 +90,7 @@ raw payloads when no fingerprint matches.
 
 .. literalinclude:: ../../custom_components/raspyrfm/switch.py
    :language: python
-   :lines: 1-120
+   :lines: 1-98
 
 .. literalinclude:: ../../custom_components/raspyrfm/binary_sensor.py
    :language: python
@@ -98,15 +98,15 @@ raw payloads when no fingerprint matches.
 
 .. literalinclude:: ../../custom_components/raspyrfm/light.py
    :language: python
-   :lines: 1-120
+   :lines: 1-103
 
 .. literalinclude:: ../../custom_components/raspyrfm/button.py
    :language: python
-   :lines: 1-200
+   :lines: 1-124
 
 .. literalinclude:: ../../custom_components/raspyrfm/sensor.py
    :language: python
-   :lines: 1-120
+   :lines: 1-81
 
 Websocket API surface
 ---------------------

@@ -1,34 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 180" role="img" aria-labelledby="title desc">
-  <title id="title">RaspyRFM setup workflow</title>
-  <desc id="desc">Timeline showing the main steps to bring a RaspyRFM module online with Home Assistant.</desc>
-  <style>
-    text { font-family: 'DejaVu Sans', Arial, sans-serif; }
-    .step { font-size: 18px; font-weight: 600; fill: #0f172a; }
-    .detail { font-size: 15px; fill: #1f2937; }
-  </style>
-  <rect x="20" y="40" width="160" height="100" rx="16" fill="#fee2e2" stroke="#ef4444" stroke-width="3"/>
-  <text x="100" y="80" text-anchor="middle" class="step">1 · Hardware</text>
-  <text x="100" y="105" text-anchor="middle" class="detail">Mount RaspyRFM</text>
-  <text x="100" y="125" text-anchor="middle" class="detail">Verify pin 1 alignment</text>
-  <rect x="220" y="40" width="160" height="100" rx="16" fill="#dbeafe" stroke="#3b82f6" stroke-width="3"/>
-  <text x="300" y="80" text-anchor="middle" class="step">2 · Firmware</text>
-  <text x="300" y="105" text-anchor="middle" class="detail">Enable SPI in boot config</text>
-  <text x="300" y="125" text-anchor="middle" class="detail">Reboot Raspberry Pi</text>
-  <rect x="420" y="40" width="160" height="100" rx="16" fill="#dcfce7" stroke="#22c55e" stroke-width="3"/>
-  <text x="500" y="80" text-anchor="middle" class="step">3 · Gateway</text>
-  <text x="500" y="105" text-anchor="middle" class="detail">Install raspyrfm-client</text>
-  <text x="500" y="125" text-anchor="middle" class="detail">Expose UDP ports</text>
-  <rect x="620" y="40" width="200" height="100" rx="16" fill="#ede9fe" stroke="#8b5cf6" stroke-width="3"/>
-  <text x="720" y="80" text-anchor="middle" class="step">4 · Home Assistant</text>
-  <text x="720" y="105" text-anchor="middle" class="detail">Add RaspyRFM integration</text>
-  <text x="720" y="125" text-anchor="middle" class="detail">Learn & map RF codes</text>
-  <line x1="180" y1="90" x2="220" y2="90" stroke="#0f172a" stroke-width="4" marker-end="url(#arrow)"/>
-  <line x1="380" y1="90" x2="420" y2="90" stroke="#0f172a" stroke-width="4" marker-end="url(#arrow)"/>
-  <line x1="580" y1="90" x2="620" y2="90" stroke="#0f172a" stroke-width="4" marker-end="url(#arrow)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 220" role="img" aria-labelledby="title desc">
+  <title id="title">RaspyRFM hardware setup workflow</title>
+  <desc id="desc">Four color coded panels describe the hardware, firmware, gateway, and Home Assistant milestones required to bring a RaspyRFM online.</desc>
   <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="strokeWidth" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0 0 L10 5 L0 10 z" fill="#0f172a"/>
+    <style>
+      text { font-family: 'DejaVu Sans', Arial, sans-serif; fill: #0f172a; }
+      .stage { font-size: 20px; font-weight: 700; }
+      .detail { font-size: 16px; fill: #1f2937; }
+      .sub { font-size: 14px; fill: #334155; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#0f172a" />
     </marker>
   </defs>
+  <g transform="translate(40,40)">
+    <rect x="0" y="0" width="180" height="140" rx="18" fill="#fee2e2" stroke="#ef4444" stroke-width="3" />
+    <text x="90" y="36" text-anchor="middle" class="stage">1 · Hardware</text>
+    <text x="90" y="70" text-anchor="middle" class="detail">Seat module on GPIO</text>
+    <text x="90" y="96" text-anchor="middle" class="sub">Check Pin 1 alignment</text>
+    <text x="90" y="120" text-anchor="middle" class="sub">Secure standoffs</text>
+  </g>
+  <g transform="translate(260,40)">
+    <rect x="0" y="0" width="180" height="140" rx="18" fill="#dbeafe" stroke="#3b82f6" stroke-width="3" />
+    <text x="90" y="36" text-anchor="middle" class="stage">2 · Firmware</text>
+    <text x="90" y="70" text-anchor="middle" class="detail">Enable SPI overlays</text>
+    <text x="90" y="96" text-anchor="middle" class="sub">Edit <tspan font-style="italic">config.txt</tspan></text>
+    <text x="90" y="120" text-anchor="middle" class="sub">Verify spidev0.0/0.1</text>
+  </g>
+  <g transform="translate(480,40)">
+    <rect x="0" y="0" width="180" height="140" rx="18" fill="#dcfce7" stroke="#22c55e" stroke-width="3" />
+    <text x="90" y="36" text-anchor="middle" class="stage">3 · Gateway</text>
+    <text x="90" y="70" text-anchor="middle" class="detail">Install raspyrfm-client</text>
+    <text x="90" y="96" text-anchor="middle" class="sub">Expose UDP 49880</text>
+    <text x="90" y="120" text-anchor="middle" class="sub">Test RF learning</text>
+  </g>
+  <g transform="translate(700,40)">
+    <rect x="0" y="0" width="180" height="140" rx="18" fill="#ede9fe" stroke="#8b5cf6" stroke-width="3" />
+    <text x="90" y="36" text-anchor="middle" class="stage">4 · Home Assistant</text>
+    <text x="90" y="70" text-anchor="middle" class="detail">Add RaspyRFM integration</text>
+    <text x="90" y="96" text-anchor="middle" class="sub">Map remotes &amp; sensors</text>
+    <text x="90" y="120" text-anchor="middle" class="sub">Automate workflows</text>
+  </g>
+  <line x1="220" y1="110" x2="260" y2="110" stroke="#0f172a" stroke-width="4" marker-end="url(#arrow)" />
+  <line x1="440" y1="110" x2="480" y2="110" stroke="#0f172a" stroke-width="4" marker-end="url(#arrow)" />
+  <line x1="660" y1="110" x2="700" y2="110" stroke="#0f172a" stroke-width="4" marker-end="url(#arrow)" />
 </svg>
