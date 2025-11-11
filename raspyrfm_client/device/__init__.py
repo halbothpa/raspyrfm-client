@@ -56,17 +56,16 @@ def _mirror_package(alias: str, target: str) -> ModuleType:
 # Manufacturer subpackages --------------------------------------------------
 manufacturer = _mirror_package(__name__ + ".manufacturer", _MANUFACTURER_BASE)
 
-_alias_modules(
-    {
-        __name__ + ".manufacturer.manufacturer_constants": _MANUFACTURER_CONSTANTS,
-    }
-)
+_MANUFACTURER_ALIAS = __name__ + ".manufacturer"
+_MANUFACTURER_CONSTANTS_ALIAS = _MANUFACTURER_ALIAS + ".manufacturer_constants"
+
+_alias_modules({_MANUFACTURER_CONSTANTS_ALIAS: _MANUFACTURER_CONSTANTS})
 
 # ``manufacturer_constants`` used to live under ``raspyrfm_client.device.manufacturer``.
 # Mirror that attribute onto the exported ``manufacturer`` package so attribute
 # imports (``from raspyrfm_client.device.manufacturer import manufacturer_constants``)
 # continue to work alongside module level aliases.
-manufacturer.manufacturer_constants = import_module(_MANUFACTURER_CONSTANTS)
+setattr(manufacturer, "manufacturer_constants", sys.modules[_MANUFACTURER_CONSTANTS_ALIAS])
 
 for finder, name, ispkg in pkgutil.walk_packages(manufacturer.__path__, manufacturer.__name__ + "."):
     alias = name.replace(manufacturer.__name__, __name__ + ".manufacturer", 1)
