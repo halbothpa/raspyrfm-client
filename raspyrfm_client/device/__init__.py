@@ -62,6 +62,12 @@ _alias_modules(
     }
 )
 
+# ``manufacturer_constants`` used to live under ``raspyrfm_client.device.manufacturer``.
+# Mirror that attribute onto the exported ``manufacturer`` package so attribute
+# imports (``from raspyrfm_client.device.manufacturer import manufacturer_constants``)
+# continue to work alongside module level aliases.
+manufacturer.manufacturer_constants = import_module(_MANUFACTURER_CONSTANTS)
+
 for finder, name, ispkg in pkgutil.walk_packages(manufacturer.__path__, manufacturer.__name__ + "."):
     alias = name.replace(manufacturer.__name__, __name__ + ".manufacturer", 1)
     module = import_module(name)
