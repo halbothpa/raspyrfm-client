@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="title desc">
+  <title id="title">Stacking the RaspyRFM on the Raspberry Pi</title>
+  <desc id="desc">Diagram showing how the RaspyRFM daughter board aligns with the Raspberry Pi GPIO header and the location of pin 1.</desc>
+  <defs>
+    <linearGradient id="piBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <linearGradient id="moduleBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f766e" />
+      <stop offset="100%" stop-color="#0f5132" />
+    </linearGradient>
+    <style>
+      text { font-family: 'DejaVu Sans', Arial, sans-serif; fill: #0f172a; }
+      .caption { font-size: 22px; font-weight: 700; }
+      .label { font-size: 16px; fill: #e2e8f0; }
+      .callout { font-size: 16px; fill: #0f172a; font-weight: 600; }
+      .pinlabel { font-size: 14px; fill: #f8fafc; font-weight: 600; }
+    </style>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="strokeWidth" markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M0 0 L12 6 L0 12 z" fill="#f8fafc" />
+    </marker>
+  </defs>
+  <rect x="80" y="160" width="560" height="160" rx="20" fill="url(#piBody)" stroke="#0f172a" stroke-width="4" />
+  <text x="360" y="192" text-anchor="middle" class="caption" fill="#dbeafe">Raspberry Pi base board</text>
+  <text x="360" y="218" text-anchor="middle" class="label">USB / microSD ports face the front</text>
+  <text x="360" y="244" text-anchor="middle" class="label">HDMI and audio ports face the back</text>
+  <g transform="translate(180,60)">
+    <rect x="0" y="0" width="360" height="140" rx="18" fill="url(#moduleBody)" stroke="#064e3b" stroke-width="4" />
+    <text x="180" y="40" text-anchor="middle" class="caption" fill="#bbf7d0">RaspyRFM / RaspyRFM Twin</text>
+    <text x="180" y="68" text-anchor="middle" class="label" fill="#ccfbf1">IDC socket seats on GPIO header</text>
+    <text x="180" y="94" text-anchor="middle" class="label" fill="#ccfbf1">Pin 1 indicator (triangle or 1)</text>
+  </g>
+  <rect x="320" y="230" width="80" height="70" rx="10" fill="#f97316" stroke="#9a3412" stroke-width="3" />
+  <text x="360" y="258" text-anchor="middle" class="pinlabel">Pin 1 · 3V3</text>
+  <path d="M360 200 L360 230" stroke="#f8fafc" stroke-width="6" stroke-linecap="round" marker-end="url(#arrow)" />
+  <g transform="translate(470,120)">
+    <rect x="0" y="0" width="160" height="70" rx="12" fill="#f1f5f9" stroke="#0f172a" stroke-width="2" />
+    <text x="80" y="32" text-anchor="middle" class="callout">Match Pin 1 → Pin 1</text>
+    <text x="80" y="52" text-anchor="middle" class="callout">Keep boards parallel</text>
+  </g>
+  <g transform="translate(110,120)">
+    <rect x="0" y="0" width="160" height="70" rx="12" fill="#f1f5f9" stroke="#0f172a" stroke-width="2" />
+    <text x="80" y="32" text-anchor="middle" class="callout">Secure standoffs</text>
+    <text x="80" y="52" text-anchor="middle" class="callout">Avoid twisting force</text>
+  </g>
+</svg>

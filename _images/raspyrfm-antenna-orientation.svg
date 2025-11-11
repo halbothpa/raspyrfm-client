@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" role="img" aria-labelledby="title desc">
+  <title id="title">RaspyRFM antenna orientation</title>
+  <desc id="desc">Diagram showing where to attach 433 MHz and 868/915 MHz antennas and how to set the ASK/FSK slide switches.</desc>
+  <defs>
+    <style>
+      text { font-family: 'DejaVu Sans', Arial, sans-serif; fill: #0f172a; }
+      .panel-title { font-size: 20px; font-weight: 700; }
+      .label { font-size: 16px; }
+      .switch { font-size: 14px; fill: #0f172a; font-weight: 600; }
+    </style>
+  </defs>
+  <rect x="40" y="40" width="640" height="200" rx="24" fill="#f8fafc" stroke="#0f172a" stroke-width="3" />
+  <text x="360" y="72" text-anchor="middle" class="panel-title">Top view of RaspyRFM Twin</text>
+  <g transform="translate(120,100)">
+    <rect x="0" y="0" width="160" height="120" rx="18" fill="#d1fae5" stroke="#047857" stroke-width="3" />
+    <text x="80" y="28" text-anchor="middle" class="panel-title">Radio A</text>
+    <text x="80" y="56" text-anchor="middle" class="label">Factory tuned 433 MHz</text>
+    <text x="80" y="82" text-anchor="middle" class="label">Use whip antenna</text>
+    <text x="80" y="108" text-anchor="middle" class="switch">Switch → ASK/OOK</text>
+  </g>
+  <g transform="translate(440,100)">
+    <rect x="0" y="0" width="160" height="120" rx="18" fill="#ede9fe" stroke="#6d28d9" stroke-width="3" />
+    <text x="80" y="28" text-anchor="middle" class="panel-title">Radio B</text>
+    <text x="80" y="56" text-anchor="middle" class="label">868 / 915 MHz support</text>
+    <text x="80" y="82" text-anchor="middle" class="label">Attach matching antenna</text>
+    <text x="80" y="108" text-anchor="middle" class="switch">Switch → FSK for sensors</text>
+  </g>
+  <text x="360" y="240" text-anchor="middle" class="label">Keep antennas vertical and hand-tighten the SMA connectors</text>
+</svg>

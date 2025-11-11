@@ -1,0 +1,73 @@
+<svg width="960" height="540" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">RaspyRFM signal mapping canvas</title>
+  <desc id="desc">Mock-up of the RaspyRFM signal mapper showing sensors, actuators, and other payload swimlanes.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e1f5fe" />
+      <stop offset="1" stop-color="#e0f2f1" />
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="960" height="540" fill="url(#bg)" rx="32" />
+  <text x="480" y="64" fill="#0d47a1" font-size="28" font-family="'Inter', 'Segoe UI', sans-serif" text-anchor="middle">
+    Live signal topology
+  </text>
+  <g transform="translate(80,120)">
+    <rect x="0" y="0" width="240" height="340" fill="#ffffff" fill-opacity="0.85" rx="24" />
+    <text x="120" y="36" text-anchor="middle" font-size="18" font-family="Inter" fill="#1b5e20">Sensors</text>
+    <g transform="translate(120,110)">
+      <circle r="26" fill="#26a69a" />
+      <text y="6" text-anchor="middle" font-size="14" font-family="Inter" fill="#ffffff">Door</text>
+    </g>
+    <g transform="translate(120,200)">
+      <circle r="26" fill="#26a69a" />
+      <text y="6" text-anchor="middle" font-size="14" font-family="Inter" fill="#ffffff">Motion</text>
+    </g>
+    <g transform="translate(120,290)">
+      <circle r="26" fill="#26a69a" />
+      <text y="6" text-anchor="middle" font-size="14" font-family="Inter" fill="#ffffff">Window</text>
+    </g>
+  </g>
+  <g transform="translate(360,120)">
+    <rect x="0" y="0" width="240" height="340" fill="#ffffff" fill-opacity="0.85" rx="24" />
+    <text x="120" y="36" text-anchor="middle" font-size="18" font-family="Inter" fill="#0d47a1">Actuators</text>
+    <g transform="translate(120,110)">
+      <circle r="26" fill="#1e88e5" />
+      <text y="6" text-anchor="middle" font-size="14" font-family="Inter" fill="#ffffff">Lamp</text>
+    </g>
+    <g transform="translate(120,200)">
+      <circle r="26" fill="#1e88e5" />
+      <text y="6" text-anchor="middle" font-size="14" font-family="Inter" fill="#ffffff">Heater</text>
+    </g>
+    <g transform="translate(120,290)">
+      <circle r="26" fill="#1e88e5" />
+      <text y="6" text-anchor="middle" font-size="14" font-family="Inter" fill="#ffffff">Fan</text>
+    </g>
+  </g>
+  <g transform="translate(640,120)">
+    <rect x="0" y="0" width="240" height="340" fill="#ffffff" fill-opacity="0.85" rx="24" />
+    <text x="120" y="36" text-anchor="middle" font-size="18" font-family="Inter" fill="#263238">Other</text>
+    <g transform="translate(120,110)">
+      <circle r="26" fill="#ffb74d" />
+      <text y="6" text-anchor="middle" font-size="14" font-family="Inter" fill="#263238">Bell</text>
+    </g>
+    <g transform="translate(120,200)">
+      <circle r="26" fill="#ffb74d" />
+      <text y="6" text-anchor="middle" font-size="14" font-family="Inter" fill="#263238">Meter</text>
+    </g>
+    <g transform="translate(120,290)">
+      <circle r="26" fill="#ffb74d" />
+      <text y="6" text-anchor="middle" font-size="14" font-family="Inter" fill="#263238">Button</text>
+    </g>
+  </g>
+  <g stroke="#90caf9" stroke-width="2" stroke-dasharray="6 8" fill="none">
+    <path d="M320 230 C 360 180, 420 180, 480 230" />
+    <path d="M320 170 C 360 140, 420 140, 480 170" />
+    <path d="M320 290 C 360 310, 420 310, 480 290" />
+    <path d="M600 230 C 640 180, 700 180, 760 230" />
+  </g>
+  <g fill="#0d47a1" font-family="Inter" font-size="14">
+    <text x="240" y="470">Friendly labels</text>
+    <text x="480" y="470" text-anchor="middle">Linked Home Assistant devices</text>
+    <text x="720" y="470" text-anchor="end">Category swimlanes</text>
+  </g>
+</svg>

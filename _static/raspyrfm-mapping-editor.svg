@@ -1,0 +1,55 @@
+<svg width="960" height="540" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">RaspyRFM mapping editor</title>
+  <desc id="desc">Mock-up of the mapping editor with category, label, and device toggles.</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fafafa" />
+      <stop offset="1" stop-color="#e3f2fd" />
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="960" height="540" fill="#f1f6fb" />
+  <rect x="120" y="80" width="720" height="380" rx="28" fill="url(#panel)" stroke="#bbdefb" stroke-width="2" />
+  <text x="160" y="132" font-size="24" font-family="'Inter', 'Segoe UI', sans-serif" fill="#0d47a1">
+    Payload: 0101110110
+  </text>
+  <g transform="translate(160,170)">
+    <rect x="0" y="0" width="280" height="80" rx="20" fill="#ffffff" stroke="#cfd8dc" />
+    <text x="24" y="34" font-size="16" font-family="Inter" fill="#607d8b">Display label</text>
+    <text x="24" y="60" font-size="18" font-family="Inter" fill="#263238">Garage Motion</text>
+  </g>
+  <g transform="translate(480,170)">
+    <rect x="0" y="0" width="200" height="80" rx="20" fill="#ffffff" stroke="#cfd8dc" />
+    <text x="24" y="34" font-size="16" font-family="Inter" fill="#607d8b">Category</text>
+    <g transform="translate(24,58)">
+      <circle r="12" fill="#1e88e5" />
+      <text x="28" y="6" font-size="18" font-family="Inter" fill="#263238">Actuator</text>
+    </g>
+  </g>
+  <g transform="translate(160,280)">
+    <rect x="0" y="0" width="520" height="120" rx="24" fill="#ffffff" stroke="#cfd8dc" />
+    <text x="24" y="36" font-size="16" font-family="Inter" fill="#607d8b">Linked devices</text>
+    <g transform="translate(24,64)">
+      <rect x="0" y="-18" width="24" height="24" rx="6" fill="#1e88e5" />
+      <text x="36" y="0" font-size="18" font-family="Inter" fill="#263238">Workshop Lamp</text>
+    </g>
+    <g transform="translate(24,98)">
+      <rect x="0" y="-18" width="24" height="24" rx="6" fill="#ffffff" stroke="#90a4ae" />
+      <text x="36" y="0" font-size="18" font-family="Inter" fill="#90a4ae">Heater Relay</text>
+    </g>
+  </g>
+  <g transform="translate(160,430)" font-family="Inter" font-size="16">
+    <rect x="0" y="0" width="140" height="44" rx="22" fill="#1e88e5" />
+    <text x="70" y="28" text-anchor="middle" fill="#ffffff">Save mapping</text>
+  </g>
+  <g transform="translate(320,430)" font-family="Inter" font-size="16">
+    <rect x="0" y="0" width="140" height="44" rx="22" fill="#ffffff" stroke="#90a4ae" />
+    <text x="70" y="28" text-anchor="middle" fill="#546e7a">Reset</text>
+  </g>
+  <g transform="translate(480,430)" font-family="Inter" font-size="16">
+    <rect x="0" y="0" width="140" height="44" rx="22" fill="#ffcdd2" stroke="#ef9a9a" />
+    <text x="70" y="28" text-anchor="middle" fill="#b71c1c">Remove</text>
+  </g>
+  <text x="160" y="510" font-family="Inter" font-size="14" fill="#546e7a">
+    The interface mirrors the Home Assistant component and highlights connected devices for each payload.
+  </text>
+</svg>
