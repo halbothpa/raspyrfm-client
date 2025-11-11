@@ -12,10 +12,18 @@ raspyrfm_client.device.manufacturer.rev.Ritter module
     :undoc-members:
     :show-inheritance:
 
-raspyrfm_client.device.manufacturer.rev.Telecontrol module
-----------------------------------------------------------
+raspyrfm_client.device.manufacturer.rev.Telecontrol8342C module
+----------------------------------------------------------------
 
-.. automodule:: raspyrfm_client.device.manufacturer.rev.Telecontrol
+.. automodule:: raspyrfm_client.device.manufacturer.rev.Telecontrol8342C
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+raspyrfm_client.device.manufacturer.rev.Telecontrol8342LC module
+-----------------------------------------------------------------
+
+.. automodule:: raspyrfm_client.device.manufacturer.rev.Telecontrol8342LC
     :members:
     :undoc-members:
     :show-inheritance:

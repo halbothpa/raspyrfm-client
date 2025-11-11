@@ -23,7 +23,7 @@ Design principles at a glance
   the live application to avoid jarring transitions between docs and UI.
 
 Panels and layout framing
-------------------------
+-------------------------
 
 .. figure:: _static/raspyrfm-dashboard-panels.svg
    :alt: Full dashboard layout showing signal panels, side rail, and summary footer
