@@ -11,6 +11,7 @@ RaspyRFM Client Manual
    ui-showcase
    raspyrfm_client
    modules
+   troubleshooting
 
 Overview
 --------
