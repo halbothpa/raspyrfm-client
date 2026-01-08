@@ -2,9 +2,11 @@
   "domain": "raspyrfm",
   "name": "RaspyRFM",
   "version": "0.1.0",
-  "documentation": "https://www.seegel-systeme.de/produkt/raspyrfm-ii/",
+  "documentation": "https://halbothpa.github.io/raspyrfm-client/",
   "requirements": [],
-  "codeowners": ["@seegel-systeme"],
+  "codeowners": ["@seegel-systeme", "@halbothpa"],
   "config_flow": true,
-  "iot_class": "local_push"
+  "iot_class": "local_push",
+  "quality_scale": "silver",
+  "integration_type": "device"
 }

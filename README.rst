@@ -45,6 +45,45 @@ The bundled Home Assistant panel now features a refreshed design, inline validat
 You can find the related integration documentation here: 
 `RaspyRFM Home Assistant component documentation <https://www.home-assistant.io/components/switch.raspyrfm/>`_
 
+Home Assistant OS Installation (Raspberry Pi 4/5)
+--------------------------------------------------
+
+**Pre-built Releases for HAOS**
+
+This integration is optimized for Home Assistant OS running on Raspberry Pi 4 and 5. Download the latest release from the `GitHub Releases page <https://github.com/halbothpa/raspyrfm-client/releases>`_.
+
+**Quick Installation Steps:**
+
+1. Download the latest ``raspyrfm-X.X.X.zip`` from releases
+2. Access your Home Assistant installation via SSH or the Samba share
+3. Navigate to your config directory (usually ``/config``)
+4. Create ``custom_components`` directory if it doesn't exist
+5. Extract the zip file contents to ``/config/custom_components/raspyrfm/``
+6. Restart Home Assistant
+7. Go to **Settings** → **Devices & Services** → **Add Integration**
+8. Search for "RaspyRFM" and configure with your gateway details
+
+**Configuration:**
+
+- **Host**: IP address of your RaspyRFM gateway (e.g., ``192.168.1.100``)
+- **Port**: Gateway port (default: ``49880``)
+
+**Hardware Setup for Raspberry Pi:**
+
+If you're using a Raspberry Pi as your RaspyRFM gateway:
+
+1. Connect your 433MHz RF module to the GPIO pins
+2. Ensure the RaspyRFM daemon is running on the gateway Pi
+3. The gateway must be on the same network as your HAOS installation
+4. Test connectivity: ``ping <gateway-ip>`` from HAOS terminal
+
+**Troubleshooting:**
+
+- **Cannot find gateway**: Check network connectivity and firewall settings
+- **Integration won't load**: Verify all files are in ``custom_components/raspyrfm/``
+- **Devices not responding**: Confirm gateway is running and RF codes are correct
+- **Check logs**: Go to Settings → System → Logs and filter for "raspyrfm"
+
 How to use
 ==========
 
