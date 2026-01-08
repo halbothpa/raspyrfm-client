@@ -187,6 +187,10 @@ Carry out the following tasks in order.
          cd RaspyRFM
          python3 -m pip install --break-system-packages spidev
 
+      .. note::
+         The ``--break-system-packages`` flag is required on Alpine Linux (used by
+         Home Assistant OS) to install Python packages system-wide.
+
    #. Create a service file at ``/etc/systemd/system/raspyrfm.service``::
 
          [Unit]
