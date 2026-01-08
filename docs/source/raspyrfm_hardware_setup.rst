@@ -182,7 +182,7 @@ Carry out the following tasks in order.
          version: '3.8'
          services:
            raspyfm-gateway:
-             image: ghcr.io/raspyrfm/raspyrfm-gateway:latest
+             image: ghcr.io/halbothpa/raspyrfm-gateway:latest
              container_name: raspyfm-gateway
              restart: unless-stopped
              network_mode: host
@@ -214,7 +214,7 @@ Carry out the following tasks in order.
 
          cd /config/custom_components
          mkdir -p raspyrfm
-         curl -L https://github.com/raspyrfm/raspyrfm-client/archive/refs/heads/main.tar.gz \
+         curl -L https://github.com/halbothpa/raspyrfm-client/archive/refs/heads/main.tar.gz \
           | tar -xz --strip-components=3 -C raspyrfm \
              raspyrfm-client-main/custom_components/raspyrfm
 
@@ -246,7 +246,7 @@ RaspyRFM gateway share access to the SPI devices::
          - /dev/spidev0.1
 
      raspyfm-gateway:
-       image: ghcr.io/raspyrfm/raspyrfm-gateway:latest
+       image: ghcr.io/halbothpa/raspyrfm-gateway:latest
        container_name: raspyfm-gateway
        restart: unless-stopped
        network_mode: host

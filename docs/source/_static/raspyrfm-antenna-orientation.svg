@@ -1,30 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" role="img" aria-labelledby="title desc">
   <title id="title">RaspyRFM antenna orientation</title>
   <desc id="desc">Diagram showing where to attach 433 MHz and 868/915 MHz antennas and how to set the ASK/FSK slide switches.</desc>
   <defs>
     <style>
-      text { font-family: 'DejaVu Sans', Arial, sans-serif; fill: #0f172a; }
-      .panel-title { font-size: 20px; font-weight: 700; }
-      .label { font-size: 16px; }
-      .switch { font-size: 14px; fill: #0f172a; font-weight: 600; }
+      text { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; fill: #0f172a; }
+      .panel-title { font-size: 24px; font-weight: 700; letter-spacing: 0.02em; }
+      .label { font-size: 17px; }
+      .switch { font-size: 16px; fill: #0f172a; font-weight: 600; }
+      .main-title { font-size: 26px; font-weight: 700; }
     </style>
+    <filter id="shadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+      <feOffset dx="0" dy="4" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
-  <rect x="40" y="40" width="640" height="200" rx="24" fill="#f8fafc" stroke="#0f172a" stroke-width="3" />
-  <text x="360" y="72" text-anchor="middle" class="panel-title">Top view of RaspyRFM Twin</text>
-  <g transform="translate(120,100)">
-    <rect x="0" y="0" width="160" height="120" rx="18" fill="#d1fae5" stroke="#047857" stroke-width="3" />
-    <text x="80" y="28" text-anchor="middle" class="panel-title">Radio A</text>
-    <text x="80" y="56" text-anchor="middle" class="label">Factory tuned 433 MHz</text>
-    <text x="80" y="82" text-anchor="middle" class="label">Use whip antenna</text>
-    <text x="80" y="108" text-anchor="middle" class="switch">Switch → ASK/OOK</text>
+  
+  <!-- Background -->
+  <rect x="40" y="40" width="720" height="240" rx="28" fill="#f8fafc" stroke="#1e88e5" stroke-width="4" filter="url(#shadow)" />
+  <text x="400" y="82" text-anchor="middle" class="main-title" fill="#1e88e5">RaspyRFM Twin Antenna Configuration</text>
+  
+  <!-- Radio A Panel -->
+  <g transform="translate(100,110)">
+    <rect x="0" y="0" width="280" height="150" rx="20" fill="#d1fae5" stroke="#047857" stroke-width="4" filter="url(#shadow)" />
+    <circle cx="35" cy="35" r="26" fill="#047857" />
+    <text x="35" y="45" text-anchor="middle" class="panel-title" fill="white">A</text>
+    <text x="140" y="42" text-anchor="middle" class="panel-title" fill="#065f46">Radio A</text>
+    <text x="140" y="72" text-anchor="middle" class="label" fill="#064e3b">433 MHz (Factory tuned)</text>
+    <text x="140" y="100" text-anchor="middle" class="label" fill="#064e3b">SMA connector: Antenna A</text>
+    <text x="140" y="128" text-anchor="middle" class="switch" fill="#065f46">Switch → ASK/OOK</text>
   </g>
-  <g transform="translate(440,100)">
-    <rect x="0" y="0" width="160" height="120" rx="18" fill="#ede9fe" stroke="#6d28d9" stroke-width="3" />
-    <text x="80" y="28" text-anchor="middle" class="panel-title">Radio B</text>
-    <text x="80" y="56" text-anchor="middle" class="label">868 / 915 MHz support</text>
-    <text x="80" y="82" text-anchor="middle" class="label">Attach matching antenna</text>
-    <text x="80" y="108" text-anchor="middle" class="switch">Switch → FSK for sensors</text>
+  
+  <!-- Radio B Panel -->
+  <g transform="translate(420,110)">
+    <rect x="0" y="0" width="280" height="150" rx="20" fill="#ede9fe" stroke="#6d28d9" stroke-width="4" filter="url(#shadow)" />
+    <circle cx="35" cy="35" r="26" fill="#6d28d9" />
+    <text x="35" y="45" text-anchor="middle" class="panel-title" fill="white">B</text>
+    <text x="140" y="42" text-anchor="middle" class="panel-title" fill="#5b21b6">Radio B</text>
+    <text x="140" y="72" text-anchor="middle" class="label" fill="#4c1d95">868/915 MHz support</text>
+    <text x="140" y="100" text-anchor="middle" class="label" fill="#4c1d95">SMA connector: Antenna B</text>
+    <text x="140" y="128" text-anchor="middle" class="switch" fill="#5b21b6">Switch → FSK (for sensors)</text>
   </g>
-  <text x="360" y="240" text-anchor="middle" class="label">Keep antennas vertical and hand-tighten the SMA connectors</text>
+  
+  <!-- Bottom instruction -->
+  <text x="400" y="290" text-anchor="middle" class="label" fill="#475569">⚡ Keep antennas vertical · Hand-tighten SMA connectors · Use frequency-matched antennas</text>
 </svg>
