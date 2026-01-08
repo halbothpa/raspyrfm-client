@@ -167,43 +167,60 @@ Carry out the following tasks in order.
       Adjust the file with ``nano`` if the SPI options are missing, then run
       ``ha host reboot``.
 
-4. **Deploy the RaspyRFM gateway container**
+4. **Deploy the RaspyRFM gateway**
 
-   The Home Assistant supervisor runs an isolated operating system, so install
-   the gateway as a Docker service that is managed by the host OS:
+   Home Assistant OS runs on an isolated system. You need to install the
+   gateway software that will communicate with the RF hardware. There are
+   two options:
 
-   #. From the host shell, create a dedicated directory::
+   **Option A: Using the RaspyRFM connair gateway (Recommended)**
 
-         mkdir -p /usr/local/share/raspyrfm
-         cd /usr/local/share/raspyrfm
+   #. From the host shell (accessed via Terminal & SSH add-on with ``login``
+      command), install git and Python::
 
-   #. Create ``docker-compose.yml`` with the following content::
+         apk add git python3 py3-pip
 
-         version: '3.8'
-         services:
-           raspyfm-gateway:
-             image: ghcr.io/halbothpa/raspyrfm-gateway:latest
-             container_name: raspyfm-gateway
-             restart: unless-stopped
-             network_mode: host
-             devices:
-               - /dev/spidev0.0
-               - /dev/spidev0.1
-             volumes:
-               - ./config:/app/config
-             environment:
-               RASPYRFM_SPI_DEVICE_A: /dev/spidev0.0
-               RASPYRFM_SPI_DEVICE_B: /dev/spidev0.1
-               RASPYRFM_BIND_HOST: 0.0.0.0
-               RASPYRFM_BIND_PORT: 49880
+   #. Clone and set up the RaspyRFM gateway::
 
-   #. Start the container::
+         cd /root
+         git clone https://github.com/Phunkafizer/RaspyRFM.git
+         cd RaspyRFM
+         python3 -m pip install --break-system-packages spidev
 
-         docker compose up -d
+   #. Create a service file at ``/etc/systemd/system/raspyrfm.service``::
 
-   #. Confirm the UDP listener is online::
+         [Unit]
+         Description=RaspyRFM Gateway Service
+         After=network.target
 
+         [Service]
+         Type=simple
+         User=root
+         WorkingDirectory=/root/RaspyRFM
+         ExecStart=/usr/bin/python3 /root/RaspyRFM/connair.py
+         Restart=always
+         RestartSec=10
+
+         [Install]
+         WantedBy=multi-user.target
+
+   #. Enable and start the service::
+
+         systemctl daemon-reload
+         systemctl enable raspyrfm.service
+         systemctl start raspyrfm.service
+
+   #. Verify the gateway is running::
+
+         systemctl status raspyrfm.service
          ss -uap | grep 49880
+
+   **Option B: Manual Python gateway**
+
+   You can also run the gateway manually for testing::
+
+      cd /root/RaspyRFM
+      python3 connair.py
 
 5. **Install the RaspyRFM custom integration**
 
@@ -226,45 +243,74 @@ Home Assistant Container (Docker) workflow
 ------------------------------------------
 
 When Home Assistant runs inside Docker on top of Raspberry Pi OS, the host OS
-is in full control of the hardware.  The following ``docker-compose.yml``
-snippet illustrates a combined setup where the Home Assistant container and the
-RaspyRFM gateway share access to the SPI devices::
+is in full control of the hardware. You need to install the RaspyRFM gateway
+separately on the host.
 
-   version: '3.8'
-   services:
-     homeassistant:
-       image: ghcr.io/home-assistant/raspberrypi4-homeassistant:stable
-       container_name: homeassistant
-       restart: unless-stopped
-       network_mode: host
-       privileged: true
-       volumes:
-         - /opt/homeassistant/config:/config
-         - /etc/localtime:/etc/localtime:ro
-       devices:
-         - /dev/spidev0.0
-         - /dev/spidev0.1
+1. **Install the RaspyRFM gateway on the host**
 
-     raspyfm-gateway:
-       image: ghcr.io/halbothpa/raspyrfm-gateway:latest
-       container_name: raspyfm-gateway
-       restart: unless-stopped
-       network_mode: host
-       depends_on:
-         - homeassistant
-       devices:
-         - /dev/spidev0.0
-         - /dev/spidev0.1
-       environment:
-         RASPYRFM_SPI_DEVICE_A: /dev/spidev0.0
-         RASPYRFM_SPI_DEVICE_B: /dev/spidev0.1
-       volumes:
-         - /opt/raspyrfm/config:/app/config
+   On your Raspberry Pi OS (outside of any containers), install the gateway::
 
-Bring the stack online with ``docker compose up -d``.  Confirm that the custom
-integration exists in ``/opt/homeassistant/config/custom_components/raspyrfm``
-(see the previous section for installation steps).  The integration discovers
-and communicates with the gateway through the host network.
+      sudo apt update && sudo apt install -y git python3 python3-pip
+      cd /opt
+      sudo git clone https://github.com/Phunkafizer/RaspyRFM.git
+      cd RaspyRFM
+      sudo python3 -m pip install spidev
+
+   Create a systemd service at ``/etc/systemd/system/raspyrfm-gateway.service``::
+
+      [Unit]
+      Description=RaspyRFM UDP gateway
+      After=network-online.target
+      Wants=network-online.target
+
+      [Service]
+      Type=simple
+      User=root
+      WorkingDirectory=/opt/RaspyRFM
+      ExecStart=/usr/bin/python3 /opt/RaspyRFM/connair.py
+      Restart=on-failure
+
+      [Install]
+      WantedBy=multi-user.target
+
+   Enable and start the gateway service::
+
+      sudo systemctl daemon-reload
+      sudo systemctl enable --now raspyrfm-gateway
+      sudo systemctl status raspyrfm-gateway
+
+2. **Deploy Home Assistant in Docker**
+
+   Create a ``docker-compose.yml`` file for Home Assistant::
+
+      version: '3.8'
+      services:
+        homeassistant:
+          image: ghcr.io/home-assistant/raspberrypi4-homeassistant:stable
+          container_name: homeassistant
+          restart: unless-stopped
+          network_mode: host
+          privileged: true
+          volumes:
+            - /opt/homeassistant/config:/config
+            - /etc/localtime:/etc/localtime:ro
+
+   Start Home Assistant::
+
+      sudo docker compose up -d
+
+3. **Install the RaspyRFM custom integration**
+
+   Copy the integration files to your Home Assistant config directory::
+
+      mkdir -p /opt/homeassistant/config/custom_components/raspyrfm
+      curl -L https://github.com/halbothpa/raspyrfm-client/archive/refs/heads/main.tar.gz \
+        | tar -xz --strip-components=3 -C /opt/homeassistant/config/custom_components/raspyrfm \
+           raspyrfm-client-main/custom_components/raspyrfm
+
+   Restart Home Assistant, then add the RaspyRFM integration via
+   *Settings → Devices & Services*, entering ``localhost`` or your Pi's
+   IP address as the gateway host.
 
 .. figure:: _static/raspyrfm-ha-topology.svg
    :alt: Diagram showing how Home Assistant, the RaspyRFM gateway, and RF
@@ -286,16 +332,16 @@ communicate over the network.
       sudo apt update && sudo apt full-upgrade -y
       sudo raspi-config nonint do_spi 0
 
-2. Install dependencies for the ``raspyrfm-client`` gateway::
+2. Install git and Python dependencies::
 
-      sudo apt install -y python3 python3-venv git
-      sudo useradd --system --create-home --home-dir /var/lib/raspyrfm raspyfm
+      sudo apt install -y python3 python3-pip git
 
-3. Provision a virtual environment and fetch the client::
+3. Clone the RaspyRFM gateway software::
 
-      sudo -u raspyfm python3 -m venv /var/lib/raspyrfm/venv
-      sudo -u raspyfm /var/lib/raspyrfm/venv/bin/pip install --upgrade pip
-      sudo -u raspyfm /var/lib/raspyrfm/venv/bin/pip install raspyrfm-client
+      cd /opt
+      sudo git clone https://github.com/Phunkafizer/RaspyRFM.git
+      cd RaspyRFM
+      sudo python3 -m pip install spidev
 
 4. Create a systemd unit in ``/etc/systemd/system/raspyrfm-gateway.service``::
 
@@ -306,12 +352,9 @@ communicate over the network.
 
       [Service]
       Type=simple
-      User=raspyfm
-      Group=raspyfm
-      WorkingDirectory=/var/lib/raspyrfm
-      ExecStart=/var/lib/raspyrfm/venv/bin/python -m raspyrfm_client.connair \
-        --spi-device-a /dev/spidev0.0 --spi-device-b /dev/spidev0.1 \
-        --listen 0.0.0.0 --port 49880
+      User=root
+      WorkingDirectory=/opt/RaspyRFM
+      ExecStart=/usr/bin/python3 /opt/RaspyRFM/connair.py
       Restart=on-failure
 
       [Install]
@@ -322,8 +365,14 @@ communicate over the network.
       sudo systemctl daemon-reload
       sudo systemctl enable --now raspyrfm-gateway
 
-5. Point your Home Assistant instance (running elsewhere on the network) to
+5. Verify the gateway is running::
+
+      sudo systemctl status raspyrfm-gateway
+      ss -uap | grep 49880
+
+6. Point your Home Assistant instance (running elsewhere on the network) to
    the Raspberry Pi gateway via *Settings → Devices & Services → RaspyRFM*.
+   Enter the IP address of your Raspberry Pi and port 49880.
 
 Twin module radio selection
 ---------------------------

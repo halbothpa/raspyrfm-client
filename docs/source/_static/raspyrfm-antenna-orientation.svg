@@ -28,25 +28,25 @@
   <text x="400" y="82" text-anchor="middle" class="main-title" fill="#1e88e5">RaspyRFM Twin Antenna Configuration</text>
   
   <!-- Radio A Panel -->
-  <g transform="translate(100,110)">
-    <rect x="0" y="0" width="280" height="150" rx="20" fill="#d1fae5" stroke="#047857" stroke-width="4" filter="url(#shadow)" />
-    <circle cx="35" cy="35" r="26" fill="#047857" />
-    <text x="35" y="45" text-anchor="middle" class="panel-title" fill="white">A</text>
-    <text x="140" y="42" text-anchor="middle" class="panel-title" fill="#065f46">Radio A</text>
-    <text x="140" y="72" text-anchor="middle" class="label" fill="#064e3b">433 MHz (Factory tuned)</text>
-    <text x="140" y="100" text-anchor="middle" class="label" fill="#064e3b">SMA connector: Antenna A</text>
-    <text x="140" y="128" text-anchor="middle" class="switch" fill="#065f46">Switch → ASK/OOK</text>
+  <g transform="translate(100,120)">
+    <rect x="0" y="0" width="280" height="140" rx="20" fill="#d1fae5" stroke="#047857" stroke-width="4" filter="url(#shadow)" />
+    <circle cx="35" cy="32" r="24" fill="#047857" />
+    <text x="35" y="41" text-anchor="middle" class="panel-title" fill="white">A</text>
+    <text x="140" y="38" text-anchor="middle" class="panel-title" fill="#065f46">Radio A</text>
+    <text x="140" y="68" text-anchor="middle" class="label" fill="#064e3b">433 MHz (Factory tuned)</text>
+    <text x="140" y="95" text-anchor="middle" class="label" fill="#064e3b">SMA connector: Antenna A</text>
+    <text x="140" y="122" text-anchor="middle" class="switch" fill="#065f46">Switch → ASK/OOK</text>
   </g>
   
   <!-- Radio B Panel -->
-  <g transform="translate(420,110)">
-    <rect x="0" y="0" width="280" height="150" rx="20" fill="#ede9fe" stroke="#6d28d9" stroke-width="4" filter="url(#shadow)" />
-    <circle cx="35" cy="35" r="26" fill="#6d28d9" />
-    <text x="35" y="45" text-anchor="middle" class="panel-title" fill="white">B</text>
-    <text x="140" y="42" text-anchor="middle" class="panel-title" fill="#5b21b6">Radio B</text>
-    <text x="140" y="72" text-anchor="middle" class="label" fill="#4c1d95">868/915 MHz support</text>
-    <text x="140" y="100" text-anchor="middle" class="label" fill="#4c1d95">SMA connector: Antenna B</text>
-    <text x="140" y="128" text-anchor="middle" class="switch" fill="#5b21b6">Switch → FSK (for sensors)</text>
+  <g transform="translate(420,120)">
+    <rect x="0" y="0" width="280" height="140" rx="20" fill="#ede9fe" stroke="#6d28d9" stroke-width="4" filter="url(#shadow)" />
+    <circle cx="35" cy="32" r="24" fill="#6d28d9" />
+    <text x="35" y="41" text-anchor="middle" class="panel-title" fill="white">B</text>
+    <text x="140" y="38" text-anchor="middle" class="panel-title" fill="#5b21b6">Radio B</text>
+    <text x="140" y="68" text-anchor="middle" class="label" fill="#4c1d95">868/915 MHz support</text>
+    <text x="140" y="95" text-anchor="middle" class="label" fill="#4c1d95">SMA connector: Antenna B</text>
+    <text x="140" y="122" text-anchor="middle" class="switch" fill="#5b21b6">Switch → FSK (for sensors)</text>
   </g>
   
   <!-- Bottom instruction -->
