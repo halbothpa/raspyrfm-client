@@ -35,28 +35,28 @@
   </defs>
   
   <!-- Raspberry Pi Base -->
-  <rect x="90" y="250" width="620" height="140" rx="24" fill="url(#piBody)" stroke="#0f172a" stroke-width="4" filter="url(#shadow)" />
-  <text x="400" y="282" text-anchor="middle" class="caption" fill="#dbeafe">Raspberry Pi 4/5</text>
-  <text x="400" y="310" text-anchor="middle" class="label">GPIO 40-pin header at top</text>
-  <text x="400" y="338" text-anchor="middle" class="label">USB / Ethernet ports accessible</text>
-  <text x="400" y="366" text-anchor="middle" class="label">microSD slot at bottom edge</text>
+  <rect x="90" y="280" width="620" height="130" rx="24" fill="url(#piBody)" stroke="#0f172a" stroke-width="4" filter="url(#shadow)" />
+  <text x="400" y="310" text-anchor="middle" class="caption" fill="#dbeafe">Raspberry Pi 4/5</text>
+  <text x="400" y="335" text-anchor="middle" class="label">GPIO 40-pin header at top</text>
+  <text x="400" y="360" text-anchor="middle" class="label">USB / Ethernet ports accessible</text>
+  <text x="400" y="385" text-anchor="middle" class="label">microSD slot at bottom edge</text>
   
   <!-- RaspyRFM Module -->
-  <g transform="translate(190,80)">
-    <rect x="0" y="0" width="420" height="140" rx="20" fill="url(#moduleBody)" stroke="#064e3b" stroke-width="4" filter="url(#shadow)" />
-    <text x="210" y="38" text-anchor="middle" class="caption" fill="#bbf7d0">RaspyRFM / RaspyRFM Twin</text>
-    <text x="210" y="68" text-anchor="middle" class="label" fill="#d1fae5">10-pin IDC connector on underside</text>
-    <text x="210" y="95" text-anchor="middle" class="label" fill="#d1fae5">Aligns with GPIO header pins 1-10</text>
-    <text x="210" y="122" text-anchor="middle" class="label" fill="#d1fae5">Pin 1 marked with triangle (▸) or "1"</text>
+  <g transform="translate(190,50)">
+    <rect x="0" y="0" width="420" height="130" rx="20" fill="url(#moduleBody)" stroke="#064e3b" stroke-width="4" filter="url(#shadow)" />
+    <text x="210" y="35" text-anchor="middle" class="caption" fill="#bbf7d0">RaspyRFM / RaspyRFM Twin</text>
+    <text x="210" y="62" text-anchor="middle" class="label" fill="#d1fae5">10-pin IDC connector on underside</text>
+    <text x="210" y="87" text-anchor="middle" class="label" fill="#d1fae5">Aligns with GPIO header pins 1-10</text>
+    <text x="210" y="112" text-anchor="middle" class="label" fill="#d1fae5">Pin 1 marked with triangle (▸) or "1"</text>
   </g>
   
   <!-- Pin 1 Indicator on Pi -->
-  <rect x="330" y="230" width="140" height="70" rx="12" fill="#fbbf24" stroke="#92400e" stroke-width="4" />
-  <text x="400" y="258" text-anchor="middle" class="pinlabel" fill="#78350f">GPIO Pin 1</text>
-  <text x="400" y="280" text-anchor="middle" class="pinlabel" fill="#78350f">3.3V Power</text>
+  <rect x="330" y="210" width="140" height="60" rx="12" fill="#fbbf24" stroke="#92400e" stroke-width="4" />
+  <text x="400" y="235" text-anchor="middle" class="pinlabel" fill="#78350f">GPIO Pin 1</text>
+  <text x="400" y="255" text-anchor="middle" class="pinlabel" fill="#78350f">3.3V Power</text>
   
   <!-- Arrow pointing from module to Pin 1 -->
-  <path d="M400 220 L400 230" stroke="#fbbf24" stroke-width="7" stroke-linecap="round" marker-end="url(#arrow)" />
+  <path d="M400 180 L400 210" stroke="#fbbf24" stroke-width="7" stroke-linecap="round" marker-end="url(#arrow)" />
   
   <!-- Callout boxes - repositioned to avoid overlap -->
   <g transform="translate(50,20)">
