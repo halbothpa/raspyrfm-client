@@ -29,6 +29,8 @@ class RaspyRFMPanel extends LitElement {
         padding: 24px;
         background: linear-gradient(135deg, var(--primary-background-color), rgba(0, 0, 0, 0))
           no-repeat;
+        --success-color-fallback: #4caf50;
+        --info-color-fallback: #2196f3;
       }
 
       h2.section-title {
@@ -181,21 +183,21 @@ class RaspyRFMPanel extends LitElement {
       }
 
       .success {
-        color: var(--success-color, #4caf50);
+        color: var(--success-color, var(--success-color-fallback));
         margin-bottom: 12px;
         padding: 12px 16px;
         background: rgba(76, 175, 80, 0.1);
         border-radius: 8px;
-        border-left: 4px solid var(--success-color, #4caf50);
+        border-left: 4px solid var(--success-color, var(--success-color-fallback));
       }
 
       .info {
-        color: var(--info-color, #2196f3);
+        color: var(--info-color, var(--info-color-fallback));
         margin-bottom: 12px;
         padding: 12px 16px;
         background: rgba(33, 150, 243, 0.1);
         border-radius: 8px;
-        border-left: 4px solid var(--info-color, #2196f3);
+        border-left: 4px solid var(--info-color, var(--info-color-fallback));
       }
 
       .required {
