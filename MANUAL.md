@@ -398,3 +398,86 @@ available inside Home Assistant as well.
   enhancements.
 
 Happy hacking!
+
+### 13.1 For Home Assistant OS (Raspberry Pi 4/5)
+
+**Automated Installation with Releases:**
+
+1. Download the latest release from the [GitHub Releases page](https://github.com/halbothpa/raspyrfm-client/releases)
+2. Choose `raspyrfm-X.X.X.zip` for a quick installation
+3. Access your Home Assistant instance:
+   - Via **Samba/SMB share**: Navigate to the `config` folder
+   - Via **SSH/Terminal**: Connect to your HAOS installation
+4. Extract the ZIP file contents to `/config/custom_components/raspyrfm/`
+5. Restart Home Assistant
+6. Configure the integration:
+   - Navigate to **Settings → Devices & Services**
+   - Click **Add Integration**
+   - Search for "RaspyRFM"
+   - Enter gateway host (e.g., `192.168.1.100`) and port (default: `49880`)
+
+### 13.2 Setting Up RaspyRFM Gateway on Raspberry Pi
+
+If you're using a separate Raspberry Pi as your RaspyRFM gateway:
+
+1. **Hardware Setup**:
+   - Connect your 433MHz RF transceiver module to GPIO pins
+   - For RaspyRFM II: Connect to SPI interface
+   - Ensure proper power supply (5V, 2.5A minimum for Pi 4/5)
+
+2. **Software Installation**:
+   ```bash
+   # On your gateway Raspberry Pi
+   git clone https://github.com/Phunkafizer/RaspyRFM.git
+   cd RaspyRFM
+   sudo python3 setup.py install
+   
+   # Start the gateway daemon
+   sudo python3 connair.py
+   ```
+
+3. **Network Configuration**:
+   - Assign a static IP to your gateway Pi
+   - Ensure it's on the same network as your HAOS installation
+   - Open port 49880 (or your configured port)
+   - Test connectivity: `ping <gateway-ip>` from HAOS terminal
+
+4. **Auto-start on Boot** (optional):
+   ```bash
+   # Create systemd service
+   sudo nano /etc/systemd/system/raspyrfm.service
+   ```
+   
+   Add the following configuration:
+   ```ini
+   [Unit]
+   Description=RaspyRFM Gateway
+   After=network.target
+   
+   [Service]
+   Type=simple
+   User=pi
+   WorkingDirectory=/home/pi/RaspyRFM
+   ExecStart=/usr/bin/python3 /home/pi/RaspyRFM/connair.py
+   Restart=always
+   
+   [Install]
+   WantedBy=multi-user.target
+   ```
+   
+   Enable and start:
+   ```bash
+   sudo systemctl enable raspyrfm
+   sudo systemctl start raspyrfm
+   ```
+
+### 13.3 Using the Home Assistant Panel
+
+After installation, access the RaspyRFM panel:
+
+1. Navigate to **RaspyRFM** in the sidebar
+2. **Learn Mode**: Click "Start Learning" to capture RF signals
+3. **Create Entities**: Map captured signals to switches, lights, or buttons
+4. **Send Commands**: Test and control your RF devices
+5. **Signal Mapping**: Organize signals by category (sensors, actuators, etc.)
+

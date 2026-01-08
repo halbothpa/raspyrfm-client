@@ -16,6 +16,8 @@ class RaspyRFMPanel extends LitElement {
       formActions: { state: true },
       formCustomAction: { state: true },
       error: { state: true },
+      successMessage: { state: true },
+      infoMessage: { state: true },
     };
   }
 
@@ -27,6 +29,8 @@ class RaspyRFMPanel extends LitElement {
         padding: 24px;
         background: linear-gradient(135deg, var(--primary-background-color), rgba(0, 0, 0, 0))
           no-repeat;
+        --success-color-fallback: #4caf50;
+        --info-color-fallback: #2196f3;
       }
 
       h2.section-title {
@@ -172,6 +176,28 @@ class RaspyRFMPanel extends LitElement {
       .error {
         color: var(--error-color);
         margin-bottom: 12px;
+        padding: 12px 16px;
+        background: rgba(244, 67, 54, 0.1);
+        border-radius: 8px;
+        border-left: 4px solid var(--error-color);
+      }
+
+      .success {
+        color: var(--success-color, var(--success-color-fallback));
+        margin-bottom: 12px;
+        padding: 12px 16px;
+        background: rgba(76, 175, 80, 0.1);
+        border-radius: 8px;
+        border-left: 4px solid var(--success-color, var(--success-color-fallback));
+      }
+
+      .info {
+        color: var(--info-color, var(--info-color-fallback));
+        margin-bottom: 12px;
+        padding: 12px 16px;
+        background: rgba(33, 150, 243, 0.1);
+        border-radius: 8px;
+        border-left: 4px solid var(--info-color, var(--info-color-fallback));
       }
 
       .required {
@@ -250,12 +276,57 @@ class RaspyRFMPanel extends LitElement {
 
         .actions {
           justify-content: stretch;
+          flex-direction: column;
+        }
+
+        .actions mwc-button {
+          width: 100%;
         }
 
         .signal-entry {
           flex-direction: column;
           align-items: stretch;
           gap: 12px;
+        }
+
+        .split-columns {
+          grid-template-columns: 1fr;
+        }
+
+        h2.section-title {
+          font-size: 1.2rem;
+        }
+      }
+
+      .help-text {
+        font-size: 0.85rem;
+        color: var(--secondary-text-color);
+        margin-top: 8px;
+        padding: 8px;
+        background: rgba(0, 0, 0, 0.02);
+        border-radius: 6px;
+      }
+
+      .help-icon {
+        cursor: help;
+        opacity: 0.6;
+        transition: opacity 0.2s;
+      }
+
+      .help-icon:hover {
+        opacity: 1;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
         }
       }
     `;
@@ -274,6 +345,8 @@ class RaspyRFMPanel extends LitElement {
     this._configureActionsForType(this.formType);
     this.formCustomAction = "";
     this.error = null;
+    this.successMessage = null;
+    this.infoMessage = null;
     this._signalUnsub = null;
     this._learningUnsub = null;
     this._persistedMappings = {};
@@ -376,7 +449,15 @@ class RaspyRFMPanel extends LitElement {
           <mwc-button icon="mdi:refresh" @click=${this._refreshDevices}>Refresh devices</mwc-button>
           <mwc-button icon="mdi:chart-bubble" @click=${this._loadMappings}>Reload mapping</mwc-button>
         </div>
-        ${this.error ? html`<div class="error">${this.error}</div>` : ""}
+        ${this.error ? html`<div class="error">⚠️ ${this.error}</div>` : ""}
+        ${this.successMessage ? html`<div class="success">✓ ${this.successMessage}</div>` : ""}
+        ${this.infoMessage ? html`<div class="info">ℹ️ ${this.infoMessage}</div>` : ""}
+        ${!this.learning && !this.signals.length ? html`
+          <div class="info">
+            <strong>Getting Started:</strong> Click "Start learning" to begin capturing RF signals from your remotes and devices. 
+            For Raspberry Pi 4/5 with HAOS, ensure your RaspyRFM gateway is connected and accessible on the network.
+          </div>
+        ` : ""}
         <div class="split-columns">
           ${this._renderSignals()} ${this._renderForm()}
         </div>
