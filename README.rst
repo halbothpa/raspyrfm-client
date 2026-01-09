@@ -108,7 +108,7 @@ the adaptive classification chips and the universal entity send controls.
 Usage
 -----
 
-For a basic example have a look at the `example.py <https://github.com/markusressel/raspyrfm-client/blob/master/example_simple.py>`_ file.
+For a basic example have a look at the `example.py <https://github.com/halbothpa/raspyrfm-client/blob/master/example_simple.py>`_ file.
 
 If you need more info the `documentation <https://halbothpa.github.io/raspyrfm-client/>`_ covers the full Home Assistant workflow.
 
