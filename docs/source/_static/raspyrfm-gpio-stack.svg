@@ -58,14 +58,14 @@
   <text x="400" y="272" text-anchor="middle" class="pinlabel" fill="#78350f">GPIO Pin 1</text>
   <text x="400" y="290" text-anchor="middle" class="pinlabel" fill="#78350f">3.3V Power</text>
   
-  <!-- Callout boxes - repositioned to avoid overlap -->
-  <g transform="translate(50,30)">
+  <!-- Callout boxes - positioned to slightly touch green module -->
+  <g transform="translate(50,45)">
     <rect x="0" y="0" width="200" height="70" rx="14" fill="#f1f5f9" stroke="#1e88e5" stroke-width="3" filter="url(#shadow)" />
     <text x="100" y="30" text-anchor="middle" class="callout">✓ Match Pin 1 → Pin 1</text>
     <text x="100" y="52" text-anchor="middle" class="callout">✓ Press firmly &amp; evenly</text>
   </g>
   
-  <g transform="translate(560,30)">
+  <g transform="translate(560,45)">
     <rect x="0" y="0" width="200" height="70" rx="14" fill="#f1f5f9" stroke="#1e88e5" stroke-width="3" filter="url(#shadow)" />
     <text x="100" y="30" text-anchor="middle" class="callout">✓ Secure with standoffs</text>
     <text x="100" y="52" text-anchor="middle" class="callout">✓ Keep boards parallel</text>
