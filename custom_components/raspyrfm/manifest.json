@@ -1,7 +1,7 @@
 {
   "domain": "raspyrfm",
   "name": "RaspyRFM",
-  "version": "0.1.0",
+  "version": "0.0.3",
   "documentation": "https://halbothpa.github.io/raspyrfm-client/",
   "requirements": [],
   "codeowners": ["@seegel-systeme", "@halbothpa"],
