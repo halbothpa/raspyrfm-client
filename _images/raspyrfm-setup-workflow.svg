@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 260" role="img" aria-labelledby="title desc">
+  <title id="title">RaspyRFM hardware setup workflow</title>
+  <desc id="desc">Four color coded panels describe the hardware, firmware, gateway, and Home Assistant milestones required to bring a RaspyRFM online.</desc>
+  <defs>
+    <style>
+      text { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; fill: #0f172a; }
+      .stage { font-size: 22px; font-weight: 700; letter-spacing: 0.02em; }
+      .detail { font-size: 17px; fill: #1f2937; font-weight: 600; }
+      .sub { font-size: 15px; fill: #475569; }
+    </style>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fee2e2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fecaca;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#bfdbfe;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#dcfce7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#bbf7d0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ede9fe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ddd6fe;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+      <feOffset dx="0" dy="4" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerUnits="strokeWidth" markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#1e88e5" />
+    </marker>
+  </defs>
+  
+  <!-- Step 1: Hardware -->
+  <g transform="translate(50,50)">
+    <rect x="0" y="0" width="200" height="160" rx="20" fill="url(#grad1)" stroke="#ef4444" stroke-width="3" filter="url(#shadow)" />
+    <circle cx="30" cy="30" r="22" fill="#ef4444" />
+    <text x="30" y="40" text-anchor="middle" fill="white" font-size="24" font-weight="700">1</text>
+    <text x="100" y="45" text-anchor="middle" class="stage" fill="#991b1b">Hardware</text>
+    <text x="100" y="80" text-anchor="middle" class="detail">Seat module on GPIO</text>
+    <text x="100" y="108" text-anchor="middle" class="sub">✓ Check Pin 1 alignment</text>
+    <text x="100" y="133" text-anchor="middle" class="sub">✓ Secure standoffs</text>
+  </g>
+  
+  <!-- Arrow 1 -->
+  <line x1="250" y1="130" x2="285" y2="130" stroke="#1e88e5" stroke-width="5" marker-end="url(#arrow)" />
+  
+  <!-- Step 2: Firmware -->
+  <g transform="translate(285,50)">
+    <rect x="0" y="0" width="200" height="160" rx="20" fill="url(#grad2)" stroke="#3b82f6" stroke-width="3" filter="url(#shadow)" />
+    <circle cx="30" cy="30" r="22" fill="#3b82f6" />
+    <text x="30" y="40" text-anchor="middle" fill="white" font-size="24" font-weight="700">2</text>
+    <text x="100" y="45" text-anchor="middle" class="stage" fill="#1e3a8a">Firmware</text>
+    <text x="100" y="80" text-anchor="middle" class="detail">Enable SPI overlays</text>
+    <text x="100" y="108" text-anchor="middle" class="sub">✓ Edit config.txt</text>
+    <text x="100" y="133" text-anchor="middle" class="sub">✓ Verify spidev0.0/0.1</text>
+  </g>
+  
+  <!-- Arrow 2 -->
+  <line x1="485" y1="130" x2="520" y2="130" stroke="#1e88e5" stroke-width="5" marker-end="url(#arrow)" />
+  
+  <!-- Step 3: Gateway -->
+  <g transform="translate(520,50)">
+    <rect x="0" y="0" width="200" height="160" rx="20" fill="url(#grad3)" stroke="#22c55e" stroke-width="3" filter="url(#shadow)" />
+    <circle cx="30" cy="30" r="22" fill="#22c55e" />
+    <text x="30" y="40" text-anchor="middle" fill="white" font-size="24" font-weight="700">3</text>
+    <text x="100" y="45" text-anchor="middle" class="stage" fill="#14532d">Gateway</text>
+    <text x="100" y="80" text-anchor="middle" class="detail">Install raspyrfm-client</text>
+    <text x="100" y="108" text-anchor="middle" class="sub">✓ Expose UDP 49880</text>
+    <text x="100" y="133" text-anchor="middle" class="sub">✓ Test RF learning</text>
+  </g>
+  
+  <!-- Arrow 3 -->
+  <line x1="720" y1="130" x2="755" y2="130" stroke="#1e88e5" stroke-width="5" marker-end="url(#arrow)" />
+  
+  <!-- Step 4: Home Assistant -->
+  <g transform="translate(755,50)">
+    <rect x="0" y="0" width="200" height="160" rx="20" fill="url(#grad4)" stroke="#8b5cf6" stroke-width="3" filter="url(#shadow)" />
+    <circle cx="30" cy="30" r="22" fill="#8b5cf6" />
+    <text x="30" y="40" text-anchor="middle" fill="white" font-size="24" font-weight="700">4</text>
+    <text x="100" y="45" text-anchor="middle" class="stage" fill="#4c1d95">Home Assistant</text>
+    <text x="100" y="80" text-anchor="middle" class="detail">Add integration</text>
+    <text x="100" y="108" text-anchor="middle" class="sub">✓ Map remotes &amp; sensors</text>
+    <text x="100" y="133" text-anchor="middle" class="sub">✓ Create automations</text>
+  </g>
+</svg>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-labelledby="title desc">
+  <title id="title">Stacking the RaspyRFM on the Raspberry Pi</title>
+  <desc id="desc">Diagram showing how the RaspyRFM daughter board aligns with the Raspberry Pi GPIO header and the location of pin 1.</desc>
+  <defs>
+    <linearGradient id="piBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <linearGradient id="moduleBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f766e" />
+      <stop offset="100%" stop-color="#0f5132" />
+    </linearGradient>
+    <style>
+      text { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; fill: #0f172a; }
+      .caption { font-size: 24px; font-weight: 700; letter-spacing: 0.02em; }
+      .label { font-size: 17px; fill: #e2e8f0; }
+      .callout { font-size: 17px; fill: #0f172a; font-weight: 600; }
+      .pinlabel { font-size: 16px; fill: #f8fafc; font-weight: 700; }
+    </style>
+    <filter id="shadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+      <feOffset dx="0" dy="4" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="strokeWidth" markerWidth="12" markerHeight="12" orient="auto">
+      <path d="M0 0 L12 6 L0 12 z" fill="#fbbf24" />
+    </marker>
+  </defs>
+  
+  <!-- Arrow pointing from module to Pin 1 - drawn first (lowest layer) -->
+  <path d="M400 240 L400 250" stroke="#fbbf24" stroke-width="7" stroke-linecap="round" marker-end="url(#arrow)" />
+  
+  <!-- Raspberry Pi Base -->
+  <rect x="90" y="300" width="620" height="110" rx="24" fill="url(#piBody)" stroke="#0f172a" stroke-width="4" filter="url(#shadow)" />
+  <text x="400" y="328" text-anchor="middle" class="caption" fill="#dbeafe">Raspberry Pi 4/5</text>
+  <text x="400" y="352" text-anchor="middle" class="label">GPIO 40-pin header at top</text>
+  <text x="400" y="375" text-anchor="middle" class="label">USB / Ethernet ports accessible</text>
+  <text x="400" y="398" text-anchor="middle" class="label">microSD slot at bottom edge</text>
+  
+  <!-- RaspyRFM Module -->
+  <g transform="translate(190,115)">
+    <rect x="0" y="0" width="420" height="110" rx="20" fill="url(#moduleBody)" stroke="#064e3b" stroke-width="4" filter="url(#shadow)" />
+    <text x="210" y="30" text-anchor="middle" class="caption" fill="#bbf7d0">RaspyRFM / RaspyRFM Twin</text>
+    <text x="210" y="53" text-anchor="middle" class="label" fill="#d1fae5">10-pin IDC connector on underside</text>
+    <text x="210" y="75" text-anchor="middle" class="label" fill="#d1fae5">Aligns with GPIO header pins 1-10</text>
+    <text x="210" y="97" text-anchor="middle" class="label" fill="#d1fae5">Pin 1 marked with triangle (▸) or "1"</text>
+  </g>
+  
+  <!-- Pin 1 Indicator on Pi -->
+  <rect x="330" y="250" width="140" height="50" rx="12" fill="#fbbf24" stroke="#92400e" stroke-width="4" />
+  <text x="400" y="272" text-anchor="middle" class="pinlabel" fill="#78350f">GPIO Pin 1</text>
+  <text x="400" y="290" text-anchor="middle" class="pinlabel" fill="#78350f">3.3V Power</text>
+  
+  <!-- Callout boxes - positioned to slightly touch green module -->
+  <g transform="translate(50,45)">
+    <rect x="0" y="0" width="200" height="70" rx="14" fill="#f1f5f9" stroke="#1e88e5" stroke-width="3" filter="url(#shadow)" />
+    <text x="100" y="30" text-anchor="middle" class="callout">✓ Match Pin 1 → Pin 1</text>
+    <text x="100" y="52" text-anchor="middle" class="callout">✓ Press firmly &amp; evenly</text>
+  </g>
+  
+  <g transform="translate(560,45)">
+    <rect x="0" y="0" width="200" height="70" rx="14" fill="#f1f5f9" stroke="#1e88e5" stroke-width="3" filter="url(#shadow)" />
+    <text x="100" y="30" text-anchor="middle" class="callout">✓ Secure with standoffs</text>
+    <text x="100" y="52" text-anchor="middle" class="callout">✓ Keep boards parallel</text>
+  </g>
+</svg>

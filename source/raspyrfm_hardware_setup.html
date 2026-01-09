@@ -1,0 +1,852 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Home Assistant Experience" href="ui-guide.html"><link rel="prev" title="Home Assistant Components" href="homeassistant_components.html">
+
+    <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
+        <title>RaspyRFM Hardware Installation Guide - RaspyRFM Client Manual</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/raspyrfm.css?v=594c1320" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --color-brand-primary: #1e88e5;
+  --color-brand-content: #00897b;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #4dd0e1;
+  --color-brand-content: #90caf9;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #4dd0e1;
+  --color-brand-content: #90caf9;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">RaspyRFM Client Manual</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">RaspyRFM Client Manual</a><input aria-label="Toggle navigation of RaspyRFM Client Manual" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="homeassistant_components.html">Home Assistant Components</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">RaspyRFM Hardware Installation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui-guide.html">Home Assistant Experience</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui-showcase.html">UI Showcase</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="raspyrfm_client.html">raspyrfm_client package</a><input aria-label="Toggle navigation of raspyrfm_client package" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="raspyrfm_client.device.html">raspyrfm_client.device package</a><input aria-label="Toggle navigation of raspyrfm_client.device package" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="raspyrfm_client.device.manufacturer.html">raspyrfm_client.device.manufacturer package</a><input aria-label="Toggle navigation of raspyrfm_client.device.manufacturer package" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.bat.html">raspyrfm_client.device.manufacturer.bat package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.brennenstuhl.html">raspyrfm_client.device.manufacturer.brennenstuhl package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.elro.html">raspyrfm_client.device.manufacturer.elro package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.intertechno.html">raspyrfm_client.device.manufacturer.intertechno package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.intertek.html">raspyrfm_client.device.manufacturer.intertek package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.mumbi.html">raspyrfm_client.device.manufacturer.mumbi package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.pollin_electronic.html">raspyrfm_client.device.manufacturer.pollin_electronic package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.rev.html">raspyrfm_client.device.manufacturer.rev package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.universal.html">raspyrfm_client.device.manufacturer.universal package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.vivanco.html">raspyrfm_client.device.manufacturer.vivanco package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="raspyrfm_client.device.manufacturer.html">raspyrfm_client.device.manufacturer package</a><input aria-label="Toggle navigation of raspyrfm_client.device.manufacturer package" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="raspyrfm_client.device.manufacturer.bat.html">raspyrfm_client.device.manufacturer.bat package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="raspyrfm_client.device.manufacturer.brennenstuhl.html">raspyrfm_client.device.manufacturer.brennenstuhl package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="raspyrfm_client.device.manufacturer.elro.html">raspyrfm_client.device.manufacturer.elro package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="raspyrfm_client.device.manufacturer.intertechno.html">raspyrfm_client.device.manufacturer.intertechno package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="raspyrfm_client.device.manufacturer.intertek.html">raspyrfm_client.device.manufacturer.intertek package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="raspyrfm_client.device.manufacturer.mumbi.html">raspyrfm_client.device.manufacturer.mumbi package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="raspyrfm_client.device.manufacturer.pollin_electronic.html">raspyrfm_client.device.manufacturer.pollin_electronic package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="raspyrfm_client.device.manufacturer.rev.html">raspyrfm_client.device.manufacturer.rev package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="raspyrfm_client.device.manufacturer.universal.html">raspyrfm_client.device.manufacturer.universal package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="raspyrfm_client.device.manufacturer.vivanco.html">raspyrfm_client.device.manufacturer.vivanco package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="modules.html">raspyrfm_client</a><input aria-label="Toggle navigation of raspyrfm_client" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="raspyrfm_client.html">raspyrfm_client package</a><input aria-label="Toggle navigation of raspyrfm_client package" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="raspyrfm_client.device.html">raspyrfm_client.device package</a><input aria-label="Toggle navigation of raspyrfm_client.device package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="raspyrfm_client.device.manufacturer.html">raspyrfm_client.device.manufacturer package</a><input aria-label="Toggle navigation of raspyrfm_client.device.manufacturer package" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="raspyrfm_client.device.manufacturer.bat.html">raspyrfm_client.device.manufacturer.bat package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="raspyrfm_client.device.manufacturer.brennenstuhl.html">raspyrfm_client.device.manufacturer.brennenstuhl package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="raspyrfm_client.device.manufacturer.elro.html">raspyrfm_client.device.manufacturer.elro package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="raspyrfm_client.device.manufacturer.intertechno.html">raspyrfm_client.device.manufacturer.intertechno package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="raspyrfm_client.device.manufacturer.intertek.html">raspyrfm_client.device.manufacturer.intertek package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="raspyrfm_client.device.manufacturer.mumbi.html">raspyrfm_client.device.manufacturer.mumbi package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="raspyrfm_client.device.manufacturer.pollin_electronic.html">raspyrfm_client.device.manufacturer.pollin_electronic package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="raspyrfm_client.device.manufacturer.rev.html">raspyrfm_client.device.manufacturer.rev package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="raspyrfm_client.device.manufacturer.universal.html">raspyrfm_client.device.manufacturer.universal package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="raspyrfm_client.device.manufacturer.vivanco.html">raspyrfm_client.device.manufacturer.vivanco package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="raspyrfm_client.device.manufacturer.html">raspyrfm_client.device.manufacturer package</a><input aria-label="Toggle navigation of raspyrfm_client.device.manufacturer package" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.bat.html">raspyrfm_client.device.manufacturer.bat package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.brennenstuhl.html">raspyrfm_client.device.manufacturer.brennenstuhl package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.elro.html">raspyrfm_client.device.manufacturer.elro package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.intertechno.html">raspyrfm_client.device.manufacturer.intertechno package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.intertek.html">raspyrfm_client.device.manufacturer.intertek package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.mumbi.html">raspyrfm_client.device.manufacturer.mumbi package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.pollin_electronic.html">raspyrfm_client.device.manufacturer.pollin_electronic package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.rev.html">raspyrfm_client.device.manufacturer.rev package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.universal.html">raspyrfm_client.device.manufacturer.universal package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="raspyrfm_client.device.manufacturer.vivanco.html">raspyrfm_client.device.manufacturer.vivanco package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/source/raspyrfm_hardware_setup.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="raspyrfm-hardware-installation-guide">
+<span id="raspyrfm-hardware-setup"></span><h1>RaspyRFM Hardware Installation Guide<a class="headerlink" href="#raspyrfm-hardware-installation-guide" title="Link to this heading">¶</a></h1>
+<p>This tutorial walks through every step required to attach a Seegel Systeme
+RaspyRFM or RaspyRFM Twin module to a Raspberry Pi and make the gateway
+available to Home Assistant.  It covers three supported deployment options:</p>
+<ul class="simple">
+<li><p>a Raspberry Pi running <strong>Home Assistant OS</strong>,</p></li>
+<li><p><strong>Home Assistant Container</strong> (Docker) on Raspberry Pi OS, and</p></li>
+<li><p>a classic <strong>Raspberry Pi OS + raspyrfm-client gateway</strong> that exposes
+Home Assistant to your 433/868&amp;nbsp;MHz devices over the network.</p></li>
+</ul>
+<p>The steps were assembled from the manufacturer’s hardware notes and battle
+tested against current Home Assistant builds so that you have a single
+self-contained reference.  Follow the sections in order—each includes visual
+checklists, shell commands, and verification tips.</p>
+<figure class="align-center" id="id1">
+<img alt="Timeline that highlights the four major phases: hardware, firmware, gateway, and Home Assistant configuration." src="../_images/raspyrfm-setup-workflow.svg" />
+<figcaption>
+<p><span class="caption-text">Four high level milestones keep the installation on track.</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Raspberry Pi 3B/3B+/4B (2&amp;nbsp;GB RAM or higher recommended)</p></li>
+<li><p>RaspyRFM or RaspyRFM Twin add-on module</p></li>
+<li><p>16&amp;nbsp;GB (or larger) microSD card and reader</p></li>
+<li><p>Reliable 5&amp;nbsp;V / 3&amp;nbsp;A Raspberry Pi PSU</p></li>
+<li><p>Ethernet (preferred) or Wi-Fi with internet access</p></li>
+<li><p>Computer with Raspberry Pi Imager (Windows/macOS/Linux)</p></li>
+<li><p>Optional: USB-TTL serial console cable for first boot diagnostics</p></li>
+</ul>
+</section>
+<section id="bill-of-materials">
+<h2>Bill of materials<a class="headerlink" href="#bill-of-materials" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given docutils container" id="id2">
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-text">Suggested hardware</span><a class="headerlink" href="#id2" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 22.0%" />
+<col style="width: 78.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Component</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Seegel Systeme RaspyRFM II</p></td>
+<td><p>Single radio (433&amp;nbsp;MHz) board with 10-pin IDC connector and onboard
+SMA antenna jack.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Seegel Systeme RaspyRFM Twin</p></td>
+<td><p>Dual-radio daughter board.  Radio <em>A</em> ships tuned to 433&amp;nbsp;MHz while
+radio <em>B</em> covers 868/915&amp;nbsp;MHz.  Each radio has its own SMA connector
+and can be selected in software.</p></td>
+</tr>
+<tr class="row-even"><td><p>2×20 (40-pin) stacking header</p></td>
+<td><p>Included with most kits.  Ensures the RaspyRFM module clears the Pi’s
+USB/Ethernet connectors.</p></td>
+</tr>
+<tr class="row-odd"><td><p>433&amp;nbsp;MHz λ/4 whip antenna</p></td>
+<td><p>Screw into the SMA connector marked <code class="docutils literal notranslate"><span class="pre">A</span></code>.  Use 868&amp;nbsp;MHz antenna on the
+connector marked <code class="docutils literal notranslate"><span class="pre">B</span></code> for the Twin module.</p></td>
+</tr>
+<tr class="row-even"><td><p>Standoffs + screws</p></td>
+<td><p>Keep the module parallel to the Raspberry Pi and avoid stress on the
+GPIO header.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="step-1-prepare-the-hardware">
+<h2>Step 1 – Prepare the hardware<a class="headerlink" href="#step-1-prepare-the-hardware" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Disconnect power</strong> from the Raspberry Pi.  The RaspyRFM must only be
+seated while the board is unpowered to avoid damaging the transceiver.</p></li>
+<li><p>Identify <strong>pin&amp;nbsp;1</strong> on both the Raspberry Pi and the RaspyRFM PCB.  On the
+Pi, it sits next to the corner closest to the microSD slot and is marked by
+a square pad.  The RaspyRFM uses an IDC connector with a small triangle or
+<code class="docutils literal notranslate"><span class="pre">1</span></code> silkscreen.</p></li>
+<li><p>If you are installing the <strong>Twin module</strong>, fit the supplied 2×20 stacking
+header onto the Raspberry Pi first.  This raises the RaspyRFM so that both
+SMA connectors clear the Pi’s USB/Ethernet ports.</p></li>
+<li><p>Place the RaspyRFM over the GPIO header and press straight down until the
+IDC connector is fully seated.</p></li>
+<li><p>Fasten the included standoffs to prevent vibration from working the board
+loose.</p></li>
+</ol>
+<figure class="align-center" id="id3">
+<img alt="Diagram showing the RaspyRFM board stacked on top of the Raspberry Pi." src="../_images/raspyrfm-gpio-stack.svg" />
+<figcaption>
+<p><span class="caption-text">Align pin&amp;nbsp;1 on the RaspyRFM IDC connector with pin&amp;nbsp;1 on the Raspberry Pi
+header before seating the board.</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="step-2-antennas-and-jumpers">
+<h2>Step 2 – Antennas and jumpers<a class="headerlink" href="#step-2-antennas-and-jumpers" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Screw the 433&amp;nbsp;MHz antenna onto the SMA connector labelled <code class="docutils literal notranslate"><span class="pre">A</span></code>.</p></li>
+<li><p>For the Twin module, attach the 868/915&amp;nbsp;MHz antenna to connector <code class="docutils literal notranslate"><span class="pre">B</span></code>.</p></li>
+<li><p>Confirm the slide switch next to radio <code class="docutils literal notranslate"><span class="pre">A</span></code> is in the <strong>ASK/OOK</strong> position
+when targeting 433&amp;nbsp;MHz mains sockets and doorbells.  Move it to <strong>FSK</strong> for
+RFM69-based sensors.  Repeat for radio <code class="docutils literal notranslate"><span class="pre">B</span></code> if used.</p></li>
+<li><p>Leave the <code class="docutils literal notranslate"><span class="pre">JP1</span></code>/<code class="docutils literal notranslate"><span class="pre">JP2</span></code> jumpers at their factory position (<code class="docutils literal notranslate"><span class="pre">3V3</span></code>) unless
+you have a documented reason to power the radios from an external supply.</p></li>
+</ul>
+<figure class="align-center" id="id4">
+<img alt="Diagram that highlights antenna assignments for RaspyRFM radio A and B and the matching ASK/FSK switch settings." src="../_images/raspyrfm-antenna-orientation.svg" />
+<figcaption>
+<p><span class="caption-text">Antennas <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> line up with radio <code class="docutils literal notranslate"><span class="pre">A</span></code> (433&amp;nbsp;MHz) and radio
+<code class="docutils literal notranslate"><span class="pre">B</span></code> (868/915&amp;nbsp;MHz).  Keep the whips vertical for best range.</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="step-3-enable-spi-support">
+<h2>Step 3 – Enable SPI support<a class="headerlink" href="#step-3-enable-spi-support" title="Link to this heading">¶</a></h2>
+<p>The RaspyRFM communicates via the Raspberry Pi’s SPI0 controller, which must be
+enabled in <code class="docutils literal notranslate"><span class="pre">config.txt</span></code>:</p>
+<ol class="arabic">
+<li><p>Insert the microSD card into your computer.</p></li>
+<li><p>Open the <code class="docutils literal notranslate"><span class="pre">config.txt</span></code> file on the boot partition and ensure the following
+lines are present (add them if necessary):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dtparam</span><span class="o">=</span><span class="n">spi</span><span class="o">=</span><span class="n">on</span>
+<span class="n">dtoverlay</span><span class="o">=</span><span class="n">spi0</span><span class="o">-</span><span class="mi">2</span><span class="n">cs</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">spi0-2cs</span></code> overlay (or the Raspberry Pi OS default configuration with
+<code class="docutils literal notranslate"><span class="pre">dtparam=spi=on</span></code> alone) keeps both chip select lines enabled so the Twin
+module can expose two radios.  Avoid <code class="docutils literal notranslate"><span class="pre">dtoverlay=spi0-1cs</span></code>—it disables the
+second chip select and prevents <code class="docutils literal notranslate"><span class="pre">/dev/spidev0.1</span></code> from appearing.</p>
+</li>
+<li><p>Save the file and safely eject the card.</p></li>
+<li><p>Reinsert the microSD card into the Raspberry Pi and connect power.</p></li>
+<li><p>After the Pi boots, confirm that <code class="docutils literal notranslate"><span class="pre">/dev/spidev0.0</span></code> and <code class="docutils literal notranslate"><span class="pre">/dev/spidev0.1</span></code>
+exist:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">spidev0</span><span class="o">.*</span>
+</pre></div>
+</div>
+<p>You should see both chip selects.  The Twin module uses <code class="docutils literal notranslate"><span class="pre">spidev0.0</span></code> for
+radio <code class="docutils literal notranslate"><span class="pre">A</span></code> (433&amp;nbsp;MHz) and <code class="docutils literal notranslate"><span class="pre">spidev0.1</span></code> for radio <code class="docutils literal notranslate"><span class="pre">B</span></code> (868/915&amp;nbsp;MHz).</p>
+</li>
+</ol>
+</section>
+<section id="home-assistant-os-workflow">
+<h2>Home Assistant OS workflow<a class="headerlink" href="#home-assistant-os-workflow" title="Link to this heading">¶</a></h2>
+<p>The official Home Assistant OS images can drive the RaspyRFM hardware directly.
+Carry out the following tasks in order.</p>
+<ol class="arabic">
+<li><p><strong>Flash the operating system</strong></p>
+<ol class="arabic simple">
+<li><p>Start Raspberry Pi Imager and choose <em>Home Assistant OS</em> → <em>Raspberry Pi</em>
+→ your board model.</p></li>
+<li><p>Select the microSD card and click the cog icon to pre-configure Wi-Fi
+(if needed), hostname, and SSH key.</p></li>
+<li><p>Write the image and eject the card when the imager finishes.</p></li>
+</ol>
+</li>
+<li><p><strong>First boot and onboarding</strong></p>
+<ol class="arabic simple">
+<li><p>Insert the microSD card, connect Ethernet (recommended), and power up the
+Pi.</p></li>
+<li><p>Wait 20&amp;nbsp;minutes for the initial provisioning, then open
+<code class="docutils literal notranslate"><span class="pre">http://homeassistant.local:8123</span></code> in a browser to complete the onboarding
+wizard.</p></li>
+</ol>
+</li>
+<li><p><strong>Expose the SPI interface to the supervisor</strong></p>
+<ol class="arabic">
+<li><p>In the Home Assistant UI, install the <em>Terminal &amp; SSH</em> add-on from the
+<em>Official add-ons</em> repository.</p></li>
+<li><p>Open the add-on web terminal and run <code class="docutils literal notranslate"><span class="pre">login</span></code> to drop into the host OS
+shell.</p></li>
+<li><p>Verify the boot flags:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sed</span> <span class="o">-</span><span class="n">n</span> <span class="s1">&#39;1,120p&#39;</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">config</span><span class="o">.</span><span class="n">txt</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">E</span> <span class="s1">&#39;dtparam=spi|dtoverlay&#39;</span>
+</pre></div>
+</div>
+<p>Adjust the file with <code class="docutils literal notranslate"><span class="pre">nano</span></code> if the SPI options are missing, then run
+<code class="docutils literal notranslate"><span class="pre">ha</span> <span class="pre">host</span> <span class="pre">reboot</span></code>.</p>
+</li>
+</ol>
+</li>
+<li><p><strong>Deploy the RaspyRFM gateway</strong></p>
+<p>Home Assistant OS runs on an isolated system. You need to install the
+gateway software that will communicate with the RF hardware. There are
+two options:</p>
+<p><strong>Option A: Using the RaspyRFM connair gateway (Recommended)</strong></p>
+<ol class="arabic">
+<li><p>From the host shell (accessed via Terminal &amp; SSH add-on with <code class="docutils literal notranslate"><span class="pre">login</span></code>
+command), install git and Python:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apk</span> <span class="n">add</span> <span class="n">git</span> <span class="n">python3</span> <span class="n">py3</span><span class="o">-</span><span class="n">pip</span>
+</pre></div>
+</div>
+</li>
+<li><p>Clone and set up the RaspyRFM gateway:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">root</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">Phunkafizer</span><span class="o">/</span><span class="n">RaspyRFM</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">RaspyRFM</span>
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="k">break</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">packages</span> <span class="n">spidev</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">--break-system-packages</span></code> flag is required on Alpine Linux (used by
+Home Assistant OS) to install Python packages system-wide.</p>
+</div>
+</li>
+<li><p>Create a service file at <code class="docutils literal notranslate"><span class="pre">/etc/systemd/system/raspyrfm.service</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">RaspyRFM</span> <span class="n">Gateway</span> <span class="n">Service</span>
+<span class="n">After</span><span class="o">=</span><span class="n">network</span><span class="o">.</span><span class="n">target</span>
+
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">simple</span>
+<span class="n">User</span><span class="o">=</span><span class="n">root</span>
+<span class="n">WorkingDirectory</span><span class="o">=/</span><span class="n">root</span><span class="o">/</span><span class="n">RaspyRFM</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">RaspyRFM</span><span class="o">/</span><span class="n">connair</span><span class="o">.</span><span class="n">py</span>
+<span class="n">Restart</span><span class="o">=</span><span class="n">always</span>
+<span class="n">RestartSec</span><span class="o">=</span><span class="mi">10</span>
+
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+<span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+</li>
+<li><p>Enable and start the service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">raspyrfm</span><span class="o">.</span><span class="n">service</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">raspyrfm</span><span class="o">.</span><span class="n">service</span>
+</pre></div>
+</div>
+</li>
+<li><p>Verify the gateway is running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">status</span> <span class="n">raspyrfm</span><span class="o">.</span><span class="n">service</span>
+<span class="n">ss</span> <span class="o">-</span><span class="n">uap</span> <span class="o">|</span> <span class="n">grep</span> <span class="mi">49880</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p><strong>Option B: Manual Python gateway</strong></p>
+<p>You can also run the gateway manually for testing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">RaspyRFM</span>
+<span class="n">python3</span> <span class="n">connair</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Install the RaspyRFM custom integration</strong></p>
+<ol class="arabic">
+<li><p>In Home Assistant, open <em>Settings → Devices &amp; Services → Integrations</em> and
+click <em>+ Add Integration</em>.  Search for <em>“RaspyRFM”</em>—if it is not listed,
+install the custom component manually.</p></li>
+<li><p>To install the custom component, open the <em>Terminal &amp; SSH</em> add-on and run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">custom_components</span>
+<span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="n">raspyrfm</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">halbothpa</span><span class="o">/</span><span class="n">raspyrfm</span><span class="o">-</span><span class="n">client</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span><span class="n">refs</span><span class="o">/</span><span class="n">heads</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> \
+ <span class="o">|</span> <span class="n">tar</span> <span class="o">-</span><span class="n">xz</span> <span class="o">--</span><span class="n">strip</span><span class="o">-</span><span class="n">components</span><span class="o">=</span><span class="mi">3</span> <span class="o">-</span><span class="n">C</span> <span class="n">raspyrfm</span> \
+    <span class="n">raspyrfm</span><span class="o">-</span><span class="n">client</span><span class="o">-</span><span class="n">main</span><span class="o">/</span><span class="n">custom_components</span><span class="o">/</span><span class="n">raspyrfm</span>
+</pre></div>
+</div>
+<p>Restart Home Assistant after the files are in place.</p>
+</li>
+<li><p>Add the integration, enter the Raspberry Pi’s IP address, keep the default
+UDP port (49880), and complete the config flow.</p></li>
+</ol>
+</li>
+</ol>
+</section>
+<section id="home-assistant-container-docker-workflow">
+<h2>Home Assistant Container (Docker) workflow<a class="headerlink" href="#home-assistant-container-docker-workflow" title="Link to this heading">¶</a></h2>
+<p>When Home Assistant runs inside Docker on top of Raspberry Pi OS, the host OS
+is in full control of the hardware. You need to install the RaspyRFM gateway
+separately on the host.</p>
+<ol class="arabic">
+<li><p><strong>Install the RaspyRFM gateway on the host</strong></p>
+<p>On your Raspberry Pi OS (outside of any containers), install the gateway:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">git</span> <span class="n">python3</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">opt</span>
+<span class="n">sudo</span> <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">Phunkafizer</span><span class="o">/</span><span class="n">RaspyRFM</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">RaspyRFM</span>
+<span class="n">sudo</span> <span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">spidev</span>
+</pre></div>
+</div>
+<p>Create a systemd service at <code class="docutils literal notranslate"><span class="pre">/etc/systemd/system/raspyrfm-gateway.service</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">RaspyRFM</span> <span class="n">UDP</span> <span class="n">gateway</span>
+<span class="n">After</span><span class="o">=</span><span class="n">network</span><span class="o">-</span><span class="n">online</span><span class="o">.</span><span class="n">target</span>
+<span class="n">Wants</span><span class="o">=</span><span class="n">network</span><span class="o">-</span><span class="n">online</span><span class="o">.</span><span class="n">target</span>
+
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">simple</span>
+<span class="n">User</span><span class="o">=</span><span class="n">root</span>
+<span class="n">WorkingDirectory</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">RaspyRFM</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">RaspyRFM</span><span class="o">/</span><span class="n">connair</span><span class="o">.</span><span class="n">py</span>
+<span class="n">Restart</span><span class="o">=</span><span class="n">on</span><span class="o">-</span><span class="n">failure</span>
+
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+<span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>Enable and start the gateway service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="o">--</span><span class="n">now</span> <span class="n">raspyrfm</span><span class="o">-</span><span class="n">gateway</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">status</span> <span class="n">raspyrfm</span><span class="o">-</span><span class="n">gateway</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Deploy Home Assistant in Docker</strong></p>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">docker-compose.yml</span></code> file for Home Assistant:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">version</span><span class="p">:</span> <span class="s1">&#39;3.8&#39;</span>
+<span class="n">services</span><span class="p">:</span>
+  <span class="n">homeassistant</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">ghcr</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">home</span><span class="o">-</span><span class="n">assistant</span><span class="o">/</span><span class="n">raspberrypi4</span><span class="o">-</span><span class="n">homeassistant</span><span class="p">:</span><span class="n">stable</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">homeassistant</span>
+    <span class="n">restart</span><span class="p">:</span> <span class="n">unless</span><span class="o">-</span><span class="n">stopped</span>
+    <span class="n">network_mode</span><span class="p">:</span> <span class="n">host</span>
+    <span class="n">privileged</span><span class="p">:</span> <span class="n">true</span>
+    <span class="n">volumes</span><span class="p">:</span>
+      <span class="o">-</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">homeassistant</span><span class="o">/</span><span class="n">config</span><span class="p">:</span><span class="o">/</span><span class="n">config</span>
+      <span class="o">-</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">localtime</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">localtime</span><span class="p">:</span><span class="n">ro</span>
+</pre></div>
+</div>
+<p>Start Home Assistant:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">compose</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Install the RaspyRFM custom integration</strong></p>
+<p>Copy the integration files to your Home Assistant config directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">homeassistant</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">custom_components</span><span class="o">/</span><span class="n">raspyrfm</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">halbothpa</span><span class="o">/</span><span class="n">raspyrfm</span><span class="o">-</span><span class="n">client</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span><span class="n">refs</span><span class="o">/</span><span class="n">heads</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> \
+  <span class="o">|</span> <span class="n">tar</span> <span class="o">-</span><span class="n">xz</span> <span class="o">--</span><span class="n">strip</span><span class="o">-</span><span class="n">components</span><span class="o">=</span><span class="mi">3</span> <span class="o">-</span><span class="n">C</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">homeassistant</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">custom_components</span><span class="o">/</span><span class="n">raspyrfm</span> \
+     <span class="n">raspyrfm</span><span class="o">-</span><span class="n">client</span><span class="o">-</span><span class="n">main</span><span class="o">/</span><span class="n">custom_components</span><span class="o">/</span><span class="n">raspyrfm</span>
+</pre></div>
+</div>
+<p>Restart Home Assistant, then add the RaspyRFM integration via
+<em>Settings → Devices &amp; Services</em>, entering <code class="docutils literal notranslate"><span class="pre">localhost</span></code> or your Pi’s
+IP address as the gateway host.</p>
+</li>
+</ol>
+<figure class="align-center" id="id5">
+<img alt="Diagram showing how Home Assistant, the RaspyRFM gateway, and RF devices exchange data." src="../_images/raspyrfm-ha-topology.svg" />
+<figcaption>
+<p><span class="caption-text">Home Assistant talks to the RaspyRFM gateway over UDP while the gateway
+forwards packets to the 433/868&amp;nbsp;MHz radios via SPI.</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="raspberry-pi-os-gateway-workflow">
+<h2>Raspberry Pi OS gateway workflow<a class="headerlink" href="#raspberry-pi-os-gateway-workflow" title="Link to this heading">¶</a></h2>
+<p>If you prefer to keep Home Assistant off the hardware that drives the radios,
+turn the Raspberry Pi into a dedicated RaspyRFM gateway and let Home Assistant
+communicate over the network.</p>
+<ol class="arabic">
+<li><p>Flash Raspberry Pi OS Lite (64-bit), boot the Pi, and apply system updates:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">apt</span> <span class="n">full</span><span class="o">-</span><span class="n">upgrade</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">sudo</span> <span class="n">raspi</span><span class="o">-</span><span class="n">config</span> <span class="n">nonint</span> <span class="n">do_spi</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</li>
+<li><p>Install git and Python dependencies:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">python3</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span> <span class="n">git</span>
+</pre></div>
+</div>
+</li>
+<li><p>Clone the RaspyRFM gateway software:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">opt</span>
+<span class="n">sudo</span> <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">Phunkafizer</span><span class="o">/</span><span class="n">RaspyRFM</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">RaspyRFM</span>
+<span class="n">sudo</span> <span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">spidev</span>
+</pre></div>
+</div>
+</li>
+<li><p>Create a systemd unit in <code class="docutils literal notranslate"><span class="pre">/etc/systemd/system/raspyrfm-gateway.service</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">RaspyRFM</span> <span class="n">UDP</span> <span class="n">gateway</span>
+<span class="n">After</span><span class="o">=</span><span class="n">network</span><span class="o">-</span><span class="n">online</span><span class="o">.</span><span class="n">target</span>
+<span class="n">Wants</span><span class="o">=</span><span class="n">network</span><span class="o">-</span><span class="n">online</span><span class="o">.</span><span class="n">target</span>
+
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">simple</span>
+<span class="n">User</span><span class="o">=</span><span class="n">root</span>
+<span class="n">WorkingDirectory</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">RaspyRFM</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">RaspyRFM</span><span class="o">/</span><span class="n">connair</span><span class="o">.</span><span class="n">py</span>
+<span class="n">Restart</span><span class="o">=</span><span class="n">on</span><span class="o">-</span><span class="n">failure</span>
+
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+<span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>Enable and start the service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="o">--</span><span class="n">now</span> <span class="n">raspyrfm</span><span class="o">-</span><span class="n">gateway</span>
+</pre></div>
+</div>
+</li>
+<li><p>Verify the gateway is running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">status</span> <span class="n">raspyrfm</span><span class="o">-</span><span class="n">gateway</span>
+<span class="n">ss</span> <span class="o">-</span><span class="n">uap</span> <span class="o">|</span> <span class="n">grep</span> <span class="mi">49880</span>
+</pre></div>
+</div>
+</li>
+<li><p>Point your Home Assistant instance (running elsewhere on the network) to
+the Raspberry Pi gateway via <em>Settings → Devices &amp; Services → RaspyRFM</em>.
+Enter the IP address of your Raspberry Pi and port 49880.</p></li>
+</ol>
+</section>
+<section id="twin-module-radio-selection">
+<h2>Twin module radio selection<a class="headerlink" href="#twin-module-radio-selection" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">raspyrfm-client</span></code> library automatically enumerates both radios exposed by
+the Twin module.  Within Home Assistant the radios appear as separate gateways
+(<code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code>).  Assign devices to the radio that matches their frequency:</p>
+<ul class="simple">
+<li><p>433&amp;nbsp;MHz wall switches, weather stations, and contact sensors → <strong>Radio A</strong></p></li>
+<li><p>868&amp;nbsp;MHz heating thermostats and alarm system accessories → <strong>Radio B</strong></p></li>
+</ul>
+<p>Use the RaspyRFM panel to run two consecutive learning sessions—one per radio—
+so that codes do not overlap.</p>
+</section>
+<section id="verification-checklist">
+<h2>Verification checklist<a class="headerlink" href="#verification-checklist" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">/dev/spidev0.*</span></code> lists two chip select devices on the Raspberry Pi.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">ps</span></code> (or <code class="docutils literal notranslate"><span class="pre">systemctl</span> <span class="pre">status</span> <span class="pre">raspyrfm-gateway</span></code>) reports a running
+gateway with an open UDP socket on port 49880.</p></li>
+<li><p>The Home Assistant integration shows the gateway as <em>Connected</em> and the
+RaspyRFM panel lists your captured signals.</p></li>
+</ul>
+</section>
+<section id="troubleshooting-tips">
+<h2>Troubleshooting tips<a class="headerlink" href="#troubleshooting-tips" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Gateway offline</strong> – Check the host firewall.  UDP ports <code class="docutils literal notranslate"><span class="pre">49880</span></code> and
+<code class="docutils literal notranslate"><span class="pre">49881</span></code> must be reachable from Home Assistant.</p></li>
+<li><p><strong>Missing SPI device</strong> – Reapply the <code class="docutils literal notranslate"><span class="pre">dtparam=spi=on</span></code> setting and double
+check that no other overlay claims SPI0.</p></li>
+<li><p><strong>Twin module 868&amp;nbsp;MHz radio silent</strong> – Confirm <code class="docutils literal notranslate"><span class="pre">spidev0.1</span></code> is listed in
+your container configuration.  Without it the gateway cannot reach radio
+<code class="docutils literal notranslate"><span class="pre">B</span></code>.</p></li>
+<li><p><strong>Interference or poor range</strong> – Use quality SMA antennas that match the
+operating frequency and keep them upright.  Avoid placing the Raspberry Pi in
+metal enclosures.</p></li>
+</ul>
+</section>
+<section id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Link to this heading">¶</a></h2>
+<p>With the gateway online you can follow the <a class="reference internal" href="homeassistant_components.html"><span class="doc">Home Assistant Components</span></a>
+chapter to learn new RF codes, build automations, and manage devices from the
+RaspyRFM control panel.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="ui-guide.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Home Assistant Experience</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="homeassistant_components.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home Assistant Components</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2017, Markus Ressel
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">RaspyRFM Hardware Installation Guide</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#bill-of-materials">Bill of materials</a></li>
+<li><a class="reference internal" href="#step-1-prepare-the-hardware">Step 1 – Prepare the hardware</a></li>
+<li><a class="reference internal" href="#step-2-antennas-and-jumpers">Step 2 – Antennas and jumpers</a></li>
+<li><a class="reference internal" href="#step-3-enable-spi-support">Step 3 – Enable SPI support</a></li>
+<li><a class="reference internal" href="#home-assistant-os-workflow">Home Assistant OS workflow</a></li>
+<li><a class="reference internal" href="#home-assistant-container-docker-workflow">Home Assistant Container (Docker) workflow</a></li>
+<li><a class="reference internal" href="#raspberry-pi-os-gateway-workflow">Raspberry Pi OS gateway workflow</a></li>
+<li><a class="reference internal" href="#twin-module-radio-selection">Twin module radio selection</a></li>
+<li><a class="reference internal" href="#verification-checklist">Verification checklist</a></li>
+<li><a class="reference internal" href="#troubleshooting-tips">Troubleshooting tips</a></li>
+<li><a class="reference internal" href="#next-steps">Next steps</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=dc1923a2"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>
