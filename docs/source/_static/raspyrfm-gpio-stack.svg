@@ -51,12 +51,12 @@
   </g>
   
   <!-- Pin 1 Indicator on Pi -->
-  <rect x="330" y="210" width="140" height="60" rx="12" fill="#fbbf24" stroke="#92400e" stroke-width="4" />
-  <text x="400" y="235" text-anchor="middle" class="pinlabel" fill="#78350f">GPIO Pin 1</text>
-  <text x="400" y="255" text-anchor="middle" class="pinlabel" fill="#78350f">3.3V Power</text>
+  <rect x="330" y="220" width="140" height="60" rx="12" fill="#fbbf24" stroke="#92400e" stroke-width="4" />
+  <text x="400" y="245" text-anchor="middle" class="pinlabel" fill="#78350f">GPIO Pin 1</text>
+  <text x="400" y="265" text-anchor="middle" class="pinlabel" fill="#78350f">3.3V Power</text>
   
   <!-- Arrow pointing from module to Pin 1 -->
-  <path d="M400 180 L400 210" stroke="#fbbf24" stroke-width="7" stroke-linecap="round" marker-end="url(#arrow)" />
+  <path d="M400 190 L400 220" stroke="#fbbf24" stroke-width="7" stroke-linecap="round" marker-end="url(#arrow)" />
   
   <!-- Callout boxes - repositioned to avoid overlap -->
   <g transform="translate(50,20)">
