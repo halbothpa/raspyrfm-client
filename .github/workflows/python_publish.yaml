@@ -13,9 +13,6 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write  # Required for OIDC authentication
-      contents: read   # Usually needed for checkout
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python
@@ -32,5 +29,4 @@ jobs:
       - name: Publish a Python distribution to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          user: __token__
           password: ${{ secrets.PYPI_PASSWORD }}
