@@ -18,9 +18,9 @@ permissions:
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
-    # For self-hosted runners with Docker container actions and persist-credentials,
-    # actions/checkout@v6 requires Actions Runner v2.329.0+.
     steps:
+      # For self-hosted runners using Docker container actions with persist-credentials,
+      # actions/checkout@v6 requires Actions Runner v2.329.0+.
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
