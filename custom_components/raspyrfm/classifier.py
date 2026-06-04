@@ -137,7 +137,7 @@ def _fingerprint_action_map() -> Dict[SignalFingerprint, Set[Action]]:
                     for key, regex in device.get_channel_config_args().items()
                 }
                 device.set_channel_config(**default_config)
-            except Exception as err:  # pragma: no cover - defensive fallback
+            except (OSError, TypeError, ValueError, KeyError) as err:  # pragma: no cover - defensive fallback
                 LOGGER.debug(
                     "Unable to build default configuration for %s %s: %s",
                     manufacturer,
@@ -149,7 +149,7 @@ def _fingerprint_action_map() -> Dict[SignalFingerprint, Set[Action]]:
             for action in device.get_supported_actions():
                 try:
                     pulses, repetitions, timebase = device.get_pulse_data(action)
-                except Exception as err:  # pragma: no cover - defensive fallback
+                except (OSError, TypeError, ValueError, KeyError) as err:  # pragma: no cover - defensive fallback
                     LOGGER.debug(
                         "Unable to build fingerprint for %s %s action %s: %s",
                         manufacturer,
