@@ -173,7 +173,8 @@ def _resolve_bind_host_for_gateway(gateway_host: Optional[str]) -> str:
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
             # Connect to an arbitrary UDP endpoint so the kernel picks a route,
             # then reuse that route's local interface address for binding.
-            # Port 9 (discard) is used only to query routing; no payload is sent.
+            # Port 9 (discard) is arbitrary here; UDP connect() only sets routing
+            # context and does not transmit packets by itself.
             sock.connect((gateway_host, 9))
             return str(sock.getsockname()[0])
     except OSError:
