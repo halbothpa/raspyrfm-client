@@ -63,7 +63,7 @@ class LearnManager:
         self._transport: Optional[asyncio.transports.DatagramTransport] = None
         self._active = False
         self._listen_port = DEFAULT_LISTEN_PORT
-        self._gateway_host: Optional[str] = None
+        self._resolved_gateway_ip: Optional[str] = None
         self._signals: List[LearnedSignal] = []
         self._lock = asyncio.Lock()
 
@@ -79,8 +79,8 @@ class LearnManager:
         if self._active:
             return
 
-        self._gateway_host = await self._resolve_gateway_host()
-        bind_host = _resolve_bind_host_for_gateway(self._gateway_host)
+        self._resolved_gateway_ip = await self._resolve_gateway_host()
+        bind_host = _resolve_bind_host_for_gateway(self._resolved_gateway_ip)
         loop = asyncio.get_running_loop()
         self._transport, _ = await loop.create_datagram_endpoint(
             lambda: RaspyRFMLearnProtocol(self), local_addr=(bind_host, self._listen_port)
@@ -114,11 +114,11 @@ class LearnManager:
 
         if not payload:
             return
-        if self._gateway_host and addr[0] != self._gateway_host:
+        if self._resolved_gateway_ip and addr[0] != self._resolved_gateway_ip:
             _LOGGER.debug(
                 "Ignoring datagram from unexpected source %s (expected %s)",
                 addr[0],
-                self._gateway_host,
+                self._resolved_gateway_ip,
             )
             return
 
@@ -169,6 +169,8 @@ def _resolve_bind_host_for_gateway(gateway_host: Optional[str]) -> str:
 
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+            # Connect to an arbitrary UDP endpoint so the kernel picks a route,
+            # then reuse that route's local interface address for binding.
             sock.connect((gateway_host, 9))
             return str(sock.getsockname()[0])
     except OSError:
