@@ -167,7 +167,7 @@ def _resolve_bind_host_for_gateway(gateway_host: Optional[str]) -> str:
     """Determine a local bind address suitable for receiving gateway datagrams."""
 
     if not gateway_host:
-        raise OSError("Gateway host is unresolved")
+        raise OSError("Gateway host resolution failed before listener binding")
 
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
@@ -177,5 +177,5 @@ def _resolve_bind_host_for_gateway(gateway_host: Optional[str]) -> str:
             # context and does not transmit packets by itself.
             sock.connect((gateway_host, 9))
             return str(sock.getsockname()[0])
-    except OSError:
-        raise OSError(f"Unable to determine bind interface for gateway {gateway_host}") from None
+    except OSError as err:
+        raise OSError(f"Unable to determine bind interface for gateway {gateway_host}") from err

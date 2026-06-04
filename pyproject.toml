@@ -20,6 +20,7 @@ python = ">=3.10,<4.0"
 xeger = "*"
 pytest = "*"
 setuptools = "*"
+pygments = ">=2.20.0"
 
 [build-system]
 requires = ["poetry-core"]
