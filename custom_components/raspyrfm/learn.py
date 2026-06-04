@@ -80,6 +80,8 @@ class LearnManager:
             return
 
         self._resolved_gateway_ip = await self._resolve_gateway_host()
+        if self._resolved_gateway_ip is None:
+            raise OSError("Gateway host could not be resolved")
         bind_host = _resolve_bind_host_for_gateway(self._resolved_gateway_ip)
         loop = asyncio.get_running_loop()
         self._transport, _ = await loop.create_datagram_endpoint(
@@ -156,7 +158,7 @@ class LearnManager:
 
         try:
             return await self._hass.async_add_executor_job(socket.gethostbyname, gateway_host)
-        except OSError:
+        except socket.gaierror:
             _LOGGER.debug("Unable to resolve gateway host %s", gateway_host)
             return None
 
@@ -165,8 +167,7 @@ def _resolve_bind_host_for_gateway(gateway_host: Optional[str]) -> str:
     """Determine a local bind address suitable for receiving gateway datagrams."""
 
     if not gateway_host:
-        _LOGGER.warning("Gateway host is unresolved; falling back to loopback bind address")
-        return "127.0.0.1"
+        raise OSError("Gateway host is unresolved")
 
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
@@ -176,8 +177,4 @@ def _resolve_bind_host_for_gateway(gateway_host: Optional[str]) -> str:
             sock.connect((gateway_host, 9))
             return str(sock.getsockname()[0])
     except OSError:
-        _LOGGER.warning(
-            "Unable to determine bind interface for gateway %s; falling back to loopback",
-            gateway_host,
-        )
-        return "127.0.0.1"
+        raise OSError(f"Unable to determine bind interface for gateway {gateway_host}") from None
