@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import asyncio
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 import logging
 import socket
 import uuid
@@ -186,7 +186,7 @@ class RaspyRFMHub:
 
         async with self._signals_lock:
             self._active_signals[signal.uid] = ActiveSignal(
-                signal=signal, received_at=datetime.now(UTC), source=addr
+                signal=signal, received_at=datetime.now(tz=timezone.utc), source=addr
             )
         async_dispatcher_send(
             self._hass,

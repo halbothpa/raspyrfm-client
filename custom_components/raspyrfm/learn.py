@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import asyncio
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 import logging
 import socket
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple
@@ -127,7 +127,7 @@ class LearnManager:
         signal = LearnedSignal(
             uid=f"sig_{len(self._signals)+1}",
             payload=payload,
-            received=datetime.now(UTC),
+            received=datetime.now(tz=timezone.utc),
             metadata={"source": addr[0], "port": addr[1]},
         )
         classification = classify_payload(payload)
