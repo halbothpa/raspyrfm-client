@@ -1,0 +1,698 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="RaspyRFM Client Manual" href="source/index.html">
+
+    <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
+        <title>RaspyRFM Client Manual</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="_static/raspyrfm.css?v=594c1320" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --color-brand-primary: #1e88e5;
+  --color-brand-content: #00897b;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #4dd0e1;
+  --color-brand-content: #90caf9;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #4dd0e1;
+  --color-brand-content: #90caf9;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="#"><div class="brand">RaspyRFM Client Manual</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+  
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="source/index.html">RaspyRFM Client Manual</a><input aria-label="Toggle navigation of RaspyRFM Client Manual" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/homeassistant_components.html">Home Assistant Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/raspyrfm_hardware_setup.html">RaspyRFM Hardware Installation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/ui-guide.html">Home Assistant Experience</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/ui-showcase.html">UI Showcase</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="source/raspyrfm_client.html">raspyrfm_client package</a><input aria-label="Toggle navigation of raspyrfm_client package" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="source/raspyrfm_client.device.html">raspyrfm_client.device package</a><input aria-label="Toggle navigation of raspyrfm_client.device package" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.html">raspyrfm_client.device.manufacturer package</a><input aria-label="Toggle navigation of raspyrfm_client.device.manufacturer package" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.bat.html">raspyrfm_client.device.manufacturer.bat package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.brennenstuhl.html">raspyrfm_client.device.manufacturer.brennenstuhl package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.elro.html">raspyrfm_client.device.manufacturer.elro package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.intertechno.html">raspyrfm_client.device.manufacturer.intertechno package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.intertek.html">raspyrfm_client.device.manufacturer.intertek package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.mumbi.html">raspyrfm_client.device.manufacturer.mumbi package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.pollin_electronic.html">raspyrfm_client.device.manufacturer.pollin_electronic package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.rev.html">raspyrfm_client.device.manufacturer.rev package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.universal.html">raspyrfm_client.device.manufacturer.universal package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.vivanco.html">raspyrfm_client.device.manufacturer.vivanco package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.html">raspyrfm_client.device.manufacturer package</a><input aria-label="Toggle navigation of raspyrfm_client.device.manufacturer package" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.bat.html">raspyrfm_client.device.manufacturer.bat package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.brennenstuhl.html">raspyrfm_client.device.manufacturer.brennenstuhl package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.elro.html">raspyrfm_client.device.manufacturer.elro package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.intertechno.html">raspyrfm_client.device.manufacturer.intertechno package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.intertek.html">raspyrfm_client.device.manufacturer.intertek package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.mumbi.html">raspyrfm_client.device.manufacturer.mumbi package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.pollin_electronic.html">raspyrfm_client.device.manufacturer.pollin_electronic package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.rev.html">raspyrfm_client.device.manufacturer.rev package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.universal.html">raspyrfm_client.device.manufacturer.universal package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.vivanco.html">raspyrfm_client.device.manufacturer.vivanco package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="source/modules.html">raspyrfm_client</a><input aria-label="Toggle navigation of raspyrfm_client" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="source/raspyrfm_client.html">raspyrfm_client package</a><input aria-label="Toggle navigation of raspyrfm_client package" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="source/raspyrfm_client.device.html">raspyrfm_client.device package</a><input aria-label="Toggle navigation of raspyrfm_client.device package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.html">raspyrfm_client.device.manufacturer package</a><input aria-label="Toggle navigation of raspyrfm_client.device.manufacturer package" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.bat.html">raspyrfm_client.device.manufacturer.bat package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.brennenstuhl.html">raspyrfm_client.device.manufacturer.brennenstuhl package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.elro.html">raspyrfm_client.device.manufacturer.elro package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.intertechno.html">raspyrfm_client.device.manufacturer.intertechno package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.intertek.html">raspyrfm_client.device.manufacturer.intertek package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.mumbi.html">raspyrfm_client.device.manufacturer.mumbi package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.pollin_electronic.html">raspyrfm_client.device.manufacturer.pollin_electronic package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.rev.html">raspyrfm_client.device.manufacturer.rev package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.universal.html">raspyrfm_client.device.manufacturer.universal package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.vivanco.html">raspyrfm_client.device.manufacturer.vivanco package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.html">raspyrfm_client.device.manufacturer package</a><input aria-label="Toggle navigation of raspyrfm_client.device.manufacturer package" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.bat.html">raspyrfm_client.device.manufacturer.bat package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.brennenstuhl.html">raspyrfm_client.device.manufacturer.brennenstuhl package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.elro.html">raspyrfm_client.device.manufacturer.elro package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.intertechno.html">raspyrfm_client.device.manufacturer.intertechno package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.intertek.html">raspyrfm_client.device.manufacturer.intertek package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.mumbi.html">raspyrfm_client.device.manufacturer.mumbi package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.pollin_electronic.html">raspyrfm_client.device.manufacturer.pollin_electronic package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.rev.html">raspyrfm_client.device.manufacturer.rev package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.universal.html">raspyrfm_client.device.manufacturer.universal package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="source/raspyrfm_client.device.manufacturer.vivanco.html">raspyrfm_client.device.manufacturer.vivanco package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/index.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="raspyrfm-client-pypi-version">
+<h1>raspyrfm-client <a class="reference external" href="https://badge.fury.io/py/raspyrfm-client"><img alt="pypi_version" src="https://badge.fury.io/py/raspyrfm-client.svg" /></a><a class="headerlink" href="#raspyrfm-client-pypi-version" title="Link to this heading">¶</a></h1>
+<p>A python 3.4+ library that allows the generation of network codes for the RaspyRFM rc module (and other gateways too!).</p>
+</section>
+<section id="build-status">
+<h1>Build Status<a class="headerlink" href="#build-status" title="Link to this heading">¶</a></h1>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Master</p></th>
+<th class="head"><p>Beta</p></th>
+<th class="head"><p>Dev</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://travis-ci.org/markusressel/raspyrfm-client/branches"><img alt="build_master" src="https://travis-ci.org/markusressel/raspyrfm-client.svg?branch=master" /></a></p></td>
+<td><p><a class="reference external" href="https://travis-ci.org/markusressel/raspyrfm-client/branches"><img alt="build_beta" src="https://travis-ci.org/markusressel/raspyrfm-client.svg?branch=beta" /></a></p></td>
+<td><p><a class="reference external" href="https://travis-ci.org/markusressel/raspyrfm-client/branches"><img alt="build_dev" src="https://travis-ci.org/markusressel/raspyrfm-client.svg?branch=dev" /></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://codebeat.co/projects/github-com-markusressel-raspyrfm-client-master"><img alt="codebeat_master" src="https://codebeat.co/badges/fcac9cfe-b6a2-4c4a-938d-42214371dc3d" /></a></p></td>
+<td><p><a class="reference external" href="https://codebeat.co/projects/github-com-markusressel-xs1-api-client-beta"><img alt="codebeat_beta" src="https://codebeat.co/badges/c6c09759-3f34-4a16-b17e-d7989b3f7fae" /></a></p></td>
+<td><p><a class="reference external" href="https://codebeat.co/projects/github-com-markusressel-raspyrfm-client-dev"><img alt="codebeat_dev" src="https://codebeat.co/badges/6ef4cbdd-a452-45b2-8ee8-f7a09e53689f" /></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="home-assistant">
+<h1>Home Assistant<a class="headerlink" href="#home-assistant" title="Link to this heading">¶</a></h1>
+<p>The initial goal of this library was to be able to integrate the SimpleSolutions ConnAir gateway with <a class="reference external" href="https://www.home-assistant.io">Home Assistant</a>. This gateway is sadly not sold anymore but there are other alternatives like the Intertechno Gateway or the <a class="reference external" href="https://github.com/Phunkafizer/RaspyRFM/blob/master/connair.py">ConnAir Emulator script</a> that can be used on a Raspberry Pi equipped with a 433MHz radio like the <a class="reference external" href="https://www.seegel-systeme.de/produkt/raspyrfm-ii/">RaspyRFM from Seegel Systeme</a>.</p>
+<p>The bundled Home Assistant panel now features a refreshed design, inline validation for switch payloads, and a graphical signal mapping workspace that lets you categorise learned payloads as sensors, actuators, or auxiliary events. Linked device chips show exactly which Home Assistant entities react to a given payload so legacy installations stay understandable. Incoming payloads are fingerprinted against the original <code class="docutils literal notranslate"><span class="pre">raspyrfm-client</span></code> library so the interface can suggest whether a signal looks like a switch, a dimmable light, or a pairing remote. Suggested actions populate the creation form automatically and cover newly supported entity types such as lights and button groups. When no fingerprint matches, the universal entity card stores the raw payloads and exposes a quick-send button so you can still read and replay transmissions.</p>
+<p>You can find the related integration documentation here:
+<a class="reference external" href="https://www.home-assistant.io/components/switch.raspyrfm/">RaspyRFM Home Assistant component documentation</a></p>
+<section id="home-assistant-os-installation-raspberry-pi-4-5">
+<h2>Home Assistant OS Installation (Raspberry Pi 4/5)<a class="headerlink" href="#home-assistant-os-installation-raspberry-pi-4-5" title="Link to this heading">¶</a></h2>
+<p><strong>Pre-built Releases for HAOS</strong></p>
+<p>This integration is optimized for Home Assistant OS running on Raspberry Pi 4 and 5. Download the latest release from the <a class="reference external" href="https://github.com/halbothpa/raspyrfm-client/releases">GitHub Releases page</a>.</p>
+<p><strong>Quick Installation Steps:</strong></p>
+<ol class="arabic simple">
+<li><p>Download the latest <code class="docutils literal notranslate"><span class="pre">raspyrfm-X.X.X.zip</span></code> from releases</p></li>
+<li><p>Access your Home Assistant installation via SSH or the Samba share</p></li>
+<li><p>Navigate to your config directory (usually <code class="docutils literal notranslate"><span class="pre">/config</span></code>)</p></li>
+<li><p>Create <code class="docutils literal notranslate"><span class="pre">custom_components</span></code> directory if it doesn’t exist</p></li>
+<li><p>Extract the zip file contents to <code class="docutils literal notranslate"><span class="pre">/config/custom_components/raspyrfm/</span></code></p></li>
+<li><p>Restart Home Assistant</p></li>
+<li><p>Go to <strong>Settings</strong> → <strong>Devices &amp; Services</strong> → <strong>Add Integration</strong></p></li>
+<li><p>Search for “RaspyRFM” and configure with your gateway details</p></li>
+</ol>
+<p><strong>Configuration:</strong></p>
+<ul class="simple">
+<li><p><strong>Host</strong>: IP address of your RaspyRFM gateway (e.g., <code class="docutils literal notranslate"><span class="pre">192.168.1.100</span></code>)</p></li>
+<li><p><strong>Port</strong>: Gateway port (default: <code class="docutils literal notranslate"><span class="pre">49880</span></code>)</p></li>
+</ul>
+<p><strong>Hardware Setup for Raspberry Pi:</strong></p>
+<p>If you’re using a Raspberry Pi as your RaspyRFM gateway:</p>
+<ol class="arabic simple">
+<li><p>Connect your 433MHz RF module to the GPIO pins</p></li>
+<li><p>Ensure the RaspyRFM daemon is running on the gateway Pi</p></li>
+<li><p>The gateway must be on the same network as your HAOS installation</p></li>
+<li><p>Test connectivity: <code class="docutils literal notranslate"><span class="pre">ping</span> <span class="pre">&lt;gateway-ip&gt;</span></code> from HAOS terminal</p></li>
+</ol>
+<p><strong>Troubleshooting:</strong></p>
+<ul class="simple">
+<li><p><strong>Cannot find gateway</strong>: Check network connectivity and firewall settings</p></li>
+<li><p><strong>Integration won’t load</strong>: Verify all files are in <code class="docutils literal notranslate"><span class="pre">custom_components/raspyrfm/</span></code></p></li>
+<li><p><strong>Devices not responding</strong>: Confirm gateway is running and RF codes are correct</p></li>
+<li><p><strong>Check logs</strong>: Go to Settings → System → Logs and filter for “raspyrfm”</p></li>
+</ul>
+</section>
+</section>
+<section id="how-to-use">
+<h1>How to use<a class="headerlink" href="#how-to-use" title="Link to this heading">¶</a></h1>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">raspyrfm-client</span></code></p>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">¶</a></h2>
+<p>The full project manual is published automatically via GitHub Pages whenever
+changes land on the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch. Visit
+<code class="docutils literal notranslate"><span class="pre">https://halbothpa.github.io/raspyrfm-client/</span></code> for the rendered HTML
+documentation sourced from the <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory. The site now uses the
+<a class="reference external" href="https://pradyunsg.me/furo/">Furo</a> theme with custom accent colours and
+hero components that mirror the refreshed Home Assistant UI, plus SVG
+illustrations of the mapping workspace for quick onboarding. A new UI
+showcase page highlights every card in the Home Assistant panel, including
+the adaptive classification chips and the universal entity send controls.</p>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<p>For a basic example have a look at the <a class="reference external" href="https://github.com/halbothpa/raspyrfm-client/blob/master/example_simple.py">example.py</a> file.</p>
+<p>If you need more info the <a class="reference external" href="https://halbothpa.github.io/raspyrfm-client/">documentation</a> covers the full Home Assistant workflow.</p>
+</section>
+<section id="basic-example">
+<h2>Basic Example<a class="headerlink" href="#basic-example" title="Link to this heading">¶</a></h2>
+<section id="import-required-modules">
+<h3>Import required modules<a class="headerlink" href="#import-required-modules" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">raspyrfm_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">RaspyRFMClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">raspyrfm_client.device_implementations.controlunit.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Action</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">raspyrfm_client.device_implementations.controlunit.controlunit_constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">ControlUnitModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">raspyrfm_client.device_implementations.gateway.manufacturer.gateway_constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">GatewayModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">raspyrfm_client.device_implementations.manufacturer_constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">Manufacturer</span>
+</pre></div>
+</div>
+</section>
+<section id="create-the-raspyrfmclient-object">
+<h3>Create the <code class="code docutils literal notranslate"><span class="pre">RaspyRFMClient</span></code> object<a class="headerlink" href="#create-the-raspyrfmclient-object" title="Link to this heading">¶</a></h3>
+<p>Get a client instance by calling:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rfm_client</span> <span class="o">=</span> <span class="n">RaspyRFMClient</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="create-a-gateway-instance">
+<h3>Create a <code class="code docutils literal notranslate"><span class="pre">Gateway</span></code> instance<a class="headerlink" href="#create-a-gateway-instance" title="Link to this heading">¶</a></h3>
+<p>You can let the library search automatically for gateways available in LAN using:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gateways</span> <span class="o">=</span> <span class="n">rfm_client</span><span class="o">.</span><span class="n">search</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This will return a list of Gateways that can later be used to send signals to.</p>
+<p>To get a quick overview of what gateway <strong>manufacturers</strong> and <strong>models</strong> are supported call:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rfm_client</span><span class="o">.</span><span class="n">list_supported_gateways</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Create a gateway instance with the specified <code class="code docutils literal notranslate"><span class="pre">IP</span></code> and <code class="code docutils literal notranslate"><span class="pre">Port</span></code> of your Gateway by using:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gateway</span> <span class="o">=</span> <span class="n">rfm_client</span><span class="o">.</span><span class="n">get_gateway</span><span class="p">(</span><span class="n">Manufacturer</span><span class="o">.</span><span class="n">SEEGEL_SYSTEME</span><span class="p">,</span> <span class="n">GatewayModel</span><span class="o">.</span><span class="n">RASPYRFM</span><span class="p">,</span> <span class="s2">&quot;192.168.2.10&quot;</span><span class="p">,</span> <span class="mi">9876</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gateway</span> <span class="o">=</span> <span class="n">rfm_client</span><span class="o">.</span><span class="n">get_gateway</span><span class="p">(</span><span class="n">Manufacturer</span><span class="o">.</span><span class="n">SEEGEL_SYSTEME</span><span class="p">,</span> <span class="n">GatewayModel</span><span class="o">.</span><span class="n">RASPYRFM</span><span class="p">,</span> <span class="s2">&quot;192.168.2.10&quot;</span><span class="p">)</span> <span class="c1"># defaults to 49880 or the gateway implementations default</span>
+</pre></div>
+</div>
+</section>
+<section id="get-a-controlunit">
+<h3>Get a <code class="code docutils literal notranslate"><span class="pre">ControlUnit</span></code><a class="headerlink" href="#get-a-controlunit" title="Link to this heading">¶</a></h3>
+<p>ControlUnits are the devices that receive the RC signals sent using the gateway, f.ex. a power outlet.</p>
+<p>To get a quick overview of what ControlUnits <strong>manufacturers</strong> and <strong>models</strong> are supported call:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rfm_client</span><span class="o">.</span><span class="n">list_supported_controlunits</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>which will give you an indented list of supported manufacturers and their supported models similar to this:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Elro
+  RC3500-A IP44 DE
+  AB440S
+  AB440D 200W
+  AB440D 300W
+  AB440ID
+  AB440IS
+  AB440L
+  AB440SC
+  AB440WD
+BAT
+  RC AAA1000-A IP44 Outdoor
+Brennenstuhl
+  RCS 1000 N Comfort
+  RCS 1044 N Comfort
+Intertek
+  Model 1919361
+[...]
+</pre></div>
+</div>
+<p>To generate codes for a device <strong>you first have to get an instance of its implementation</strong> like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">brennenstuhl_rcs1000</span> <span class="o">=</span> <span class="n">rfm_client</span><span class="o">.</span><span class="n">get_controlunit</span><span class="p">(</span><span class="n">manufacturer_constants</span><span class="o">.</span><span class="n">BRENNENSTUHL</span><span class="p">,</span>
+                                          <span class="n">manufacturer_constants</span><span class="o">.</span><span class="n">RCS_1000_N_COMFORT</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The parameters of the <code class="code docutils literal notranslate"><span class="pre">get_controlunit()</span></code> method always need to be an enum value of the specified type.
+You can get an enum constant by its name though using:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">manufacturer</span> <span class="o">=</span> <span class="n">Manufacturer</span><span class="p">(</span><span class="s2">&quot;Intertechno&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ControlUnitModel</span><span class="p">(</span><span class="s2">&quot;IT-1500&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="controlunit-channel-configuration">
+<h3><code class="code docutils literal notranslate"><span class="pre">ControlUnit</span></code> channel configuration<a class="headerlink" href="#controlunit-channel-configuration" title="Link to this heading">¶</a></h3>
+<p>Before you can generate codes with your shiny new gateway and <code class="code docutils literal notranslate"><span class="pre">ControlUnit</span></code> implementations you have to specify a channel configuration for your <code class="code docutils literal notranslate"><span class="pre">ControlUnit</span></code>. These <strong>configurations can be very different for every device</strong>. The best way to know the correct way of specifying the channel configuration for a specific device is to look at the source code (yes I know…) or by trial and error (even worse). A good <code class="code docutils literal notranslate"><span class="pre">ControlUnit</span></code> implementation should tell you how the configuration should look like when specifying it in a wrong way.</p>
+<p>However all configurations are a <strong>keyed dictionary</strong>.
+So in general there are two ways of passing the channel configuration argument.
+One (inline):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">device</span><span class="o">.</span><span class="n">set_channel_config</span><span class="p">(</span><span class="n">value1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value2</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Two (as a dictionary):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">device</span><span class="o">.</span><span class="n">set_channel_config</span><span class="p">(</span><span class="o">**</span><span class="p">{</span>
+    <span class="s1">&#39;value1&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;value2&#39;</span><span class="p">:</span> <span class="mi">2</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p><strong>Note</strong> that the <strong>keys always need to be a</strong> <code class="code docutils literal notranslate"><span class="pre">string</span></code>.
+The second one is the recommended one as it will often result in a much more readable source code.</p>
+<p>For our Brennenstuhl device it would look like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">brennenstuhl_rcs1000</span><span class="o">.</span><span class="n">set_channel_config</span><span class="p">(</span><span class="o">**</span><span class="p">{</span>
+    <span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;3&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;4&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;5&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;CH&#39;</span><span class="p">:</span> <span class="s1">&#39;A&#39;</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</section>
+<section id="generate-action-codes">
+<h3>Generate action codes<a class="headerlink" href="#generate-action-codes" title="Link to this heading">¶</a></h3>
+<p>Now that you have a properly set up <code class="code docutils literal notranslate"><span class="pre">ControlUnit</span></code> you can generate codes for it’s supported actions by using an <code class="code docutils literal notranslate"><span class="pre">Action</span></code> enum constant that you imported previously.</p>
+<p>To get a list of supported actions for a <code class="code docutils literal notranslate"><span class="pre">ControlUnit</span></code> call:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">brennenstuhl_rcs1000</span><span class="o">.</span><span class="n">get_supported_actions</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>and generate a code for one of them using your <code class="code docutils literal notranslate"><span class="pre">Gateway</span></code> instance:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">code</span> <span class="o">=</span> <span class="n">gateway</span><span class="o">.</span><span class="n">generate_code</span><span class="p">(</span><span class="n">brennenstuhl_rcs1000</span><span class="p">,</span> <span class="n">Action</span><span class="o">.</span><span class="n">ON</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="send-the-code-to-the-raspyrfm-module">
+<h3>Send the code to the <code class="code docutils literal notranslate"><span class="pre">RaspyRFM</span></code> module<a class="headerlink" href="#send-the-code-to-the-raspyrfm-module" title="Link to this heading">¶</a></h3>
+<p>To send a code for your device of choice you can combine the objects in this call:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rfm_client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">gateway</span><span class="p">,</span> <span class="n">brennenstuhl_rcs1000</span><span class="p">,</span> <span class="n">Action</span><span class="o">.</span><span class="n">ON</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will generate a code specific to the passed in gateway implementation and send it to it’s host address immediately after.</p>
+</section>
+</section>
+</section>
+<section id="custom-implementations">
+<h1>Custom implementations<a class="headerlink" href="#custom-implementations" title="Link to this heading">¶</a></h1>
+<p>The <code class="code docutils literal notranslate"><span class="pre">raspyrfm-client</span></code> library is designed so you can implement custom devices in a (hopefully) very easy way.</p>
+<section id="file-structure">
+<h2>File Structure<a class="headerlink" href="#file-structure" title="Link to this heading">¶</a></h2>
+<p>All <code class="code docutils literal notranslate"><span class="pre">ControlUnit</span></code> implementations are located in the <code class="code docutils literal notranslate"><span class="pre">/device_implementations/controlunit/manufacturer/</span></code> module and implement the base class <code class="code docutils literal notranslate"><span class="pre">Device</span></code> that can be found in <code class="code docutils literal notranslate"><span class="pre">/device_implementations/controlunit/base.py</span></code>.</p>
+</section>
+<section id="create-a-new-controlunit">
+<h2>Create a new <code class="code docutils literal notranslate"><span class="pre">ControlUnit</span></code><a class="headerlink" href="#create-a-new-controlunit" title="Link to this heading">¶</a></h2>
+<p>To create a new <code class="code docutils literal notranslate"><span class="pre">ControlUnit</span></code> implementation for a new manufacturer and model create a new subdirectory for your manufacturer and a python file for your model:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>───raspyrfm_client
+│   │   client.py
+│   │
+│   └───device
+│       │   actions.py
+│       │   base.py
+│       │
+│       └───manufacturer
+│           │   manufacturer_constants.py
+│           │
+│           ├───intertek
+│           │       Model1919361.py
+│           │
+│           ├───rev
+│           │       Ritter.py
+│           │       Telecontrol.py
+│           │
+│           ├───universal
+│           │       HX2262Compatible.py
+│           │
+│           └───yourmanufacturer
+│                   yourmodel.py
+──────────────────────────────────────────
+</pre></div>
+</div>
+</section>
+<section id="implement-a-controlunit">
+<h2>Implement a <code class="code docutils literal notranslate"><span class="pre">ControlUnit</span></code><a class="headerlink" href="#implement-a-controlunit" title="Link to this heading">¶</a></h2>
+<p>Now the basic implementation of your <code class="code docutils literal notranslate"><span class="pre">ControlUnit</span></code> should looks like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">raspyrfm_client.device_implementations.controlunit.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Action</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">raspyrfm_client.device_implementations.controlunit.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">ControlUnit</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">YourModel</span><span class="p">(</span><span class="n">ControlUnit</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">raspyrfm_client.device_implementations.manufacturer_constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">Manufacturer</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">raspyrfm_client.device_implementations.controlunit.controlunit_constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">ControlUnitModel</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">Manufacturer</span><span class="o">.</span><span class="n">YourManufacturer</span><span class="p">,</span> <span class="n">ControlUnitModel</span><span class="o">.</span><span class="n">YourModel</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_channel_config_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_pulse_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">Action</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_supported_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Action</span><span class="o">.</span><span class="n">ON</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Most importantly you have to call the <code class="code docutils literal notranslate"><span class="pre">super().__init__</span></code> method like shown. This will ensure that your implementation is found by the <code class="code docutils literal notranslate"><span class="pre">RaspyRFMClient</span></code> and you can get an instance of your device using <code class="code docutils literal notranslate"><span class="pre">rfm_client.get_controlunit()</span></code> as shown before.</p>
+<p>If your manufacturer does not exist yet <strong>create a new enum constant</strong> in the <code class="code docutils literal notranslate"><span class="pre">manufacturer_constants.py</span></code> file and use its value in your <code class="code docutils literal notranslate"><span class="pre">__init__</span></code>.
+<strong>Do the same thing for your model name</strong> in the <code class="code docutils literal notranslate"><span class="pre">controlunit_constants.py</span></code> file.</p>
+<p>You also have to implement all abstract methods from the <code class="code docutils literal notranslate"><span class="pre">Device</span></code> class. Have a look at it’s documentation to get a sense of what those methods are all about.</p>
+<p>After you have implemented all methods you are good to go!
+Just call <code class="code docutils literal notranslate"><span class="pre">rfm_client.reload_implementation_classes()</span></code> and <code class="code docutils literal notranslate"><span class="pre">rfm_client.list_supported_controlunits()</span></code> to check if your implementation is listed.
+If everything looks good you can use your implementation like any other one.</p>
+</section>
+<section id="exclude-a-wip-implementation">
+<h2>Exclude a WIP implementation<a class="headerlink" href="#exclude-a-wip-implementation" title="Link to this heading">¶</a></h2>
+<p>To prevent the RaspyRFM client from importing your half baked or base class implementation just include a class field like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">YourModel</span><span class="p">(</span><span class="n">ControlUnit</span><span class="p">):</span>
+   <span class="n">DISABLED</span> <span class="o">=</span> <span class="kc">True</span>
+
+   <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">¶</a></h1>
+<p>GitHub is for social coding: if you want to write code, I encourage contributions through pull requests from forks
+of this repository. Create GitHub tickets for bugs and new features and comment on the ones that you are interested in.</p>
+</section>
+<section id="license">
+<h1>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">raspyrfm</span><span class="o">-</span><span class="n">client</span> <span class="n">by</span> <span class="n">Markus</span> <span class="n">Ressel</span>
+<span class="n">Copyright</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="mi">2017</span>  <span class="n">Markus</span> <span class="n">Ressel</span>
+
+<span class="n">This</span> <span class="n">program</span> <span class="ow">is</span> <span class="n">free</span> <span class="n">software</span><span class="p">:</span> <span class="n">you</span> <span class="n">can</span> <span class="n">redistribute</span> <span class="n">it</span> <span class="ow">and</span><span class="o">/</span><span class="ow">or</span> <span class="n">modify</span>
+<span class="n">it</span> <span class="n">under</span> <span class="n">the</span> <span class="n">terms</span> <span class="n">of</span> <span class="n">the</span> <span class="n">GNU</span> <span class="n">General</span> <span class="n">Public</span> <span class="n">License</span> <span class="k">as</span> <span class="n">published</span> <span class="n">by</span>
+<span class="n">the</span> <span class="n">Free</span> <span class="n">Software</span> <span class="n">Foundation</span><span class="p">,</span> <span class="n">either</span> <span class="n">version</span> <span class="mi">3</span> <span class="n">of</span> <span class="n">the</span> <span class="n">License</span><span class="p">,</span> <span class="ow">or</span>
+<span class="p">(</span><span class="n">at</span> <span class="n">your</span> <span class="n">option</span><span class="p">)</span> <span class="nb">any</span> <span class="n">later</span> <span class="n">version</span><span class="o">.</span>
+
+<span class="n">This</span> <span class="n">program</span> <span class="ow">is</span> <span class="n">distributed</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">hope</span> <span class="n">that</span> <span class="n">it</span> <span class="n">will</span> <span class="n">be</span> <span class="n">useful</span><span class="p">,</span>
+<span class="n">but</span> <span class="n">WITHOUT</span> <span class="n">ANY</span> <span class="n">WARRANTY</span><span class="p">;</span> <span class="n">without</span> <span class="n">even</span> <span class="n">the</span> <span class="n">implied</span> <span class="n">warranty</span> <span class="n">of</span>
+<span class="n">MERCHANTABILITY</span> <span class="ow">or</span> <span class="n">FITNESS</span> <span class="n">FOR</span> <span class="n">A</span> <span class="n">PARTICULAR</span> <span class="n">PURPOSE</span><span class="o">.</span>  <span class="n">See</span> <span class="n">the</span>
+<span class="n">GNU</span> <span class="n">General</span> <span class="n">Public</span> <span class="n">License</span> <span class="k">for</span> <span class="n">more</span> <span class="n">details</span><span class="o">.</span>
+
+<span class="n">You</span> <span class="n">should</span> <span class="n">have</span> <span class="n">received</span> <span class="n">a</span> <span class="n">copy</span> <span class="n">of</span> <span class="n">the</span> <span class="n">GNU</span> <span class="n">General</span> <span class="n">Public</span> <span class="n">License</span>
+<span class="n">along</span> <span class="k">with</span> <span class="n">this</span> <span class="n">program</span><span class="o">.</span>  <span class="n">If</span> <span class="ow">not</span><span class="p">,</span> <span class="n">see</span> <span class="o">&lt;</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">gnu</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/&gt;.</span>
+</pre></div>
+</div>
+</section>
+<section id="content">
+<h1>Content:<a class="headerlink" href="#content" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/index.html">RaspyRFM Client Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/index.html#overview">Overview</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="source/index.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">RaspyRFM Client Manual</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2017, Markus Ressel
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=dc1923a2"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 600" role="img" aria-labelledby="title desc">
+  <title id="title">Adaptive RaspyRFM device form</title>
+  <desc id="desc">Illustration of the RaspyRFM panel showing classification chips and dynamic action rows.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f4f7fb" />
+      <stop offset="100%" stop-color="#e2ebf5" />
+    </linearGradient>
+    <filter id="shadow" x="-6%" y="-6%" width="112%" height="112%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#102a43" flood-opacity="0.18" />
+    </filter>
+    <style>
+      text { font-family: "Inter", "Helvetica", "Arial", sans-serif; }
+    </style>
+  </defs>
+  <rect width="980" height="600" fill="url(#bg)" />
+  <g transform="translate(70 70)">
+    <rect width="340" height="460" rx="26" ry="26" fill="#ffffff" filter="url(#shadow)" />
+    <text x="40" y="70" font-size="28" font-weight="600" fill="#12344d">Captured signal</text>
+    <g transform="translate(40 110)">
+      <rect x="0" y="0" width="260" height="54" rx="12" ry="12" fill="#f0f3f8" />
+      <text x="16" y="34" font-family="Fira Code, Menlo, Consolas, monospace" font-size="16" fill="#172b4d">TXP:0,0,5,5600,350,...</text>
+    </g>
+    <g transform="translate(40 180)" font-size="13" font-weight="600" letter-spacing="0.08em">
+      <rect x="0" y="0" width="108" height="32" rx="16" ry="16" fill="#d6e4ff" />
+      <text x="54" y="21" text-anchor="middle" fill="#2451b2">LIGHT</text>
+      <rect x="124" y="0" width="96" height="32" rx="16" ry="16" fill="#e6f4ea" />
+      <text x="172" y="21" text-anchor="middle" fill="#2f7d32">ON</text>
+      <rect x="236" y="0" width="96" height="32" rx="16" ry="16" fill="#fef1e6" />
+      <text x="284" y="21" text-anchor="middle" fill="#c05621">BRIGHT</text>
+    </g>
+    <g transform="translate(40 240)">
+      <rect x="0" y="0" width="260" height="46" rx="12" ry="12" fill="#2d72d9" />
+      <text x="130" y="29" text-anchor="middle" font-size="16" font-weight="600" fill="#ffffff">Set as On</text>
+    </g>
+    <g transform="translate(40 300)">
+      <rect x="0" y="0" width="260" height="46" rx="12" ry="12" fill="#192b4d" />
+      <text x="130" y="29" text-anchor="middle" font-size="15" font-weight="600" fill="#ffffff">Use light template</text>
+    </g>
+    <text x="40" y="386" font-size="14" fill="#62748a">Classifier fingerprints payloads and proposes the best matching entity type.</text>
+  </g>
+  <g transform="translate(430 40)">
+    <rect width="460" height="520" rx="28" ry="28" fill="#ffffff" filter="url(#shadow)" />
+    <text x="56" y="72" font-size="32" font-weight="600" fill="#142641">Create Home Assistant device</text>
+    <g transform="translate(56 118)">
+      <text x="0" y="0" font-size="18" fill="#54657a">Name</text>
+      <rect x="0" y="16" width="348" height="54" rx="14" ry="14" fill="#f3f5fa" stroke="#d4ddec" />
+      <text x="20" y="50" font-size="22" fill="#1a2a3a">Porch Lamp</text>
+    </g>
+    <g transform="translate(56 206)">
+      <text x="0" y="0" font-size="18" fill="#54657a">Type</text>
+      <rect x="0" y="16" width="220" height="54" rx="14" ry="14" fill="#f3f5fa" stroke="#d4ddec" />
+      <text x="18" y="50" font-size="20" fill="#1a2a3a">Light ▾</text>
+      <text x="246" y="44" font-size="14" fill="#8091a5">Switch • Binary sensor • Button group • Universal</text>
+    </g>
+    <g transform="translate(56 294)">
+      <rect x="0" y="0" width="348" height="60" rx="16" ry="16" fill="#eef5ff" />
+      <text x="18" y="26" font-size="14" font-weight="600" fill="#2f5aa0">ON</text>
+      <text x="18" y="47" font-family="Fira Code, Menlo, Consolas, monospace" font-size="18" fill="#11263c">TXP:...:A1:ON</text>
+      <rect x="300" y="14" width="32" height="32" rx="10" ry="10" fill="#2d72d9" />
+      <text x="316" y="36" text-anchor="middle" font-size="16" font-weight="600" fill="#ffffff">✓</text>
+    </g>
+    <g transform="translate(56 370)">
+      <rect x="0" y="0" width="348" height="60" rx="16" ry="16" fill="#fdf6f6" stroke="#f1b2af" stroke-width="2" />
+      <text x="18" y="26" font-size="14" font-weight="600" fill="#c04a3e">OFF (optional)</text>
+      <text x="18" y="47" font-size="16" fill="#c04a3e">Assign a payload or leave empty to dim instead.</text>
+    </g>
+    <g transform="translate(56 446)">
+      <rect x="0" y="0" width="348" height="60" rx="16" ry="16" fill="#f0f8ed" />
+      <text x="18" y="26" font-size="14" font-weight="600" fill="#2f7d32">BRIGHT</text>
+      <text x="18" y="47" font-family="Fira Code, Menlo, Consolas, monospace" font-size="18" fill="#14532d">TXP:...:A1:BRIGHT</text>
+      <rect x="300" y="14" width="32" height="32" rx="10" ry="10" fill="#1f7a39" />
+      <text x="316" y="36" text-anchor="middle" font-size="16" font-weight="600" fill="#ffffff">✓</text>
+    </g>
+    <g transform="translate(56 522)">
+      <rect x="0" y="0" width="348" height="60" rx="16" ry="16" fill="#fef6eb" />
+      <text x="18" y="26" font-size="14" font-weight="600" fill="#c05621">DIM</text>
+      <text x="18" y="47" font-size="16" fill="#c05621">Click “Set as Dim” on the captured signal to assign.</text>
+    </g>
+  </g>
+</svg>

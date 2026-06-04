@@ -1,0 +1,43 @@
+<svg width="960" height="540" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">RaspyRFM documentation theme preview</title>
+  <desc id="desc">Mock-up of the GitHub Pages site built with the Furo theme.</desc>
+  <defs>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e3f2fd" />
+      <stop offset="1" stop-color="#e0f7fa" />
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" fill="#f8fbff" />
+  <rect x="80" y="64" width="800" height="132" rx="28" fill="url(#hero)" />
+  <text x="120" y="120" font-family="'Inter', 'Segoe UI', sans-serif" font-size="28" fill="#0d47a1">
+    RaspyRFM Client Manual
+  </text>
+  <text x="120" y="156" font-family="Inter" font-size="18" fill="#00695c">
+    Beautifully typeset documentation published on every push.
+  </text>
+  <g transform="translate(80,224)">
+    <rect x="0" y="0" width="240" height="220" rx="24" fill="#ffffff" stroke="#e3f2fd" />
+    <text x="24" y="48" font-family="Inter" font-size="18" fill="#0d47a1">Guides</text>
+    <text x="24" y="92" font-family="Inter" font-size="16" fill="#546e7a">Home Assistant UI</text>
+    <text x="24" y="132" font-family="Inter" font-size="16" fill="#546e7a">Signal mapping</text>
+    <text x="24" y="172" font-family="Inter" font-size="16" fill="#546e7a">Deployment</text>
+  </g>
+  <g transform="translate(360,224)">
+    <rect x="0" y="0" width="520" height="100" rx="24" fill="#ffffff" stroke="#e0f2f1" />
+    <text x="32" y="48" font-family="Inter" font-size="18" fill="#00897b">Signal mapping workspace</text>
+    <text x="32" y="78" font-family="Inter" font-size="16" fill="#546e7a">
+      Inline diagrams and annotations explain how to categorise payloads.
+    </text>
+  </g>
+  <g transform="translate(360,348)">
+    <rect x="0" y="0" width="520" height="96" rx="24" fill="#ffffff" stroke="#e0f2f1" />
+    <text x="32" y="46" font-family="Inter" font-size="18" fill="#1e88e5">Automated publishing</text>
+    <text x="32" y="74" font-family="Inter" font-size="16" fill="#546e7a">
+      GitHub Actions builds and deploys the manual to gh-pages without manual steps.
+    </text>
+  </g>
+  <g transform="translate(720,88)">
+    <circle r="18" fill="#1e88e5" />
+    <text x="0" y="6" text-anchor="middle" font-family="Inter" font-size="16" fill="#ffffff">R</text>
+  </g>
+</svg>

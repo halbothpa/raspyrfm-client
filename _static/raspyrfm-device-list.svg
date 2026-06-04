@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 600" role="img" aria-labelledby="title desc">
+  <title id="title">RaspyRFM device inventory</title>
+  <desc id="desc">Overview card showing switches, lights, buttons, and universal send controls.</desc>
+  <defs>
+    <linearGradient id="header" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#152238" />
+      <stop offset="100%" stop-color="#0f1a2a" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#102a43" flood-opacity="0.2" />
+    </filter>
+    <style>
+      text { font-family: "Inter", "Helvetica", "Arial", sans-serif; }
+    </style>
+  </defs>
+  <rect width="980" height="600" fill="#eef3f8" />
+  <rect x="90" y="50" width="800" height="90" rx="22" ry="22" fill="url(#header)" />
+  <text x="140" y="110" font-size="38" font-weight="600" fill="#ffffff">Home Assistant · RaspyRFM</text>
+  <g transform="translate(120 170)">
+    <rect width="760" height="390" rx="32" ry="32" fill="#ffffff" filter="url(#shadow)" />
+    <text x="48" y="64" font-size="32" font-weight="600" fill="#132743">Device inventory</text>
+    <text x="48" y="96" font-size="18" fill="#5b6b7f">Send stored payloads or remove devices from Home Assistant.</text>
+    <g transform="translate(48 126)">
+      <rect width="664" height="88" rx="22" ry="22" fill="#f7f9fc" stroke="#d9e2ec" />
+      <text x="32" y="40" font-size="24" fill="#16293b">Porch Lamp</text>
+      <text x="32" y="66" font-size="16" fill="#5a6c80">Light · on/off/bright/dim</text>
+      <rect x="438" y="22" width="96" height="44" rx="12" ry="12" fill="#2d72d9" />
+      <text x="486" y="50" text-anchor="middle" font-size="18" font-weight="600" fill="#ffffff">Send ON</text>
+      <rect x="542" y="22" width="96" height="44" rx="12" ry="12" fill="#0f172a" />
+      <text x="590" y="50" text-anchor="middle" font-size="18" font-weight="600" fill="#ffffff">Send DIM</text>
+    </g>
+    <g transform="translate(48 226)">
+      <rect width="664" height="88" rx="22" ry="22" fill="#fef9f0" stroke="#f1d0a8" />
+      <text x="32" y="40" font-size="24" fill="#5c3417">Doorbell</text>
+      <text x="32" y="66" font-size="16" fill="#7c5330">Button group · actions: chime, pair</text>
+      <rect x="438" y="22" width="96" height="44" rx="12" ry="12" fill="#f59e0b" />
+      <text x="486" y="50" text-anchor="middle" font-size="18" font-weight="600" fill="#ffffff">Chime</text>
+      <rect x="542" y="22" width="96" height="44" rx="12" ry="12" fill="#d97706" />
+      <text x="590" y="50" text-anchor="middle" font-size="18" font-weight="600" fill="#ffffff">Pair</text>
+    </g>
+    <g transform="translate(48 326)">
+      <rect width="664" height="88" rx="22" ry="22" fill="#eef5ff" stroke="#d5e4ff" />
+      <text x="32" y="40" font-size="24" fill="#132f52">Legacy sensor hub</text>
+      <text x="32" y="66" font-size="16" fill="#4f6b95">Universal · last seen payload: ``TXP:...:A7``</text>
+      <rect x="438" y="22" width="200" height="44" rx="12" ry="12" fill="#1d4ed8" />
+      <text x="538" y="50" text-anchor="middle" font-size="18" font-weight="600" fill="#ffffff">Send last payload</text>
+    </g>
+    <text x="48" y="432" font-size="16" fill="#5b6b7f">Actions call ``raspyrfm/device/send`` while **Delete** remains available from the card menu.</text>
+  </g>
+</svg>
